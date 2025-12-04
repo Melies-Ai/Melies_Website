@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion';
-import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useMotionTemplate, AnimatePresence } from 'framer-motion';
+import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User } from 'lucide-react';
 import rawFrame from '../assets/spark_raw.png';
 import renderFrame from '../assets/spark_render.png';
 import consistency1 from '../assets/spark_consistency_1.webp';
@@ -127,7 +127,65 @@ const ConsistencyEngine = () => {
     );
 };
 
+const AssetCard = ({ image, type, icon: Icon, delay }) => (
+    <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.5, delay, type: "spring", bounce: 0.4 }}
+        className="relative w-40 h-40 rounded-2xl overflow-hidden shadow-lg group"
+    >
+        <img src={image} alt={type} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+
+        {/* Close Button */}
+        <div className="absolute top-2 right-2 w-8 h-8 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/50 transition-colors cursor-pointer">
+            <X size={16} />
+        </div>
+
+        {/* Label */}
+        <div className="absolute bottom-2 left-2 right-2">
+            <div className="bg-white/90 backdrop-blur-md rounded-full py-1.5 px-3 flex items-center gap-2 shadow-sm">
+                <Icon size={14} className="text-ink" />
+                <span className="text-xs font-medium text-ink">{type}</span>
+            </div>
+        </div>
+    </motion.div>
+);
+
 const AssetIntegration = () => {
+    const [animationState, setAnimationState] = React.useState(0); // 0: Empty, 1: Drop 1, 2: Show 1, 3: Drop 2, 4: Show 2
+
+    React.useEffect(() => {
+        let isMounted = true;
+        const sequence = async () => {
+            while (isMounted) {
+                if (!isMounted) break;
+                setAnimationState(0);
+                await new Promise(r => setTimeout(r, 1000));
+
+                if (!isMounted) break;
+                // Drop 1
+                setAnimationState(1);
+                await new Promise(r => setTimeout(r, 600));
+                if (!isMounted) break;
+                setAnimationState(2); // Show Location
+
+                await new Promise(r => setTimeout(r, 1000));
+
+                if (!isMounted) break;
+                // Drop 2
+                setAnimationState(3);
+                await new Promise(r => setTimeout(r, 600));
+                if (!isMounted) break;
+                setAnimationState(4); // Show Character
+
+                await new Promise(r => setTimeout(r, 3000));
+            }
+        };
+        sequence();
+        return () => { isMounted = false; };
+    }, []);
+
     return (
         <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
             <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row-reverse items-center gap-16">
@@ -140,29 +198,73 @@ const AssetIntegration = () => {
                     </p>
                 </div>
 
-                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center">
+                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center h-[500px]">
                     <div className="absolute inset-0 opacity-20" style={{
                         backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
                     }} />
 
-                    <div className="relative w-64 h-80 bg-white rounded-2xl border-2 border-dashed border-black/10 flex flex-col items-center justify-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center text-accent">
-                            <ImageIcon size={32} />
-                        </div>
-                        <div className="text-center">
-                            <div className="text-sm font-medium text-ink">Drop Assets Here</div>
-                            <div className="text-xs text-ink/40">Max 2 files (PNG, OBJ)</div>
-                        </div>
+                    {/* Drop Zone Container */}
+                    <div className="relative w-full max-w-md h-full flex flex-col items-center justify-center">
 
-                        {/* Simulated Uploaded Asset */}
-                        <motion.div
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute -right-12 -bottom-8 w-24 h-24 bg-white rounded-xl shadow-xl border border-black/5 p-2 rotate-12"
-                        >
-                            <div className="w-full h-full bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg" />
-                        </motion.div>
+                        {/* Empty State / Drop Zone */}
+                        <AnimatePresence mode="wait">
+                            {animationState === 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="absolute inset-0 flex items-center justify-center"
+                                >
+                                    <div className="w-64 h-64 rounded-3xl border-2 border-dashed border-black/10 flex flex-col items-center justify-center gap-4">
+                                        <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                                            <ImageIcon size={32} />
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-sm font-medium text-ink">Drop Assets Here</div>
+                                            <div className="text-xs text-ink/40">Max 2 files (PNG, OBJ)</div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {/* Dropping Files Animation */}
+                        <AnimatePresence>
+                            {(animationState === 1 || animationState === 3) && (
+                                <motion.div
+                                    initial={{ y: -200, opacity: 0, rotate: -10 }}
+                                    animate={{ y: 0, opacity: 1, rotate: 0 }}
+                                    exit={{ scale: 0.5, opacity: 0 }}
+                                    transition={{ type: "spring", damping: 20 }}
+                                    className="absolute z-20"
+                                >
+                                    <div className="w-24 h-32 bg-white rounded-lg shadow-xl border border-black/5 flex items-center justify-center">
+                                        <ImageIcon size={32} className="text-ink/20" />
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {/* Revealed Cards */}
+                        <div className="flex gap-6 z-10">
+                            {animationState >= 2 && (
+                                <AssetCard
+                                    image={consistency2}
+                                    type="Location"
+                                    icon={Palmtree}
+                                    delay={0}
+                                />
+                            )}
+                            {animationState >= 4 && (
+                                <AssetCard
+                                    image={consistency1}
+                                    type="Character"
+                                    icon={User}
+                                    delay={0}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
