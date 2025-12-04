@@ -3,6 +3,9 @@ import { motion, useMotionValue, useSpring, useMotionTemplate } from 'framer-mot
 import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu } from 'lucide-react';
 import rawFrame from '../assets/spark_raw.png';
 import renderFrame from '../assets/spark_render.png';
+import consistency1 from '../assets/spark_consistency_1.webp';
+import consistency2 from '../assets/spark_consistency_2.webp';
+import consistency3 from '../assets/spark_consistency_3.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
@@ -100,9 +103,8 @@ const ConsistencyEngine = () => {
                         backgroundSize: '40px 40px'
                     }} />
 
-                    {/* Film Strip Visual */}
-                    <div className="flex gap-4 overflow-hidden relative">
-                        {[1, 2, 3].map((i) => (
+                    <div className="flex gap-4 relative p-2">
+                        {[consistency1, consistency2, consistency3].map((img, i) => (
                             <motion.div
                                 key={i}
                                 initial={{ opacity: 0, x: 50 }}
@@ -110,17 +112,12 @@ const ConsistencyEngine = () => {
                                 transition={{ duration: 0.8, delay: i * 0.2, ease: "circOut" }}
                                 className="w-48 h-80 bg-white rounded-xl border border-black/5 shadow-lg flex-shrink-0 relative overflow-hidden"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-amber-50" />
-                                {/* Character Placeholder (Consistent) */}
-                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-48 bg-orange-500/20 rounded-t-full flex items-end justify-center pb-4">
-                                    <div className="w-20 h-20 bg-orange-500 rounded-full" />
-                                </div>
-                                {/* Different Background Elements */}
-                                {i === 1 && <div className="absolute top-4 right-4 w-12 h-12 bg-blue-400/20 rounded-full" />}
-                                {i === 2 && <div className="absolute top-10 left-4 w-16 h-8 bg-emerald-400/20 rounded-lg" />}
-                                {i === 3 && <div className="absolute top-6 right-8 w-10 h-10 bg-purple-400/20 rotate-45" />}
-
-                                <div className="absolute top-2 left-2 text-[10px] font-mono text-ink/40">SCENE_0{i}</div>
+                                <img
+                                    src={img}
+                                    alt={`Consistency Scene ${i + 1}`}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                                <div className="absolute top-2 left-2 text-[10px] font-mono text-white/80 bg-black/20 px-1.5 py-0.5 rounded backdrop-blur-sm">SCENE_0{i + 1}</div>
                             </motion.div>
                         ))}
                     </div>
