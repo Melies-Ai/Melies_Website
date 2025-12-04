@@ -9,6 +9,7 @@ import Citizen from './pages/Citizen';
 import Oasis from './pages/Oasis';
 import Spark from './pages/Spark';
 import Pricing from './pages/Pricing';
+import Manifesto from './pages/Manifesto';
 
 
 import ButtonShowcase from './pages/ButtonShowcase';
@@ -26,6 +27,7 @@ const AnimatedRoutes = () => {
         <Route path="/oasis" element={<Oasis />} />
         <Route path="/spark" element={<Spark />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/manifesto" element={<Manifesto />} />
 
         {/* TEST LAB ROUTE - REMOVE FOR PRODUCTION */}
         <Route path="/buttons" element={<ButtonShowcase />} />

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
 @tailwind base;
 
 .font-bricolage {
@@ -94,4 +95,544 @@ body {
   font-family: 'Geist Mono', 'Monaco', monospace;
   letter-spacing: -0.01em;
   font-weight: 400;
+}
+
+/* ========================================
+   MANIFESTO PAGE STYLES
+   ======================================== */
+
+.manifesto-page {
+  --day: #f4e1c4;
+  --evening: #fccc83;
+  --dusk: #db7a2a;
+  --night: #0f0907;
+  --dawn: #140e0b;
+  --morning: #ae9681;
+  --light: var(--day);
+  --dark: var(--night);
+  --shadow: #1a1917;
+  --bounce-light: #f5d7a6;
+  --timing-fn: cubic-bezier(0.455, 0.19, 0, 0.985);
+  --border-day: rgb(78 53 45 / 13%);
+  --border-night: rgb(78 53 45 / 30%);
+  --manifesto-text: #626262;
+  --gradient-title-manifesto: linear-gradient(to right, #1f140e, #827d74);
+
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 100px;
+  background-color: var(--light);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  color: var(--manifesto-text);
+  font-size: 14px;
+  line-height: 1.5;
+  animation: manifesto-sunrise 1s var(--timing-fn) forwards;
+}
+
+.manifesto-page.dark {
+  --light: var(--night);
+  --dark: var(--day);
+  --shadow: #070503;
+  --bounce-light: #573926;
+  --gradient-title-manifesto: linear-gradient(to right, #feeed9, #a8a298);
+  --manifesto-text: #8b8b8b;
+  animation: manifesto-sunset 1.7s var(--timing-fn) forwards;
+}
+
+@keyframes manifesto-sunrise {
+  100% {
+    background-color: var(--day);
+  }
+}
+
+@keyframes manifesto-sunset {
+  0% {
+    background-color: var(--day);
+  }
+  30% {
+    background-color: var(--evening);
+  }
+  60% {
+    background-color: var(--dusk);
+  }
+  90% {
+    background-color: var(--dawn);
+  }
+  100% {
+    background-color: var(--night);
+  }
+}
+
+/* Dappled Light Effect */
+.manifesto-dappled-light {
+  pointer-events: none;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.manifesto-glow {
+  position: absolute;
+  background: linear-gradient(309deg, var(--bounce-light), var(--bounce-light) 20%, transparent);
+  transition: background 1s var(--timing-fn);
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+}
+
+.manifesto-glow-bounce {
+  position: absolute;
+  background: linear-gradient(355deg, var(--bounce-light) 0%, transparent 30%, transparent 100%);
+  transition: background 1s var(--timing-fn);
+  opacity: 0.5;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+}
+
+.manifesto-perspective {
+  position: absolute;
+  transition: transform 1.7s var(--timing-fn), opacity 4s ease;
+  top: -30vh;
+  right: 0;
+  width: 80vw;
+  height: 130vh;
+  opacity: 0.07;
+  transform-origin: top right;
+  transform-style: preserve-3d;
+  transform: matrix3d(0.75, -0.0625, 0, 0.0008, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+}
+
+.manifesto-perspective.dark {
+  opacity: 0.3;
+  transform: matrix3d(0.8333, 0.0833, 0, 0.0003, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+}
+
+.manifesto-leaves {
+  position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+  bottom: -20px;
+  right: -700px;
+  width: 1600px;
+  height: 1400px;
+  animation: manifesto-billow 8s ease-in-out infinite;
+}
+
+@keyframes manifesto-billow {
+  0% {
+    transform: perspective(400px) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  25% {
+    transform: perspective(400px) rotateX(1deg) rotateY(2deg) scale(1.02);
+  }
+  50% {
+    transform: perspective(400px) rotateX(-4deg) rotateY(-2deg) scale(0.97);
+  }
+  75% {
+    transform: perspective(400px) rotateX(1deg) rotateY(-1deg) scale(1.04);
+  }
+  100% {
+    transform: perspective(400px) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+}
+
+.manifesto-blinds {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.manifesto-shutters {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 60px;
+  transition: gap 1s var(--timing-fn);
+}
+
+.manifesto-page.dark .manifesto-shutters {
+  gap: 20px;
+}
+
+.manifesto-shutter {
+  width: 100%;
+  height: 40px;
+  background-color: var(--shadow);
+  transition: height 1s var(--timing-fn), background-color 1s var(--timing-fn);
+}
+
+.manifesto-page.dark .manifesto-shutter {
+  height: 80px;
+}
+
+.manifesto-progressive-blur {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.manifesto-progressive-blur > div {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  backdrop-filter: blur(var(--blur-amount));
+  mask-image: linear-gradient(252deg, transparent, transparent var(--stop1), black var(--stop2), black);
+}
+
+/* Content Wrapper */
+.manifesto-content-wrapper {
+  isolation: isolate;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 800px;
+  min-width: 320px;
+  border-left: 1px solid var(--border-day);
+  border-right: 1px solid var(--border-day);
+  transition: border-color 1s var(--timing-fn);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.manifesto-page.dark .manifesto-content-wrapper {
+  border-left-color: var(--border-night);
+  border-right-color: var(--border-night);
+}
+
+@media screen and (max-width: 1200px) {
+  .manifesto-content-wrapper {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .manifesto-content-wrapper {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .manifesto-content-wrapper {
+    width: calc(100% - 30px);
+  }
+}
+
+/* Stripe Container */
+.manifesto-stripe-container {
+  width: 100%;
+  height: 35px;
+  position: relative;
+  overflow: hidden;
+}
+
+.manifesto-stripe-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(78 53 45 / 13%) 0 2.5px,
+    transparent 2.5px 7.5px,
+    rgb(78 53 45 / 10%) 7.5px 9.5px,
+    transparent 9.5px 14.5px,
+    rgb(78 53 45 / 8%) 14.5px 16px,
+    transparent 16px 21px,
+    rgb(78 53 45 / 6%) 21px 22px,
+    transparent 22px 27px,
+    rgb(78 53 45 / 4%) 27px 27.5px,
+    transparent 27.5px
+  );
+  transition: background 1s var(--timing-fn), opacity 1s var(--timing-fn);
+}
+
+.manifesto-page.dark .manifesto-stripe-container::before {
+  background: linear-gradient(
+    to bottom,
+    rgb(78 53 45) 0 2.5px,
+    transparent 2.5px 7.5px,
+    rgb(78 53 45 / 80%) 7.5px 9.5px,
+    transparent 9.5px 14.5px,
+    rgb(78 53 45 / 50%) 14.5px 16px,
+    transparent 16px 21px,
+    rgb(78 53 45 / 35%) 21px 22px,
+    transparent 22px 27px,
+    rgb(78 53 45 / 23%) 27px 27.5px,
+    transparent 27.5px
+  );
+  opacity: 0.3;
+}
+
+/* Header */
+.manifesto-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  width: 100%;
+}
+
+.manifesto-logo {
+  display: flex;
+  align-items: center;
+}
+
+.manifesto-logo-img {
+  width: auto;
+  height: 1.25rem;
+  margin-right: 0.3125rem;
+}
+
+.manifesto-site-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  color: #282828;
+  transition: color 1s var(--timing-fn);
+  text-transform: none;
+}
+
+.manifesto-page.dark .manifesto-site-title {
+  color: #fff;
+}
+
+.manifesto-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.manifesto-socials em {
+  margin: 0;
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
+.manifesto-twitter-button {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-day);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--manifesto-text);
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: border-color 1s var(--timing-fn), background-color 0.2s ease;
+}
+
+.manifesto-twitter-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.manifesto-page.dark .manifesto-twitter-button {
+  border-color: var(--border-night);
+}
+
+/* Main Content */
+.manifesto-main {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sections */
+.manifesto-section {
+  width: 100%;
+  border-bottom: 1px solid var(--border-day);
+  padding: 2.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  transition: border-color 1s var(--timing-fn);
+}
+
+.manifesto-page.dark .manifesto-section {
+  border-bottom-color: var(--border-night);
+}
+
+/* Sub-blocks */
+.manifesto-sub-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.manifesto-sub-block h2 {
+  font-weight: 300;
+  letter-spacing: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-transform: lowercase;
+  font-size: 14px;
+}
+
+.manifesto-content {
+  margin-top: 0.5rem;
+}
+
+.manifesto-content p,
+.manifesto-content ul {
+  font-size: 14px;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+.manifesto-content p:last-child {
+  margin-bottom: 0;
+}
+
+.manifesto-content ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+.manifesto-content ul li {
+  padding-left: 1em;
+  text-indent: -1em;
+  margin-bottom: 0.5rem;
+}
+
+.manifesto-content ul li::before {
+  content: "- ";
+  color: var(--manifesto-text);
+}
+
+/* Gradient Text */
+.manifesto-gradient-text {
+  background: var(--gradient-title-manifesto);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  width: fit-content;
+}
+
+/* Hero */
+.manifesto-hero-title {
+  font-size: 14px;
+  text-transform: none;
+  font-weight: 300;
+}
+
+/* Quote */
+.manifesto-quote {
+  font-style: italic !important;
+  font-size: 14px;
+  margin: 1rem auto 0 auto;
+  padding: 0;
+  border: none;
+  font-weight: 300;
+  width: 80%;
+}
+
+/* Image Container */
+.manifesto-image-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.manifesto-image-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.manifesto-image-wrapper img {
+  max-width: 100%;
+  background-color: #1f140e;
+  transition: background-color 1s var(--timing-fn);
+}
+
+.manifesto-page.dark .manifesto-image-wrapper img {
+  background-color: transparent;
+}
+
+/* Footer */
+.manifesto-footer-section {
+  border-bottom: none;
+}
+
+.manifesto-footer {
+  width: 100%;
+}
+
+.manifesto-footer-content {
+  padding: 0;
+}
+
+.manifesto-footer-content p {
+  margin-bottom: 1rem;
+}
+
+.manifesto-footer-image {
+  width: 100%;
+}
+
+.manifesto-footer-image img {
+  width: 100%;
+  display: block;
+  filter: invert(1);
+  transition: filter 1s var(--timing-fn);
+}
+
+.manifesto-page.dark .manifesto-footer-image img {
+  filter: invert(0);
+}
+
+.manifesto-copyright {
+  text-align: center;
+  padding: 0.625rem 0;
+  font-size: 0.8em;
+}
+
+.manifesto-copyright p {
+  margin: 0;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 600px) {
+  .manifesto-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.9375rem;
+  }
+
+  .manifesto-socials {
+    margin-top: 0.625rem;
+  }
+
+  .manifesto-hero-title {
+    font-size: 14px;
+  }
+
+  .manifesto-twitter-button {
+    width: 1.875rem;
+    height: 1.875rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Ensure site header/footer are above manifesto blur effect */
+body:has(.manifesto-page) footer {
+  position: relative;
+  z-index: 10;
+  background-color: #F0ECE2;
+}
+
+body:has(.manifesto-page) nav {
+  z-index: 50;
 }
