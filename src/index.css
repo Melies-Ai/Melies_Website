@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@tailwind base;
+
+.font-bricolage {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Geist Sans', 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  /* Regular default */
+
+  /* Tech Ethereal Palette */
+  --background: #F0ECE2;
+  /* Beige */
+  --primary-text: #111111;
+  --secondary-text: #666666;
+
+  --stroke-light: rgba(255, 255, 255, 0.3);
+  /* Subtler white border */
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  /* Slightly more transparent */
+
+  --btn-bg: #111111;
+  --btn-text: #FFFFFF;
+
+  color-scheme: light;
+  color: var(--primary-text);
+  background-color: var(--background);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background);
+  overflow-x: hidden;
+  /* Subtle white gradient at the top */
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Subtle white border */
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+  border-radius: 24px;
+}
+
+.sunken-canvas {
+  background-color: rgba(0, 0, 0, 0.02);
+  /* Very subtle darken */
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  border-radius: 24px;
+}
+
+/* Ambilight Glow - Removed as per "remove weird gradient" request, or kept very subtle? 
+   User said "remove weird gradient background", likely referring to the body background.
+   I'll keep this utility but ensure it's not used globally on the body. */
+/* Typography Utilities */
+.font-mono-tech {
+  font-family: 'Geist Mono', 'Monaco', monospace;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}

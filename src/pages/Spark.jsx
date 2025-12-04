@@ -1,0 +1,481 @@
+import React from 'react';
+import { motion, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion';
+import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu } from 'lucide-react';
+import rawFrame from '../assets/spark_raw.png';
+import renderFrame from '../assets/spark_render.png';
+import Button from '../components/Button';
+import CTASection from '../components/CTASection';
+
+const PhoneFrame = ({ color, delay, content }) => (
+    <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay, type: "spring", stiffness: 100 }}
+        className="glass-panel relative w-64 h-[500px] rounded-[3rem] overflow-hidden"
+    >
+        {/* Screen Content */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-10`} />
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+            {content}
+        </div>
+
+        {/* UI Elements */}
+        <div className="absolute bottom-8 left-6 right-6 flex justify-center">
+            <div className="h-1 w-24 bg-ink/10 rounded-full" />
+        </div>
+    </motion.div>
+);
+
+const ViralFeedSimulator = () => {
+    return (
+        <div className="relative w-64 h-[500px] bg-black rounded-[3rem] border-4 border-ink/10 overflow-hidden shadow-2xl mx-auto">
+            {/* Notch */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20" />
+
+            {/* Feed Content */}
+            <div className="absolute inset-0 overflow-hidden">
+                <motion.div
+                    animate={{ y: [0, -1035] }} // Adjusted for seamless loop
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }} // Slower, smoother
+                    className="space-y-2"
+                >
+                    {[...Array(5)].map((_, i) => (
+                        <div key={i} className="w-full h-[500px] relative bg-ink/5 border-b border-white/10">
+                            <div className={`absolute inset-0 bg-gradient-to-br ${i % 2 === 0 ? 'from-accent/20 to-purple-500/20' : 'from-blue-500/20 to-emerald-500/20'}`} />
+                            <div className="absolute bottom-20 left-4 right-4 space-y-2">
+                                <div className="h-4 w-3/4 bg-white/20 rounded animate-pulse" />
+                                <div className="h-4 w-1/2 bg-white/20 rounded animate-pulse" />
+                            </div>
+                            {/* Floating Reaction */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: [0, 1, 0], y: -100 }}
+                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
+                                className="absolute bottom-32 right-4 text-2xl"
+                            >
+                                {['🔥', '❤️', '😮', '🚀'][i % 4]}
+                            </motion.div>
+                        </div>
+                    ))}
+                </motion.div>
+            </div>
+
+            {/* UI Overlay */}
+            <div className="absolute bottom-8 left-6 right-6 flex justify-between items-end z-10">
+                <div className="space-y-2">
+                    <div className="flex gap-1">
+                        <div className="w-8 h-8 rounded-full bg-white/20" />
+                        <div className="space-y-1">
+                            <div className="w-20 h-2 bg-white/20 rounded" />
+                            <div className="w-12 h-2 bg-white/20 rounded" />
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">❤️</div>
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">💬</div>
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">↗️</div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const ConsistencyEngine = () => {
+    return (
+        <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
+            <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row items-center gap-16">
+                <div className="flex-1 text-left">
+                    <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">Consistency Engine</h2>
+                    <p className="text-xl text-ink/60 leading-relaxed mb-8">
+                        Keep your background, characters, and objects consistent throughout the shot.
+                        <br /><br />
+                        Our Vertical Story Model ensures identity retention across every frame of your 20-second loop.
+                    </p>
+                </div>
+
+                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-8 relative overflow-hidden group">
+                    <div className="absolute inset-0 opacity-20" style={{
+                        backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
+                        backgroundSize: '40px 40px'
+                    }} />
+
+                    {/* Film Strip Visual */}
+                    <div className="flex gap-4 overflow-hidden relative">
+                        {[1, 2, 3].map((i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.8, delay: i * 0.2, ease: "circOut" }}
+                                className="w-48 h-80 bg-white rounded-xl border border-black/5 shadow-lg flex-shrink-0 relative overflow-hidden"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-amber-50" />
+                                {/* Character Placeholder (Consistent) */}
+                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-48 bg-orange-500/20 rounded-t-full flex items-end justify-center pb-4">
+                                    <div className="w-20 h-20 bg-orange-500 rounded-full" />
+                                </div>
+                                {/* Different Background Elements */}
+                                {i === 1 && <div className="absolute top-4 right-4 w-12 h-12 bg-blue-400/20 rounded-full" />}
+                                {i === 2 && <div className="absolute top-10 left-4 w-16 h-8 bg-emerald-400/20 rounded-lg" />}
+                                {i === 3 && <div className="absolute top-6 right-8 w-10 h-10 bg-purple-400/20 rotate-45" />}
+
+                                <div className="absolute top-2 left-2 text-[10px] font-mono text-ink/40">SCENE_0{i}</div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const AssetIntegration = () => {
+    return (
+        <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
+            <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row-reverse items-center gap-16">
+                <div className="flex-1 text-left">
+                    <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">Bring Your Own Assets</h2>
+                    <p className="text-xl text-ink/60 leading-relaxed mb-8">
+                        Integrate up to two of your own elements. Logos, products, or specific props.
+                        <br /><br />
+                        Spark seamlessly blends them into the generated video, respecting lighting and physics.
+                    </p>
+                </div>
+
+                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center">
+                    <div className="absolute inset-0 opacity-20" style={{
+                        backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
+                        backgroundSize: '40px 40px'
+                    }} />
+
+                    <div className="relative w-64 h-80 bg-white rounded-2xl border-2 border-dashed border-black/10 flex flex-col items-center justify-center gap-4">
+                        <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                            <ImageIcon size={32} />
+                        </div>
+                        <div className="text-center">
+                            <div className="text-sm font-medium text-ink">Drop Assets Here</div>
+                            <div className="text-xs text-ink/40">Max 2 files (PNG, OBJ)</div>
+                        </div>
+
+                        {/* Simulated Uploaded Asset */}
+                        <motion.div
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -right-12 -bottom-8 w-24 h-24 bg-white rounded-xl shadow-xl border border-black/5 p-2 rotate-12"
+                        >
+                            <div className="w-full h-full bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg" />
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const FullExperience = () => {
+    return (
+        <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
+            <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row items-center gap-16">
+                <div className="flex-1 text-left">
+                    <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">The Full Experience</h2>
+                    <p className="text-xl text-ink/60 leading-relaxed mb-8">
+                        Video is just the beginning. Our best model generates the entire sensory package.
+                        <br /><br />
+                        Video, Music, Voice, and Sound FX—all generated together in perfect sync.
+                    </p>
+                </div>
+
+                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-8 relative overflow-hidden flex items-center justify-center">
+                    <div className="absolute inset-0 opacity-20" style={{
+                        backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
+                        backgroundSize: '40px 40px'
+                    }} />
+
+                    {/* Layer Stack Visual */}
+                    <div className="flex flex-col gap-2 w-3/4 perspective-1000">
+                        {[
+                            { label: "Video Track", icon: <ImageIcon size={16} />, color: "bg-blue-500" },
+                            { label: "Music Score", icon: <Music size={16} />, color: "bg-purple-500" },
+                            { label: "Voiceover", icon: <Mic size={16} />, color: "bg-rose-500" },
+                            { label: "Sound FX", icon: <Volume2 size={16} />, color: "bg-amber-500" },
+                        ].map((layer, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ x: -50, opacity: 0 }}
+                                whileInView={{ x: 0, opacity: 1 }}
+                                transition={{ delay: i * 0.1 }}
+                                className="h-16 bg-white rounded-xl border border-black/5 shadow-sm flex items-center px-4 gap-4 relative overflow-hidden"
+                                style={{ transform: `translateZ(${i * 10}px)` }}
+                            >
+                                <div className={`w-8 h-8 rounded-lg ${layer.color} text-white flex items-center justify-center`}>
+                                    {layer.icon}
+                                </div>
+                                <div className="font-medium text-ink text-sm">{layer.label}</div>
+                                {/* Waveform Visual */}
+                                <div className="flex-1 flex items-center gap-1 h-full opacity-20">
+                                    {[...Array(20)].map((_, j) => (
+                                        <div key={j} className={`w-1 bg-ink rounded-full`} style={{ height: `${Math.random() * 100}%` }} />
+                                    ))}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+
+const StyleLens = () => {
+    const containerRef = React.useRef(null);
+    const [isHovering, setIsHovering] = React.useState(false);
+
+    // Use MotionValues for high-performance updates without re-renders
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // Smooth spring animation for the lens radius
+    const radius = useSpring(0, { stiffness: 400, damping: 30 });
+
+    React.useEffect(() => {
+        radius.set(isHovering ? 150 : 0);
+    }, [isHovering]);
+
+    const handleMouseMove = (e) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+    };
+
+    // Create dynamic styles based on motion values
+    const clipPath = useMotionTemplate`circle(${radius}px at ${mouseX}px ${mouseY}px)`;
+    const borderGradient = useMotionTemplate`radial-gradient(circle 152px at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.3) 0%, transparent 1%, transparent 100%)`;
+
+    return (
+        <div
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            className="relative w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl cursor-none group"
+        >
+            {/* Base Layer: Raw Sketch */}
+            <img
+                src={rawFrame}
+                alt="Raw Sketch"
+                className="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125"
+            />
+            <div className="absolute inset-0 bg-black/10" />
+
+            {/* Reveal Layer: Rendered Output */}
+            <motion.div
+                className="absolute inset-0 w-full h-full"
+                style={{ clipPath }}
+            >
+                <img
+                    src={renderFrame}
+                    alt="Spark Render"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Lens Border Effect */}
+                <motion.div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{ background: borderGradient }}
+                />
+            </motion.div>
+
+            {/* Cursor/Lens UI */}
+            <motion.div
+                className="absolute pointer-events-none z-20 flex items-center justify-center"
+                style={{
+                    x: mouseX,
+                    y: mouseY,
+                    translateX: '-50%',
+                    translateY: '-50%',
+                    opacity: isHovering ? 1 : 0
+                }}
+            >
+                <div className="w-[300px] h-[300px] rounded-full border-2 border-white/50 shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center justify-center">
+                    <div className="text-white/80 text-xs font-mono tracking-widest bg-black/50 px-2 py-1 rounded backdrop-blur-md">
+                        SPARK_RENDER_ENGINE
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* Hint */}
+            {!isHovering && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/60 backdrop-blur-md text-white px-6 py-3 rounded-full font-medium animate-pulse">
+                        Hover to Reveal Magic
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+const UseCases = () => {
+    const cases = [
+        {
+            title: "Fashion",
+            icon: <ShoppingBag size={24} />,
+            desc: "Virtual try-ons and runway walks generated from a single photo.",
+            gradient: "from-pink-500 to-rose-500"
+        },
+        {
+            title: "Food & Bev",
+            icon: <Utensils size={24} />,
+            desc: "Steam, sizzle, and pour. Appetizing motion for static menus.",
+            gradient: "from-orange-500 to-amber-500"
+        },
+        {
+            title: "Tech",
+            icon: <Cpu size={24} />,
+            desc: "Product reveals and exploded views without 3D rendering.",
+            gradient: "from-blue-500 to-cyan-500"
+        }
+    ];
+
+    return (
+        <div className="max-w-7xl mx-auto px-6 py-24">
+            <div className="text-center mb-16">
+                <h2 className="text-3xl font-medium text-ink mb-4">Built for every vertical.</h2>
+                <p className="text-ink/60">Spark adapts to your industry's visual language.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+                {cases.map((item, i) => (
+                    <motion.div
+                        key={i}
+                        whileHover={{ y: -5 }}
+                        className="group relative overflow-hidden rounded-3xl bg-white border border-black/5 shadow-sm hover:shadow-xl transition-all duration-300"
+                    >
+                        <div className={`h-2 bg-gradient-to-r ${item.gradient}`} />
+                        <div className="p-8">
+                            <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
+                                {item.icon}
+                            </div>
+                            <h3 className="text-xl font-medium text-ink mb-3">{item.title}</h3>
+                            <p className="text-ink/60 leading-relaxed">{item.desc}</p>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const Spark = () => {
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="pb-0 pt-24 px-4 overflow-hidden"
+        >
+            {/* HERO SECTION */}
+            <section className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 mb-32 px-4">
+                <div className="flex-1 z-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent-dark text-xs font-medium tracking-wider mb-6 border border-accent/20"
+                    >
+                        VERTICAL STORY MODEL
+                    </motion.div>
+                    <motion.h1
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        className="text-5xl md:text-8xl font-medium mb-6 text-ink"
+                    >
+                        <span className="text-accent">SPARK.</span><br />Vertical Stories.
+                    </motion.h1>
+                    <p className="text-xl text-ink/60 max-w-xl mb-8">
+                        Create ~20-second vertical videos while keeping your background, characters, and objects consistent throughout the shot.
+                    </p>
+                    <div className="flex items-center gap-4 mb-8 glass-panel p-4 rounded-2xl w-fit">
+                        <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Moonie&backgroundColor=b6e3f4" alt="Moonie" className="w-10 h-10" />
+                        </div>
+                        <div className="text-sm text-ink/70 italic">
+                            "Perfect loops, zero effort." <br />
+                            <span className="font-medium not-italic">- Moonie, Chief Cat Officer</span>
+                        </div>
+                    </div>
+                    <Button variant="primary" className="bg-accent text-ink hover:bg-accent/90 shadow-lg shadow-accent/20">
+                        Start Creating
+                    </Button>
+                </div>
+
+                <div className="flex-1 relative h-[600px] w-full flex items-center justify-center perspective-1000">
+                    <div className="absolute left-0 transform -rotate-y-12 scale-90 z-0 opacity-80 blur-[1px]">
+                        <PhoneFrame
+                            color="from-orange-500 to-purple-600"
+                            delay={0.2}
+                            content={
+                                <div className="space-y-4">
+                                    <div className="w-20 h-20 bg-accent/20 rounded-full mx-auto flex items-center justify-center text-4xl shadow-inner">🍿</div>
+                                    <p className="text-ink font-medium">"Popcorn Time"</p>
+                                    <p className="text-xs text-ink/50">Generated in 1.2s</p>
+                                </div>
+                            }
+                        />
+                    </div>
+                    <div className="absolute z-10 transform hover:scale-105 transition-transform duration-500">
+                        <ViralFeedSimulator />
+                    </div>
+                    <div className="absolute right-0 transform rotate-y-12 scale-90 z-0 opacity-80 blur-[1px]">
+                        <PhoneFrame
+                            color="from-pink-500 to-rose-500"
+                            delay={0.6}
+                            content={
+                                <div className="space-y-4">
+                                    <div className="w-20 h-20 bg-rose/10 rounded-full mx-auto flex items-center justify-center text-4xl shadow-inner">🎬</div>
+                                    <p className="text-ink font-medium">"Action!"</p>
+                                    <p className="text-xs text-ink/50">Scene 42 - Take 1</p>
+                                </div>
+                            }
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* CONSISTENCY ENGINE */}
+            <ConsistencyEngine />
+
+            {/* ASSET INTEGRATION */}
+            <AssetIntegration />
+
+            {/* FULL EXPERIENCE */}
+            <FullExperience />
+
+            {/* STYLE LENS SECTION */}
+            <section className="max-w-6xl mx-auto py-24 px-4">
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl font-medium mb-6 text-ink">Reality, Reimagined.</h2>
+                    <p className="text-xl text-ink/60 max-w-2xl mx-auto">
+                        Hover over the sketch to see the Spark engine's real-time rendering capabilities.
+                    </p>
+                </div>
+                <StyleLens />
+            </section>
+
+            {/* USE CASES */}
+            <UseCases />
+
+            <CTASection
+                title="Ready to ignite?"
+                description="Join the creators dominating the vertical feed with Spark."
+                buttonText="Start Creating"
+                buttonLink="/login"
+                gradient="from-accent to-orange-400"
+            />
+        </motion.div>
+    );
+};
+
+export default Spark;
