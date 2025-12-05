@@ -38,7 +38,7 @@ const AnimatedRoutes = () => {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/Melies_Website">
       <div className="min-h-screen bg-paper text-ink font-sans selection:bg-accent/30 relative">
         <Navbar />
         <AnimatedRoutes />
