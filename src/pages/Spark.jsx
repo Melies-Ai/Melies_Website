@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useMotionTemplate, AnimatePresence } from 'framer-motion';
-import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User } from 'lucide-react';
+import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box } from 'lucide-react';
 import rawFrame from '../assets/spark_raw.png';
 import renderFrame from '../assets/spark_render.png';
 import consistency1 from '../assets/spark_consistency_1.webp';
 import consistency2 from '../assets/spark_consistency_2.webp';
 import consistency3 from '../assets/spark_consistency_3.webp';
+import character2 from '../assets/character.png';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
@@ -129,9 +130,9 @@ const ConsistencyEngine = () => {
 
 const AssetCard = ({ image, type, icon: Icon, delay }) => (
     <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.5, delay, type: "spring", bounce: 0.4 }}
+        transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-40 h-40 rounded-2xl overflow-hidden shadow-lg group"
     >
         <img src={image} alt={type} className="w-full h-full object-cover" />
@@ -159,13 +160,13 @@ const AssetIntegration = () => {
         let isMounted = true;
         const sequence = async () => {
             while (isMounted) {
+                // CYCLE 1: Location -> Prop -> Character
                 if (!isMounted) break;
                 setAnimationState(0);
                 await new Promise(r => setTimeout(r, 1000));
 
                 if (!isMounted) break;
-                // Drop 1
-                setAnimationState(1);
+                setAnimationState(1); // Drop Location
                 await new Promise(r => setTimeout(r, 600));
                 if (!isMounted) break;
                 setAnimationState(2); // Show Location
@@ -173,11 +174,39 @@ const AssetIntegration = () => {
                 await new Promise(r => setTimeout(r, 1000));
 
                 if (!isMounted) break;
-                // Drop 2
-                setAnimationState(3);
+                setAnimationState(3); // Drop Prop
                 await new Promise(r => setTimeout(r, 600));
                 if (!isMounted) break;
-                setAnimationState(4); // Show Character
+                setAnimationState(4); // Show Prop
+
+                await new Promise(r => setTimeout(r, 1000));
+
+                if (!isMounted) break;
+                setAnimationState(5); // Drop Character
+                await new Promise(r => setTimeout(r, 600));
+                if (!isMounted) break;
+                setAnimationState(6); // Show Character
+
+                await new Promise(r => setTimeout(r, 3000));
+
+                // CYCLE 2: Character -> Character
+                if (!isMounted) break;
+                setAnimationState(7); // Reset
+                await new Promise(r => setTimeout(r, 1000));
+
+                if (!isMounted) break;
+                setAnimationState(8); // Drop Character 1
+                await new Promise(r => setTimeout(r, 600));
+                if (!isMounted) break;
+                setAnimationState(9); // Show Character 1
+
+                await new Promise(r => setTimeout(r, 1000));
+
+                if (!isMounted) break;
+                setAnimationState(10); // Drop Character 2
+                await new Promise(r => setTimeout(r, 600));
+                if (!isMounted) break;
+                setAnimationState(11); // Show Character 2
 
                 await new Promise(r => setTimeout(r, 3000));
             }
@@ -192,7 +221,7 @@ const AssetIntegration = () => {
                 <div className="flex-1 text-left">
                     <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">Bring Your Own Assets</h2>
                     <p className="text-xl text-ink/60 leading-relaxed mb-8">
-                        Integrate up to two of your own elements. Logos, products, or specific props.
+                        Integrate up to three of your own elements. Logos, products, or specific props.
                         <br /><br />
                         Spark seamlessly blends them into the generated video, respecting lighting and physics.
                     </p>
@@ -209,7 +238,7 @@ const AssetIntegration = () => {
 
                         {/* Empty State / Drop Zone */}
                         <AnimatePresence mode="wait">
-                            {animationState === 0 && (
+                            {(animationState === 0 || animationState === 7) && (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -222,7 +251,7 @@ const AssetIntegration = () => {
                                         </div>
                                         <div className="text-center">
                                             <div className="text-sm font-medium text-ink">Drop Assets Here</div>
-                                            <div className="text-xs text-ink/40">Max 2 files (PNG, OBJ)</div>
+                                            <div className="text-xs text-ink/40">Max 3 files (PNG, OBJ)</div>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -231,34 +260,76 @@ const AssetIntegration = () => {
 
                         {/* Dropping Files Animation */}
                         <AnimatePresence>
-                            {(animationState === 1 || animationState === 3) && (
+                            {(animationState === 1 || animationState === 3 || animationState === 5 || animationState === 8 || animationState === 10) && (
                                 <motion.div
-                                    initial={{ y: -200, opacity: 0, rotate: -10 }}
-                                    animate={{ y: 0, opacity: 1, rotate: 0 }}
-                                    exit={{ scale: 0.5, opacity: 0 }}
-                                    transition={{ type: "spring", damping: 20 }}
+                                    initial={{ y: -100, opacity: 0, scale: 0.9, rotate: -10 }}
+                                    animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+                                    exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.2 } }}
+                                    transition={{ type: "spring", stiffness: 100, damping: 15, mass: 0.8 }}
                                     className="absolute z-20"
                                 >
-                                    <div className="w-24 h-32 bg-white rounded-lg shadow-xl border border-black/5 flex items-center justify-center">
-                                        <ImageIcon size={32} className="text-ink/20" />
+                                    <div className="w-32 h-32 bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden p-1">
+                                        <img
+                                            src={
+                                                animationState === 1 ? consistency2 :
+                                                    animationState === 3 ? consistency3 :
+                                                        animationState === 5 ? consistency1 :
+                                                            animationState === 8 ? consistency1 :
+                                                                character2
+                                            }
+                                            alt="Dropping Asset"
+                                            className="w-full h-full object-cover rounded-xl"
+                                        />
                                     </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
 
                         {/* Revealed Cards */}
-                        <div className="flex gap-6 z-10">
-                            {animationState >= 2 && (
+                        <div className="flex gap-4 z-10">
+                            {/* Cycle 1 Cards */}
+                            {animationState >= 2 && animationState < 7 && (
                                 <AssetCard
+                                    key="c1-1"
                                     image={consistency2}
                                     type="Location"
                                     icon={Palmtree}
                                     delay={0}
                                 />
                             )}
-                            {animationState >= 4 && (
+                            {animationState >= 4 && animationState < 7 && (
                                 <AssetCard
+                                    key="c1-2"
+                                    image={consistency3}
+                                    type="Prop"
+                                    icon={Box}
+                                    delay={0}
+                                />
+                            )}
+                            {animationState >= 6 && animationState < 7 && (
+                                <AssetCard
+                                    key="c1-3"
                                     image={consistency1}
+                                    type="Character"
+                                    icon={User}
+                                    delay={0}
+                                />
+                            )}
+
+                            {/* Cycle 2 Cards */}
+                            {animationState >= 9 && (
+                                <AssetCard
+                                    key="c2-1"
+                                    image={consistency1}
+                                    type="Character"
+                                    icon={User}
+                                    delay={0}
+                                />
+                            )}
+                            {animationState >= 11 && (
+                                <AssetCard
+                                    key="c2-2"
+                                    image={character2}
                                     type="Character"
                                     icon={User}
                                     delay={0}
