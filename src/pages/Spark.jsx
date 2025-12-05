@@ -7,6 +7,7 @@ import consistency1 from '../assets/spark_consistency_1.webp';
 import consistency2 from '../assets/spark_consistency_2.webp';
 import consistency3 from '../assets/spark_consistency_3.webp';
 import character2 from '../assets/character.png';
+import directorChair from '../assets/director_chair.png';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
@@ -132,6 +133,7 @@ const AssetCard = ({ image, type, icon: Icon, delay }) => (
     <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
         transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-40 h-40 rounded-2xl overflow-hidden shadow-lg group"
     >
@@ -287,54 +289,56 @@ const AssetIntegration = () => {
 
                         {/* Revealed Cards */}
                         <div className="flex gap-4 z-10">
-                            {/* Cycle 1 Cards */}
-                            {animationState >= 2 && animationState < 7 && (
-                                <AssetCard
-                                    key="c1-1"
-                                    image={consistency2}
-                                    type="Location"
-                                    icon={Palmtree}
-                                    delay={0}
-                                />
-                            )}
-                            {animationState >= 4 && animationState < 7 && (
-                                <AssetCard
-                                    key="c1-2"
-                                    image={consistency3}
-                                    type="Prop"
-                                    icon={Box}
-                                    delay={0}
-                                />
-                            )}
-                            {animationState >= 6 && animationState < 7 && (
-                                <AssetCard
-                                    key="c1-3"
-                                    image={consistency1}
-                                    type="Character"
-                                    icon={User}
-                                    delay={0}
-                                />
-                            )}
+                            <AnimatePresence>
+                                {/* Cycle 1 Cards */}
+                                {animationState >= 2 && animationState < 7 && (
+                                    <AssetCard
+                                        key="c1-1"
+                                        image={consistency2}
+                                        type="Location"
+                                        icon={Palmtree}
+                                        delay={0}
+                                    />
+                                )}
+                                {animationState >= 4 && animationState < 7 && (
+                                    <AssetCard
+                                        key="c1-2"
+                                        image={consistency3}
+                                        type="Prop"
+                                        icon={Box}
+                                        delay={0}
+                                    />
+                                )}
+                                {animationState >= 6 && animationState < 7 && (
+                                    <AssetCard
+                                        key="c1-3"
+                                        image={consistency1}
+                                        type="Character"
+                                        icon={User}
+                                        delay={0}
+                                    />
+                                )}
 
-                            {/* Cycle 2 Cards */}
-                            {animationState >= 9 && (
-                                <AssetCard
-                                    key="c2-1"
-                                    image={consistency1}
-                                    type="Character"
-                                    icon={User}
-                                    delay={0}
-                                />
-                            )}
-                            {animationState >= 11 && (
-                                <AssetCard
-                                    key="c2-2"
-                                    image={character2}
-                                    type="Character"
-                                    icon={User}
-                                    delay={0}
-                                />
-                            )}
+                                {/* Cycle 2 Cards */}
+                                {animationState >= 9 && (
+                                    <AssetCard
+                                        key="c2-1"
+                                        image={consistency1}
+                                        type="Character"
+                                        icon={User}
+                                        delay={0}
+                                    />
+                                )}
+                                {animationState >= 11 && (
+                                    <AssetCard
+                                        key="c2-2"
+                                        image={character2}
+                                        type="Character"
+                                        icon={User}
+                                        delay={0}
+                                    />
+                                )}
+                            </AnimatePresence>
                         </div>
                     </div>
                 </div>
@@ -356,37 +360,81 @@ const FullExperience = () => {
                     </p>
                 </div>
 
-                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-8 relative overflow-hidden flex items-center justify-center">
-                    <div className="absolute inset-0 opacity-20" style={{
+                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2]/50 shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center min-h-[500px]">
+                    <div className="absolute inset-0 opacity-10" style={{
                         backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
                     }} />
 
-                    {/* Layer Stack Visual */}
-                    <div className="flex flex-col gap-2 w-3/4 perspective-1000">
+                    {/* Timeline Editor Visual */}
+                    <div className="relative w-full max-w-lg flex flex-col gap-4">
+                        {/* Playhead */}
+                        <motion.div
+                            className="absolute top-0 bottom-0 w-[1px] bg-accent/50 z-20"
+                            animate={{ left: ["15%", "85%"] }}
+                            transition={{ duration: 8, ease: "linear", repeat: Infinity }}
+                        >
+                            <div className="absolute -top-1 -left-1.5 w-3 h-3 bg-accent rounded-full shadow-sm" />
+                        </motion.div>
+
                         {[
-                            { label: "Video Track", icon: <ImageIcon size={16} />, color: "bg-blue-500" },
-                            { label: "Music Score", icon: <Music size={16} />, color: "bg-purple-500" },
-                            { label: "Voiceover", icon: <Mic size={16} />, color: "bg-rose-500" },
-                            { label: "Sound FX", icon: <Volume2 size={16} />, color: "bg-amber-500" },
+                            { label: "Video Track", icon: <ImageIcon size={18} />, color: "bg-blue-500", barColor: "bg-blue-400" },
+                            { label: "Music Score", icon: <Music size={18} />, color: "bg-purple-500", barColor: "bg-purple-400" },
+                            { label: "Voiceover", icon: <Mic size={18} />, color: "bg-rose-500", barColor: "bg-rose-400" },
+                            { label: "Sound FX", icon: <Volume2 size={18} />, color: "bg-amber-500", barColor: "bg-amber-400" },
                         ].map((layer, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ x: -50, opacity: 0 }}
+                                initial={{ x: -20, opacity: 0 }}
                                 whileInView={{ x: 0, opacity: 1 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="h-16 bg-white rounded-xl border border-black/5 shadow-sm flex items-center px-4 gap-4 relative overflow-hidden"
-                                style={{ transform: `translateZ(${i * 10}px)` }}
+                                className="h-20 bg-white rounded-2xl shadow-sm flex items-center px-6 gap-6 relative overflow-hidden group hover:shadow-md transition-shadow duration-300"
                             >
-                                <div className={`w-8 h-8 rounded-lg ${layer.color} text-white flex items-center justify-center`}>
+                                <div className={`w-10 h-10 rounded-xl ${layer.color} text-white flex items-center justify-center shrink-0 shadow-sm`}>
                                     {layer.icon}
                                 </div>
-                                <div className="font-medium text-ink text-sm">{layer.label}</div>
-                                {/* Waveform Visual */}
-                                <div className="flex-1 flex items-center gap-1 h-full opacity-20">
-                                    {[...Array(20)].map((_, j) => (
-                                        <div key={j} className={`w-1 bg-ink rounded-full`} style={{ height: `${Math.random() * 100}%` }} />
-                                    ))}
+                                <div className="font-medium text-ink text-sm w-24 shrink-0">{layer.label}</div>
+
+                                {/* Animated Visuals: Filmstrip vs Waveforms */}
+                                <div className="flex-1 flex items-center gap-[3px] h-full py-5 overflow-hidden">
+                                    {layer.label === "Video Track" ? (
+                                        // Filmstrip Visual for Video
+                                        <div className="flex gap-1 w-full h-full items-center">
+                                            {[...Array(8)].map((_, j) => (
+                                                <motion.div
+                                                    key={j}
+                                                    className={`h-full aspect-video rounded-md ${layer.barColor} opacity-40`}
+                                                    animate={{ opacity: [0.4, 0.7, 0.4] }}
+                                                    transition={{
+                                                        duration: 2 + Math.random(),
+                                                        repeat: Infinity,
+                                                        repeatType: "reverse",
+                                                        delay: j * 0.2,
+                                                        ease: "easeInOut"
+                                                    }}
+                                                />
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        // Waveform Visual for Audio
+                                        [...Array(35)].map((_, j) => (
+                                            <motion.div
+                                                key={j}
+                                                className={`w-1.5 rounded-full ${layer.barColor} opacity-30`}
+                                                animate={{
+                                                    height: ["20%", `${40 + Math.random() * 60}%`, "20%"],
+                                                    opacity: [0.3, 0.6, 0.3]
+                                                }}
+                                                transition={{
+                                                    duration: 1.5 + Math.random(),
+                                                    repeat: Infinity,
+                                                    repeatType: "reverse",
+                                                    delay: j * 0.05,
+                                                    ease: "easeInOut"
+                                                }}
+                                            />
+                                        ))
+                                    )}
                                 </div>
                             </motion.div>
                         ))}
@@ -582,34 +630,15 @@ const Spark = () => {
                 </div>
 
                 <div className="flex-1 relative h-[600px] w-full flex items-center justify-center perspective-1000">
-                    <div className="absolute left-0 transform -rotate-y-12 scale-90 z-0 opacity-80 blur-[1px]">
-                        <PhoneFrame
-                            color="from-orange-500 to-purple-600"
-                            delay={0.2}
-                            content={
-                                <div className="space-y-4">
-                                    <div className="w-20 h-20 bg-accent/20 rounded-full mx-auto flex items-center justify-center text-4xl shadow-inner">🍿</div>
-                                    <p className="text-ink font-medium">"Popcorn Time"</p>
-                                    <p className="text-xs text-ink/50">Generated in 1.2s</p>
-                                </div>
-                            }
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] z-0 opacity-100">
+                        <img
+                            src={directorChair}
+                            alt="Director Chair"
+                            className="w-full h-full object-contain drop-shadow-2xl"
                         />
                     </div>
                     <div className="absolute z-10 transform hover:scale-105 transition-transform duration-500">
                         <ViralFeedSimulator />
-                    </div>
-                    <div className="absolute right-0 transform rotate-y-12 scale-90 z-0 opacity-80 blur-[1px]">
-                        <PhoneFrame
-                            color="from-pink-500 to-rose-500"
-                            delay={0.6}
-                            content={
-                                <div className="space-y-4">
-                                    <div className="w-20 h-20 bg-rose/10 rounded-full mx-auto flex items-center justify-center text-4xl shadow-inner">🎬</div>
-                                    <p className="text-ink font-medium">"Action!"</p>
-                                    <p className="text-xs text-ink/50">Scene 42 - Take 1</p>
-                                </div>
-                            }
-                        />
                     </div>
                 </div>
             </section>
