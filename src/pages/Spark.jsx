@@ -1,13 +1,12 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useMotionTemplate, AnimatePresence } from 'framer-motion';
-import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box } from 'lucide-react';
+import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box, ArrowRight } from 'lucide-react';
 import rawFrame from '../assets/spark_raw.png';
 import renderFrame from '../assets/spark_render.png';
 import consistency1 from '../assets/spark_consistency_1.webp';
 import consistency2 from '../assets/spark_consistency_2.webp';
 import consistency3 from '../assets/spark_consistency_3.webp';
 import character2 from '../assets/character.png';
-import directorChair from '../assets/director_chair.png';
 import moonieAvatar from '../assets/moonie_director_small.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
@@ -34,53 +33,69 @@ const PhoneFrame = ({ color, delay, content }) => (
 
 const ViralFeedSimulator = () => {
     return (
-        <div className="relative w-64 h-[500px] bg-black rounded-[3rem] border-4 border-ink/10 overflow-hidden shadow-2xl mx-auto">
+        <div className="relative w-80 h-[640px] bg-black rounded-[3.5rem] border-[8px] border-ink/10 overflow-hidden shadow-2xl mx-auto z-10 box-border">
             {/* Notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-20" />
 
             {/* Feed Content */}
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0 overflow-hidden bg-[#111]">
                 <motion.div
-                    animate={{ y: [0, -1035] }} // Adjusted for seamless loop
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }} // Slower, smoother
-                    className="space-y-2"
+                    animate={{ y: [0, -1280] }} // Adjusted for taller items
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className="space-y-0"
                 >
-                    {[...Array(5)].map((_, i) => (
-                        <div key={i} className="w-full h-[500px] relative bg-ink/5 border-b border-white/10">
-                            <div className={`absolute inset-0 bg-gradient-to-br ${i % 2 === 0 ? 'from-accent/20 to-purple-500/20' : 'from-blue-500/20 to-emerald-500/20'}`} />
-                            <div className="absolute bottom-20 left-4 right-4 space-y-2">
-                                <div className="h-4 w-3/4 bg-white/20 rounded animate-pulse" />
-                                <div className="h-4 w-1/2 bg-white/20 rounded animate-pulse" />
-                            </div>
+                    {[consistency1, consistency2, consistency3, character2, consistency1].map((img, i) => (
+                        <div key={i} className="w-full h-[640px] relative border-b border-white/5">
+                            {/* Simulated Video Content */}
+                            <img src={img} alt="Feed content" className="w-full h-full object-cover opacity-90" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
+
                             {/* Floating Reaction */}
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: [0, 1, 0], y: -100 }}
-                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
-                                className="absolute bottom-32 right-4 text-2xl"
+                                initial={{ opacity: 0, scale: 0.5, y: 0 }}
+                                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 1], y: -200 }}
+                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.8 + 1, ease: "easeOut" }}
+                                className="absolute bottom-40 right-4 text-4xl drop-shadow-lg z-30"
                             >
-                                {['🔥', '❤️', '😮', '🚀'][i % 4]}
+                                {['❤️', '✨', '🔥'][i % 3]}
                             </motion.div>
                         </div>
                     ))}
                 </motion.div>
             </div>
 
-            {/* UI Overlay */}
-            <div className="absolute bottom-8 left-6 right-6 flex justify-between items-end z-10">
-                <div className="space-y-2">
-                    <div className="flex gap-1">
-                        <div className="w-8 h-8 rounded-full bg-white/20" />
-                        <div className="space-y-1">
-                            <div className="w-20 h-2 bg-white/20 rounded" />
-                            <div className="w-12 h-2 bg-white/20 rounded" />
+            {/* UI Overlay (TikTok Style) */}
+            <div className="absolute inset-0 z-20 pointer-events-none p-6 flex flex-col justify-end">
+                <div className="flex justify-between items-end">
+
+                    {/* LEFT: Creator Info */}
+                    <div className="flex-1 space-y-3 pb-2 pr-4">
+                        <div className="font-bold text-white text-shadow-sm flex items-center gap-2">
+                            @melies.creator
+                        </div>
+                        <p className="text-white/90 text-xs leading-snug line-clamp-2 text-shadow-sm font-light">
+                            Line-drawn minimalist animation. The two characters are sitting on the long bench... <span className="opacity-60 font-semibold cursor-pointer hover:underline">more</span>
+                        </p>
+
+                        {/* Model Badge */}
+                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-medium text-white/90 shadow-sm">
+                            Spark 1.0
                         </div>
                     </div>
-                </div>
-                <div className="flex flex-col gap-4">
-                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">❤️</div>
-                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">💬</div>
-                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">↗️</div>
+
+                    {/* RIGHT: Actions */}
+                    <div className="flex flex-col gap-6 items-center w-10 pb-2">
+                        <div className="flex flex-col items-center gap-1 pointer-events-auto">
+                            <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white cursor-pointer hover:scale-110 transition-transform">
+                                <span className="text-2xl text-red-500 drop-shadow-md">♥</span>
+                            </div>
+                            <span className="text-white text-[10px] font-medium drop-shadow-md">84K</span>
+                        </div>
+
+                        <div className="flex flex-col items-center pointer-events-auto cursor-pointer hover:opacity-80">
+                            <div className="text-white font-bold text-xl tracking-widest leading-none drop-shadow-md pb-2">...</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -543,44 +558,73 @@ const UseCases = () => {
             title: "Fashion",
             icon: <ShoppingBag size={24} />,
             desc: "Virtual try-ons and runway walks generated from a single photo.",
-            gradient: "from-pink-500 to-rose-500"
+            tags: ["Lookbook", "E-Comm", "Viral"]
         },
         {
             title: "Food & Bev",
             icon: <Utensils size={24} />,
             desc: "Steam, sizzle, and pour. Appetizing motion for static menus.",
-            gradient: "from-orange-500 to-amber-500"
+            tags: ["Menu", "Social", "Ads"]
         },
         {
             title: "Tech",
             icon: <Cpu size={24} />,
             desc: "Product reveals and exploded views without 3D rendering.",
-            gradient: "from-blue-500 to-cyan-500"
+            tags: ["Unboxing", "Feature", "Demo"]
         }
     ];
 
     return (
-        <div className="max-w-7xl mx-auto px-6 py-24">
-            <div className="text-center mb-16">
-                <h2 className="text-3xl font-medium text-ink mb-4">Built for every vertical.</h2>
-                <p className="text-ink/60">Spark adapts to your industry's visual language.</p>
+        <div className="max-w-7xl mx-auto px-6 py-32">
+            <div className="text-center mb-20">
+                <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">Built for every vertical.</h2>
+                <p className="text-xl text-ink/60 max-w-2xl mx-auto">
+                    Spark adapts its generation engine to your industry's specific visual language.
+                </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
                 {cases.map((item, i) => (
                     <motion.div
                         key={i}
-                        whileHover={{ y: -5 }}
-                        className="group relative overflow-hidden rounded-3xl bg-white border border-black/5 shadow-sm hover:shadow-xl transition-all duration-300"
+                        whileHover={{ y: -8 }}
+                        className="group relative h-80 rounded-[40px] sunken-canvas bg-[#F0ECE2] shadow-inner overflow-hidden p-8 flex flex-col justify-between"
                     >
-                        <div className={`h-2 bg-gradient-to-r ${item.gradient}`} />
-                        <div className="p-8">
-                            <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
+                        {/* Grid Background */}
+                        <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+                            backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
+                            backgroundSize: '32px 32px'
+                        }} />
+
+                        {/* Header */}
+                        <div className="relative z-10 flex justify-between items-start">
+                            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-white/40 flex items-center justify-center text-ink/80 group-hover:scale-110 transition-transform duration-500">
                                 {item.icon}
                             </div>
-                            <h3 className="text-xl font-medium text-ink mb-3">{item.title}</h3>
-                            <p className="text-ink/60 leading-relaxed">{item.desc}</p>
+                            <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors duration-300">
+                                <ArrowRight size={14} className="-rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+                            </div>
                         </div>
+
+                        {/* Content */}
+                        <div className="relative z-10">
+                            <h3 className="text-2xl font-medium text-ink mb-3">{item.title}</h3>
+                            <p className="text-ink/60 leading-relaxed text-sm mb-6">
+                                {item.desc}
+                            </p>
+
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-2">
+                                {item.tags.map((tag, t) => (
+                                    <span key={t} className="px-3 py-1 rounded-full bg-white/50 border border-black/5 text-[10px] font-mono font-medium text-ink/50 uppercase tracking-wide">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Hover Gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </motion.div>
                 ))}
             </div>
@@ -631,14 +675,9 @@ const Spark = () => {
                 </div>
 
                 <div className="flex-1 relative h-[600px] w-full flex items-center justify-center perspective-1000">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] z-0 opacity-100">
-                        <img
-                            src={directorChair}
-                            alt="Director Chair"
-                            className="w-full h-full object-contain drop-shadow-2xl"
-                        />
-                    </div>
-                    <div className="absolute z-10 transform hover:scale-105 transition-transform duration-500">
+                    {/* Shadow / Grounding Element (Replaces Chair context) */}
+                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-48 h-12 bg-black/20 blur-2xl rounded-[100%] z-0 scale-x-150 opacity-60" />
+                    <div className="absolute z-10">
                         <ViralFeedSimulator />
                     </div>
                 </div>
