@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, ArrowRight } from 'lucide-react';
 
 const ShowcaseButton = ({ name, className, children }) => (
     <div className="flex flex-col items-center gap-4 p-8 bg-white/50 rounded-2xl border border-white/20 backdrop-blur-sm">
@@ -324,6 +324,83 @@ const ButtonShowcase = () => {
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <div className="w-16 h-16 bg-purple-500 rounded-full shadow-lg" />
                         </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {/* CTA STYLES LAB SECTION */}
+            <div className="mt-24 mb-12">
+                <h2 className="text-3xl font-medium mb-8">CTA Styles</h2>
+                <div className="grid grid-cols-1 gap-12">
+
+                    {/* 1. Standard Centered CTA */}
+                    <div className="w-full bg-[#f8f6f0] rounded-[40px] p-16 text-center shadow-sm">
+                        <div className="max-w-2xl mx-auto">
+                            <h3 className="text-4xl font-medium text-ink mb-6">Ready to get started?</h3>
+                            <p className="text-lg text-ink/60 mb-8">
+                                Simple, clean, and direct. Best for general use cases where the content leads naturally to the action.
+                            </p>
+                            <button className="bg-ink text-white px-8 py-3 rounded-full font-medium hover:scale-105 transition-transform">
+                                Get Started
+                            </button>
+                            <div className="mt-4 text-xs font-mono text-ink/40">USAGE: Default page endings</div>
+                        </div>
+                    </div>
+
+                    {/* 2. Floating Glass CTA */}
+                    <div className="w-full bg-gradient-to-br from-purple-900 to-indigo-900 rounded-[40px] p-16 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
+                        <div className="relative z-10 max-w-4xl mx-auto bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+                            <div className="text-left">
+                                <h3 className="text-3xl font-bold text-white mb-2">Unlock the future</h3>
+                                <p className="text-white/70">Join the creators shaping the next generation of content.</p>
+                            </div>
+                            <button className="bg-white text-indigo-900 px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all whitespace-nowrap flex items-center gap-2">
+                                Join Now <ArrowRight size={20} />
+                            </button>
+                        </div>
+                        <div className="absolute bottom-4 left-0 right-0 text-center text-xs font-mono text-white/40">USAGE: High-impact, modern sections (e.g., Fable, Oasis)</div>
+                    </div>
+
+                    {/* 3. Retro Bold CTA */}
+                    <div className="w-full bg-[#FF4D00] rounded-[40px] p-16 border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, black 2px, transparent 2px)', backgroundSize: '20px 20px' }} />
+                        <div className="relative z-10 flex flex-col items-center">
+                            <h3 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tighter mb-8 text-center drop-shadow-[4px_4px_0_rgba(0,0,0,1)]">
+                                DON'T MISS OUT
+                            </h3>
+                            <p className="text-xl font-bold text-black bg-white px-4 py-1 mb-12 border-2 border-black shadow-[4px_4px_0_rgba(0,0,0,1)] transform -rotate-1">
+                                LIMITED ACCESS • EARLY BIRD • JOIN NOW
+                            </p>
+                            <button className="bg-yellow-400 text-black px-10 py-5 font-black text-2xl border-4 border-black shadow-[8px_8px_0_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0_rgba(0,0,0,1)] active:shadow-none active:translate-x-[8px] active:translate-y-[8px] transition-all rounded-xl">
+                                START CREATING !!!
+                            </button>
+                            <div className="mt-8 text-xs font-mono text-white font-bold bg-black px-2 py-1">USAGE: Promotional, high-energy actions (e.g., Citizen)</div>
+                        </div>
+                    </div>
+
+                    {/* 4. Split Minimal CTA */}
+                    <div className="w-full bg-white rounded-[40px] p-16 border border-black/5 shadow-xl">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                            <div className="flex-1 space-y-6">
+                                <h3 className="text-4xl font-light text-ink">
+                                    Simplicity is the <span className="font-serif italic">ultimate</span> sophistication.
+                                </h3>
+                                <p className="text-lg text-ink/50 font-light">
+                                    Focus on what matters. Your content takes center stage.
+                                </p>
+                            </div>
+                            <div className="flex-1 w-full md:w-auto flex justify-center md:justify-end">
+                                <button className="group relative px-8 py-4 bg-transparent text-ink border border-ink/20 rounded-full overflow-hidden hover:border-ink transition-colors w-full md:w-auto">
+                                    <span className="relative z-10 flex items-center justify-center gap-2 font-medium">
+                                        Explore More <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
+                                    </span>
+                                    <div className="absolute inset-0 bg-ink/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-12 pt-8 border-t border-black/5 text-center text-xs font-mono text-ink/30">USAGE: Editorial content, minimal landing pages</div>
                     </div>
 
                 </div>

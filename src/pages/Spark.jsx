@@ -8,6 +8,7 @@ import consistency2 from '../assets/spark_consistency_2.webp';
 import consistency3 from '../assets/spark_consistency_3.webp';
 import character2 from '../assets/character.png';
 import directorChair from '../assets/director_chair.png';
+import moonieAvatar from '../assets/moonie_director_small.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 
@@ -616,8 +617,8 @@ const Spark = () => {
                         Create ~20-second vertical videos while keeping your background, characters, and objects consistent throughout the shot.
                     </p>
                     <div className="flex items-center gap-4 mb-8 glass-panel p-4 rounded-2xl w-fit">
-                        <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Moonie&backgroundColor=b6e3f4" alt="Moonie" className="w-10 h-10" />
+                        <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden">
+                            <img src={moonieAvatar} alt="Moonie" className="w-full h-full object-cover scale-150 translate-y-2 translate-x-1" />
                         </div>
                         <div className="text-sm text-ink/70 italic">
                             "Perfect loops, zero effort." <br />
