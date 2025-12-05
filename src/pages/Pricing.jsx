@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import Button from '../components/Button';
 
-const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommended, saveBadge, buttonText, delay }) => (
+const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommended, saveBadge, buttonText, delay, link }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -58,12 +58,23 @@ const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommen
             ))}
         </ul>
 
-        <Button variant="custom" className={`w-full py-3 rounded-xl font-medium transition-transform ${recommended
-            ? 'bg-black text-white hover:bg-black/90'
-            : 'bg-white border border-stroke text-primary hover:bg-gray-50'
-            }`}>
-            {buttonText || 'Get Started'}
-        </Button>
+        {link ? (
+            <a href={link} className="w-full">
+                <Button variant="custom" className={`w-full py-3 rounded-xl font-medium transition-transform ${recommended
+                    ? 'bg-black text-white hover:bg-black/90'
+                    : 'bg-white border border-stroke text-primary hover:bg-gray-50'
+                    }`}>
+                    {buttonText || 'Get Started'}
+                </Button>
+            </a>
+        ) : (
+            <Button variant="custom" className={`w-full py-3 rounded-xl font-medium transition-transform ${recommended
+                ? 'bg-black text-white hover:bg-black/90'
+                : 'bg-white border border-stroke text-primary hover:bg-gray-50'
+                }`}>
+                {buttonText || 'Get Started'}
+            </Button>
+        )}
     </motion.div>
 );
 
@@ -76,6 +87,7 @@ const INDIVIDUAL_PLANS = [
             "Access to Standard models"
         ],
         buttonText: "Start for Free",
+        link: "https://app.melies.ai",
         delay: 0.1
     },
     {
@@ -91,6 +103,7 @@ const INDIVIDUAL_PLANS = [
             "Commercial license (No watermark)"
         ],
         buttonText: "Get Indie",
+        planId: "TIER_1",
         delay: 0.2
     },
     {
@@ -107,6 +120,7 @@ const INDIVIDUAL_PLANS = [
         ],
         recommended: true,
         buttonText: "Get Creator",
+        planId: "TIER_2",
         delay: 0.3
     }
 ];
@@ -125,6 +139,7 @@ const PROFESSIONAL_PLANS = [
             "Fast processing queue"
         ],
         buttonText: "Get Pro",
+        planId: "TIER_3",
         delay: 0.4
     },
     {
@@ -140,10 +155,17 @@ const PROFESSIONAL_PLANS = [
             "Fast processing queue",
             "Dedicated account support"
         ],
-        buttonText: "Contact Sales",
+        buttonText: "Get Studio",
+        planId: "TIER_4",
         delay: 0.5
     }
 ];
+
+const getSubscribeLink = (planId, isYearly) => {
+    if (!planId) return null;
+    const period = isYearly ? 'yearly' : 'monthly';
+    return `https://app.melies.ai/subscribe?plan=${planId}&period=${period}`;
+};
 
 const Pricing = () => {
     const [isYearly, setIsYearly] = useState(false);
@@ -210,6 +232,7 @@ const Pricing = () => {
                                 price={isYearly && plan.yearlyPrice ? plan.yearlyPrice : (plan.monthlyPrice || plan.price)}
                                 billingText={isYearly && plan.yearlyBill ? `Billed ${plan.yearlyBill} yearly` : null}
                                 saveBadge={isYearly ? plan.saveBadge : null}
+                                link={plan.link || getSubscribeLink(plan.planId, isYearly)}
                             />
                         ))}
                     </div>
@@ -226,6 +249,7 @@ const Pricing = () => {
                                 price={isYearly && plan.yearlyPrice ? plan.yearlyPrice : (plan.monthlyPrice || plan.price)}
                                 billingText={isYearly && plan.yearlyBill ? `Billed ${plan.yearlyBill} yearly` : null}
                                 saveBadge={isYearly ? plan.saveBadge : null}
+                                link={plan.link || getSubscribeLink(plan.planId, isYearly)}
                             />
                         ))}
                     </div>
