@@ -68,7 +68,7 @@ const Navbar = () => {
                         <Link to="/login" className="text-base font-medium text-secondary hover:text-primary transition-colors">
                             Login
                         </Link>
-                        <button className="bg-black text-white rounded-full px-6 py-2 text-base font-medium hover:opacity-90 transition-opacity shadow-lg">
+                        <button className="bg-black text-white rounded-full px-8 py-3 text-lg font-medium hover:opacity-90 transition-opacity shadow-lg -my-2 -mr-2">
                             Try Spark
                         </button>
                     </div>

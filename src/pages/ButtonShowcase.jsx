@@ -1,8 +1,99 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import { Sparkles, ArrowRight, Check, Layout, Box, ExternalLink, Zap, MousePointer2 } from 'lucide-react';
+import rawFrame from '../assets/spark_raw.png';
+import renderFrame from '../assets/spark_render.png';
+
+const StyleLens = () => {
+    const containerRef = React.useRef(null);
+    const [isHovering, setIsHovering] = React.useState(false);
+
+    // Use MotionValues for high-performance updates without re-renders
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // Smooth spring animation for the lens radius
+    const radius = useSpring(0, { stiffness: 400, damping: 30 });
+
+    React.useEffect(() => {
+        radius.set(isHovering ? 150 : 0);
+    }, [isHovering]);
+
+    const handleMouseMove = (e) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+    };
+
+    // Create dynamic styles based on motion values
+    const clipPath = useMotionTemplate`circle(${radius}px at ${mouseX}px ${mouseY}px)`;
+    const borderGradient = useMotionTemplate`radial-gradient(circle 152px at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.3) 0%, transparent 1%, transparent 100%)`;
+
+    return (
+        <div
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl cursor-none group bg-white"
+        >
+            {/* Base Layer: Raw Sketch */}
+            <img
+                src={rawFrame}
+                alt="Raw Sketch"
+                className="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125"
+            />
+            <div className="absolute inset-0 bg-black/10" />
+
+            {/* Reveal Layer: Rendered Output */}
+            <motion.div
+                className="absolute inset-0 w-full h-full"
+                style={{ clipPath }}
+            >
+                <img
+                    src={renderFrame}
+                    alt="Spark Render"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Lens Border Effect */}
+                <motion.div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{ background: borderGradient }}
+                />
+            </motion.div>
+
+            {/* Cursor/Lens UI */}
+            <motion.div
+                className="absolute pointer-events-none z-20 flex items-center justify-center"
+                style={{
+                    x: mouseX,
+                    y: mouseY,
+                    translateX: '-50%',
+                    translateY: '-50%',
+                    opacity: isHovering ? 1 : 0
+                }}
+            >
+                <div className="w-[300px] h-[300px] rounded-full border-2 border-white/50 shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center justify-center">
+                    <div className="text-white/80 text-xs font-mono tracking-widest bg-black/50 px-2 py-1 rounded backdrop-blur-md">
+                        SPARK_RENDER_ENGINE
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* Hint */}
+            {!isHovering && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/60 backdrop-blur-md text-white px-6 py-3 rounded-full font-medium animate-pulse">
+                        Hover to Reveal Magic
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
 
 const LabSection = ({ title, children, className = "bg-white", description }) => (
     <section className={`p-10 rounded-[32px] border border-stroke overflow-hidden ${className}`}>

@@ -463,114 +463,34 @@ const FullExperience = () => {
 
 
 
-const StyleLens = () => {
-    const containerRef = React.useRef(null);
-    const [isHovering, setIsHovering] = React.useState(false);
-
-    // Use MotionValues for high-performance updates without re-renders
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    // Smooth spring animation for the lens radius
-    const radius = useSpring(0, { stiffness: 400, damping: 30 });
-
-    React.useEffect(() => {
-        radius.set(isHovering ? 150 : 0);
-    }, [isHovering]);
-
-    const handleMouseMove = (e) => {
-        if (!containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        mouseX.set(e.clientX - rect.left);
-        mouseY.set(e.clientY - rect.top);
-    };
-
-    // Create dynamic styles based on motion values
-    const clipPath = useMotionTemplate`circle(${radius}px at ${mouseX}px ${mouseY}px)`;
-    const borderGradient = useMotionTemplate`radial-gradient(circle 152px at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.3) 0%, transparent 1%, transparent 100%)`;
-
-    return (
-        <div
-            ref={containerRef}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            className="relative w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl cursor-none group"
-        >
-            {/* Base Layer: Raw Sketch */}
-            <img
-                src={rawFrame}
-                alt="Raw Sketch"
-                className="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125"
-            />
-            <div className="absolute inset-0 bg-black/10" />
-
-            {/* Reveal Layer: Rendered Output */}
-            <motion.div
-                className="absolute inset-0 w-full h-full"
-                style={{ clipPath }}
-            >
-                <img
-                    src={renderFrame}
-                    alt="Spark Render"
-                    className="absolute inset-0 w-full h-full object-cover"
-                />
-                {/* Lens Border Effect */}
-                <motion.div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: borderGradient }}
-                />
-            </motion.div>
-
-            {/* Cursor/Lens UI */}
-            <motion.div
-                className="absolute pointer-events-none z-20 flex items-center justify-center"
-                style={{
-                    x: mouseX,
-                    y: mouseY,
-                    translateX: '-50%',
-                    translateY: '-50%',
-                    opacity: isHovering ? 1 : 0
-                }}
-            >
-                <div className="w-[300px] h-[300px] rounded-full border-2 border-white/50 shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center justify-center">
-                    <div className="text-white/80 text-xs font-mono tracking-widest bg-black/50 px-2 py-1 rounded backdrop-blur-md">
-                        SPARK_RENDER_ENGINE
-                    </div>
-                </div>
-            </motion.div>
-
-            {/* Hint */}
-            {!isHovering && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="bg-black/60 backdrop-blur-md text-white px-6 py-3 rounded-full font-medium animate-pulse">
-                        Hover to Reveal Magic
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
-
 const UseCases = () => {
     const cases = [
         {
             title: "Fashion",
             icon: <ShoppingBag size={24} />,
             desc: "Virtual try-ons and runway walks generated from a single photo.",
-            tags: ["Lookbook", "E-Comm", "Viral"]
+            tags: ["Lookbook", "E-Comm", "Viral"],
+            gradient: "from-pink-500/20 to-rose-500/20",
+            border: "group-hover:border-pink-500/50",
+            shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(236,72,153,0.3)]"
         },
         {
             title: "Food & Bev",
             icon: <Utensils size={24} />,
             desc: "Steam, sizzle, and pour. Appetizing motion for static menus.",
-            tags: ["Menu", "Social", "Ads"]
+            tags: ["Menu", "Social", "Ads"],
+            gradient: "from-orange-500/20 to-amber-500/20",
+            border: "group-hover:border-orange-500/50",
+            shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(249,115,22,0.3)]"
         },
         {
             title: "Tech",
             icon: <Cpu size={24} />,
             desc: "Product reveals and exploded views without 3D rendering.",
-            tags: ["Unboxing", "Feature", "Demo"]
+            tags: ["Unboxing", "Feature", "Demo"],
+            gradient: "from-blue-500/20 to-cyan-500/20",
+            border: "group-hover:border-blue-500/50",
+            shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)]"
         }
     ];
 
@@ -588,7 +508,7 @@ const UseCases = () => {
                     <motion.div
                         key={i}
                         whileHover={{ y: -8 }}
-                        className="group relative h-80 rounded-[40px] sunken-canvas bg-[#F0ECE2] shadow-inner overflow-hidden p-8 flex flex-col justify-between"
+                        className={`group relative h-80 rounded-[40px] sunken-canvas bg-[#F0ECE2] shadow-inner overflow-hidden p-8 flex flex-col justify-between border border-transparent transition-all duration-500 ${item.border} ${item.shadow}`}
                     >
                         {/* Grid Background */}
                         <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
@@ -596,19 +516,24 @@ const UseCases = () => {
                             backgroundSize: '32px 32px'
                         }} />
 
+                        {/* Interactive Color Glow */}
+                        <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-multiply`} />
+
+                        {/* Top Right Decoration (Replacing Arrow) */}
+                        <div className="absolute top-8 right-8 text-ink/10 group-hover:text-ink/20 transition-colors duration-500">
+                            <Box size={24} className="stroke-1" />
+                        </div>
+
                         {/* Header */}
                         <div className="relative z-10 flex justify-between items-start">
-                            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-white/40 flex items-center justify-center text-ink/80 group-hover:scale-110 transition-transform duration-500">
+                            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-white/40 flex items-center justify-center text-ink/80 group-hover:scale-110 group-hover:shadow-md transition-all duration-500">
                                 {item.icon}
-                            </div>
-                            <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors duration-300">
-                                <ArrowRight size={14} className="-rotate-45 group-hover:rotate-0 transition-transform duration-300" />
                             </div>
                         </div>
 
                         {/* Content */}
                         <div className="relative z-10">
-                            <h3 className="text-2xl font-medium text-ink mb-3">{item.title}</h3>
+                            <h3 className="text-2xl font-medium text-ink mb-3 group-hover:translate-x-1 transition-transform duration-300">{item.title}</h3>
                             <p className="text-ink/60 leading-relaxed text-sm mb-6">
                                 {item.desc}
                             </p>
@@ -616,15 +541,12 @@ const UseCases = () => {
                             {/* Tags */}
                             <div className="flex flex-wrap gap-2">
                                 {item.tags.map((tag, t) => (
-                                    <span key={t} className="px-3 py-1 rounded-full bg-white/50 border border-black/5 text-[10px] font-mono font-medium text-ink/50 uppercase tracking-wide">
+                                    <span key={t} className="px-3 py-1 rounded-full bg-white/50 border border-black/5 text-[10px] font-mono font-medium text-ink/50 uppercase tracking-wide group-hover:bg-white/80 group-hover:text-ink/70 transition-colors duration-500 delay-75">
                                         {tag}
                                     </span>
                                 ))}
                             </div>
                         </div>
-
-                        {/* Hover Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </motion.div>
                 ))}
             </div>
@@ -669,7 +591,7 @@ const Spark = () => {
                             <span className="font-medium not-italic">- Moonie, Chief Cat Officer</span>
                         </div>
                     </div>
-                    <Button variant="primary" className="bg-accent text-ink hover:bg-accent/90 shadow-lg shadow-accent/20">
+                    <Button variant="swipe" className="px-8 py-4 text-xl">
                         Start Creating
                     </Button>
                 </div>
@@ -691,17 +613,6 @@ const Spark = () => {
 
             {/* FULL EXPERIENCE */}
             <FullExperience />
-
-            {/* STYLE LENS SECTION */}
-            <section className="max-w-6xl mx-auto py-24 px-4">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-medium mb-6 text-ink">Reality, Reimagined.</h2>
-                    <p className="text-xl text-ink/60 max-w-2xl mx-auto">
-                        Hover over the sketch to see the Spark engine's real-time rendering capabilities.
-                    </p>
-                </div>
-                <StyleLens />
-            </section>
 
             {/* USE CASES */}
             <UseCases />

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import SystemText from '../components/SystemText';
+import CTASection from '../components/CTASection'; // Added import
 import appLogo from '../assets/app_logo.png';
 
 import iconFable from '../assets/fable_icon_vertical_black.png';
@@ -507,15 +508,14 @@ const Home = () => {
             </section>
 
             {/* FINAL CTA */}
-            <section className="px-6 py-32 text-center bg-white border-t border-stroke flex flex-col items-center">
-                <img src={appLogo} alt="Melies App" className="w-20 h-20 mb-12 shadow-xl rounded-2xl" />
-                <h2 className="text-5xl md:text-7xl font-medium tracking-tighter text-primary mb-12 max-w-4xl mx-auto">
-                    Ready to direct the <span className="chroma-text">future</span>?
-                </h2>
-                <Button className="bg-btn-bg text-btn-text rounded-full px-12 py-6 text-xl font-medium shadow-xl">
-                    Get Started Now
-                </Button>
-            </section>
+            <CTASection
+                title={<span>Ready to direct the <span className="chroma-text">future</span>?</span>}
+                description="Join the creators redefining cinema with Melies."
+                buttonText="Get Started Now"
+                buttonLink="/signup"
+                buttonVariant="swipe"
+                className="bg-white"
+            />
 
         </div>
     );

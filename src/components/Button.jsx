@@ -21,6 +21,7 @@ const Button = ({
         secondary: "bg-glass border border-glass-border text-white hover:bg-white/10 hover:border-white/30 backdrop-blur-md",
         ghost: "text-white/70 hover:text-white hover:bg-white/5",
         outline: "border border-white/20 text-white hover:border-white/50 hover:bg-white/5",
+        swipe: "bg-transparent border-2 border-black text-black hover:text-white overflow-hidden relative",
         custom: ""
     };
 
@@ -33,6 +34,9 @@ const Button = ({
             <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
             {variant === 'primary' && (
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            )}
+            {variant === 'swipe' && (
+                <span className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out will-change-transform" />
             )}
         </motion.button>
     );
