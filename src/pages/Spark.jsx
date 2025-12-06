@@ -34,9 +34,6 @@ const PhoneFrame = ({ color, delay, content }) => (
 const ViralFeedSimulator = () => {
     return (
         <div className="relative w-80 h-[640px] bg-black rounded-[3.5rem] border-[8px] border-ink/10 overflow-hidden shadow-2xl mx-auto z-10 box-border">
-            {/* Notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-20" />
-
             {/* Feed Content */}
             <div className="absolute inset-0 overflow-hidden bg-[#111]">
                 <motion.div
@@ -121,14 +118,19 @@ const ConsistencyEngine = () => {
                         backgroundSize: '40px 40px'
                     }} />
 
-                    <div className="flex gap-4 relative p-2">
+                    <motion.div
+                        className="flex gap-4 relative p-2 cursor-grab active:cursor-grabbing"
+                        drag="x"
+                        dragConstraints={{ left: -100, right: 0 }}
+                        dragElastic={0.1}
+                    >
                         {[consistency1, consistency2, consistency3].map((img, i) => (
                             <motion.div
                                 key={i}
                                 initial={{ opacity: 0, x: 50 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.8, delay: i * 0.2, ease: "circOut" }}
-                                className="w-48 h-80 bg-white rounded-xl border border-black/5 shadow-lg flex-shrink-0 relative overflow-hidden"
+                                className="w-48 h-80 bg-white rounded-xl border border-black/5 shadow-lg flex-shrink-0 relative overflow-hidden pointer-events-none"
                             >
                                 <img
                                     src={img}
@@ -138,7 +140,7 @@ const ConsistencyEngine = () => {
                                 <div className="absolute top-2 left-2 text-[10px] font-mono text-white/80 bg-black/20 px-1.5 py-0.5 rounded backdrop-blur-sm">SCENE_0{i + 1}</div>
                             </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>
@@ -520,9 +522,7 @@ const UseCases = () => {
                         <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-multiply`} />
 
                         {/* Top Right Decoration (Replacing Arrow) */}
-                        <div className="absolute top-8 right-8 text-ink/10 group-hover:text-ink/20 transition-colors duration-500">
-                            <Box size={24} className="stroke-1" />
-                        </div>
+
 
                         {/* Header */}
                         <div className="relative z-10 flex justify-between items-start">
@@ -560,18 +560,11 @@ const Spark = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="pb-0 pt-24 px-4 overflow-hidden"
+            className="pb-0 pt-36 px-4 overflow-hidden"
         >
             {/* HERO SECTION */}
             <section className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 mb-32 px-4">
                 <div className="flex-1 z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent-dark text-xs font-medium tracking-wider mb-6 border border-accent/20"
-                    >
-                        VERTICAL STORY MODEL
-                    </motion.div>
                     <motion.h1
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}

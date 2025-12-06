@@ -9,7 +9,7 @@ import logo from '../assets/logo.png';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
-const NavLink = ({ to, label, isActive, badge, badgeColor = "bg-stroke text-secondary", onClick }) => (
+const NavLink = ({ to, label, isActive, badge, badgeColor = "bg-stroke text-secondary", isFuture, onClick }) => (
     <Link
         to={to}
         onClick={onClick}
@@ -22,12 +22,13 @@ const NavLink = ({ to, label, isActive, badge, badgeColor = "bg-stroke text-seco
                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
         )}
-        <span className={`relative z-10 text-base font-medium transition-colors duration-200 ${isActive ? 'text-black' : 'text-ink/60 group-hover:text-ink'}`}>
+        <span className={`relative z-10 text-base font-medium transition-all duration-200 ${isActive ? 'text-black' : isFuture ? 'text-ink opacity-50' : 'text-ink/60 group-hover:text-ink'
+            }`}>
             {label}
         </span>
         {badge && (
-            <span className={`absolute -top-1 -right-2 z-20 text-[10px] font-medium px-1.5 py-0.5 rounded-full uppercase tracking-wider ${badgeColor} shadow-sm`}>
-                {badge}
+            <span className={`absolute -top-1 -right-2 z-20 px-1.5 py-0.5 rounded text-[9px] font-medium bg-[#F0ECE2] text-ink border border-[#F0ECE2] ${badgeColor}`}>
+                <span className="opacity-50">{badge}</span>
             </span>
         )}
     </Link>
@@ -56,9 +57,9 @@ const Navbar = () => {
                     <div className="hidden md:flex items-center justify-center flex-1">
                         <div className="flex items-center">
                             <NavLink to="/spark" label="Spark" isActive={location.pathname === '/spark'} />
-                            <NavLink to="/fable" label="Fable" isActive={location.pathname === '/fable'} />
-                            <NavLink to="/citizen" label="Citizen" isActive={location.pathname === '/citizen'} />
-                            <NavLink to="/oasis" label="Oasis" isActive={location.pathname === '/oasis'} />
+                            <NavLink to="/fable" label="Fable" isActive={location.pathname === '/fable'} badge="SOON" badgeColor="" isFuture />
+                            <NavLink to="/citizen" label="Citizen" isActive={location.pathname === '/citizen'} badge="SOON" badgeColor="" isFuture />
+                            <NavLink to="/oasis" label="Oasis" isActive={location.pathname === '/oasis'} badge="SOON" badgeColor="" isFuture />
                             <NavLink to="/pricing" label="Pricing" isActive={location.pathname === '/pricing'} />
                         </div>
                     </div>

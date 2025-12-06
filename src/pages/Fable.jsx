@@ -758,8 +758,8 @@ const SceneComposer = () => {
                                 key={type}
                                 onClick={() => setActiveType(type)}
                                 className={`text-left text-2xl md:text-3xl font-medium transition-all duration-300 py-2 ${activeType === type
-                                        ? 'text-ink translate-x-2'
-                                        : 'text-ink/20 hover:text-ink/40'
+                                    ? 'text-ink translate-x-2'
+                                    : 'text-ink/20 hover:text-ink/40'
                                     }`}
                             >
                                 {type}
@@ -854,6 +854,11 @@ const Fable = () => {
                     alt="Fable Header"
                     className="absolute inset-0 w-full h-full object-cover"
                 />
+
+                {/* Availability Tag */}
+                <div className="absolute top-8 right-8 bg-white/10 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-lg font-mono text-white/60 tracking-widest uppercase z-30">
+                    Coming 2026
+                </div>
 
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
                     <motion.div

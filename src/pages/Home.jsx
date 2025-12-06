@@ -10,6 +10,12 @@ import appLogo from '../assets/app_logo.png';
 import iconFable from '../assets/fable_icon_vertical_black.png';
 import iconCitizen from '../assets/citizen_icon_vertical_black.png';
 import iconOasis from '../assets/oasis_icon_vertical_black.png';
+import EcosystemV3 from './EcosystemV3';
+import {
+    Play,
+    Pause,
+    Volume2,
+} from 'lucide-react';
 
 const FeatureSection = ({ title, subtitle, visual, reverse }) => (
     <section className="min-h-screen flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24 px-6 py-16 max-w-7xl mx-auto">
@@ -255,100 +261,11 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* SYNERGY ECOSYSTEM */}
-            <section className="px-6 mb-32 max-w-7xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    {/* Left: Text Content */}
-                    <div className="text-left">
-                        <h2 className="text-3xl md:text-5xl font-medium text-primary mb-6">The Melies Ecosystem</h2>
-                        <p className="text-xl text-secondary leading-relaxed mb-8">
-                            A unified engine where every part amplifies the whole.
-                            <br /><br />
-                            Fable writes the script, Citizen casts the actors, and Oasis builds the world.
-                            Together, they create a seamless production pipeline that moves at the speed of thought.
-                        </p>
-                        <div className="flex flex-col gap-4">
-                            <div className="flex items-center gap-4 text-primary font-medium">
-                                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm">1</span>
-                                World Generation
-                            </div>
-                            <div className="flex items-center gap-4 text-primary font-medium">
-                                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm">2</span>
-                                Narrative Logic
-                            </div>
-                            <div className="flex items-center gap-4 text-primary font-medium">
-                                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm">3</span>
-                                Character Agency
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* Right: Diagram */}
-                    <div className="relative aspect-square sunken-canvas overflow-hidden shadow-inner group rounded-3xl">
-                        {/* Grid Background */}
-                        <div className="absolute inset-0" style={{
-                            backgroundImage: 'linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)',
-                            backgroundSize: '40px 40px'
-                        }} />
 
-                        {/* UI Overlay */}
-                        <div className="absolute top-4 left-4 flex gap-2 z-10">
-                            <div className="px-3 py-1 rounded-md bg-white border border-subtle text-xs font-mono text-ink/70 shadow-sm">Auto-Save: ON</div>
-                            <div className="px-3 py-1 rounded-md bg-white border border-subtle text-xs font-mono text-cobalt shadow-sm">Connected: Oasis, Fable, Citizen</div>
-                        </div>
-
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="relative w-full max-w-[400px] aspect-square">
-                                {/* Connecting Circle */}
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <motion.div
-                                        animate={{ rotate: 360 }}
-                                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                                        className="w-[250px] h-[250px] md:w-[300px] md:h-[300px] rounded-full border border-dashed border-black/10 relative"
-                                    >
-                                        {/* Orbiting Particles */}
-                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1.5 w-3 h-3 bg-black/20 rounded-full" />
-                                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1.5 w-3 h-3 bg-black/20 rounded-full" />
-                                        <div className="absolute top-1/2 left-0 -translate-x-1.5 -translate-y-1/2 w-3 h-3 bg-black/20 rounded-full" />
-                                        <div className="absolute top-1/2 right-0 translate-x-1.5 -translate-y-1/2 w-3 h-3 bg-black/20 rounded-full" />
-                                    </motion.div>
-                                </div>
-
-                                {/* Nodes */}
-                                {/* Top: Oasis */}
-                                <div className="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col items-center group cursor-pointer">
-                                    <div className="w-20 h-20 bg-white border border-subtle rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 z-10 relative">
-                                        <img src={iconOasis} alt="Oasis" className="h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity" />
-                                    </div>
-                                    <h3 className="text-lg font-medium text-primary bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full">Oasis</h3>
-                                </div>
-
-                                {/* Bottom Left: Fable */}
-                                <div className="absolute bottom-16 left-4 flex flex-col items-center group cursor-pointer">
-                                    <div className="w-20 h-20 bg-white border border-subtle rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 z-10 relative">
-                                        <img src={iconFable} alt="Fable" className="h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity" />
-                                    </div>
-                                    <h3 className="text-lg font-medium text-primary bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full">Fable</h3>
-                                </div>
-
-                                {/* Bottom Right: Citizen */}
-                                <div className="absolute bottom-16 right-4 flex flex-col items-center group cursor-pointer">
-                                    <div className="w-20 h-20 bg-white border border-subtle rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 z-10 relative">
-                                        <img src={iconCitizen} alt="Citizen" className="h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity" />
-                                    </div>
-                                    <h3 className="text-lg font-medium text-primary bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full">Citizen</h3>
-                                </div>
-
-                                {/* Center Text */}
-                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <div className="text-center opacity-20 font-mono text-[10px] tracking-[0.2em] text-black">
-                                        SYNERGY<br />LOOP
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {/* SYNERGY ECOSYSTEM V3: 3 PERSPECTIVES */}
+            <section className="max-w-7xl mx-auto px-6 mb-32 relative">
+                <EcosystemV3 />
             </section>
 
             {/* FEATURES SECTIONS */}
