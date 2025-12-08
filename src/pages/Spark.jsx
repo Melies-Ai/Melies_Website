@@ -7,6 +7,9 @@ import consistency1 from '../assets/spark_consistency_1.webp';
 import consistency2 from '../assets/spark_consistency_2.webp';
 import consistency3 from '../assets/spark_consistency_3.webp';
 import character2 from '../assets/character.png';
+import sparkLocation from '../assets/spark_location_appartement.webp';
+import sparkCharacter from '../assets/spark_character_isabelle.png';
+import sparkProduct from '../assets/spark_product_parfume.png';
 import moonieAvatar from '../assets/moonie_director_small.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
@@ -291,11 +294,11 @@ const AssetIntegration = () => {
                                     <div className="w-32 h-32 bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden p-1">
                                         <img
                                             src={
-                                                animationState === 1 ? consistency2 :
-                                                    animationState === 3 ? consistency3 :
-                                                        animationState === 5 ? consistency1 :
-                                                            animationState === 8 ? consistency1 :
-                                                                character2
+                                                animationState === 1 ? sparkLocation :
+                                                    animationState === 3 ? sparkProduct :
+                                                        animationState === 5 ? sparkCharacter :
+                                                            animationState === 8 ? sparkCharacter : // consistency1 was character
+                                                                sparkCharacter // character2 was character
                                             }
                                             alt="Dropping Asset"
                                             className="w-full h-full object-cover rounded-xl"
@@ -312,7 +315,7 @@ const AssetIntegration = () => {
                                 {animationState >= 2 && animationState < 7 && (
                                     <AssetCard
                                         key="c1-1"
-                                        image={consistency2}
+                                        image={sparkLocation}
                                         type="Location"
                                         icon={Palmtree}
                                         delay={0}
@@ -321,7 +324,7 @@ const AssetIntegration = () => {
                                 {animationState >= 4 && animationState < 7 && (
                                     <AssetCard
                                         key="c1-2"
-                                        image={consistency3}
+                                        image={sparkProduct}
                                         type="Prop"
                                         icon={Box}
                                         delay={0}
@@ -330,7 +333,7 @@ const AssetIntegration = () => {
                                 {animationState >= 6 && animationState < 7 && (
                                     <AssetCard
                                         key="c1-3"
-                                        image={consistency1}
+                                        image={sparkCharacter}
                                         type="Character"
                                         icon={User}
                                         delay={0}
@@ -341,7 +344,7 @@ const AssetIntegration = () => {
                                 {animationState >= 9 && (
                                     <AssetCard
                                         key="c2-1"
-                                        image={consistency1}
+                                        image={sparkCharacter}
                                         type="Character"
                                         icon={User}
                                         delay={0}
@@ -350,7 +353,7 @@ const AssetIntegration = () => {
                                 {animationState >= 11 && (
                                     <AssetCard
                                         key="c2-2"
-                                        image={character2}
+                                        image={sparkCharacter}
                                         type="Character"
                                         icon={User}
                                         delay={0}

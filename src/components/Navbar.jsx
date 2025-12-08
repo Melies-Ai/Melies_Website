@@ -3,9 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import logo from '../assets/logo.png';
-import iconFable from '../assets/fable_icon_vertical_black.png';
-import iconCitizen from '../assets/citizen_icon_vertical_black.png';
-import iconOasis from '../assets/oasis_icon_vertical_black.png';
+import iconFable from '../assets/fable_icon_only.png';
+import iconCitizen from '../assets/citizen_icon_only.png';
+import iconOasis from '../assets/oasis_icon_only.png';
 import sparkImage from '../assets/spark_consistency_1.webp';
 
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -77,7 +77,7 @@ const Navbar = () => {
                                         animate={{ opacity: 1, y: 0, scale: 1, x: "-35%" }}
                                         exit={{ opacity: 0, y: 10, scale: 0.98, x: "-35%" }}
                                         transition={{ duration: 0.2 }}
-                                        className="absolute top-full left-1/2 mt-6 w-[600px] bg-white rounded-2xl border border-black/5 shadow-xl p-2 overflow-hidden z-50"
+                                        className="absolute top-full left-1/2 mt-6 w-[480px] bg-white rounded-2xl border border-black/5 shadow-xl p-2 overflow-hidden z-50"
                                     >
                                         {/* Available Now Section (Header Removed) */}
                                         <div className="mb-4">
@@ -108,7 +108,7 @@ const Navbar = () => {
                                                     { name: "Oasis", icon: iconOasis, desc: "Living Worlds", link: "/oasis" }
                                                 ].map((item, i) => (
                                                     <Link key={i} to={item.link} className="flex flex-col gap-3 p-2 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group text-center border border-transparent hover:border-black/5">
-                                                        <div className="w-8 h-8 mx-auto group-hover:scale-110 transition-transform opacity-60 group-hover:opacity-100">
+                                                        <div className="w-8 h-8 mx-auto group-hover:scale-110 transition-transform">
                                                             <img src={item.icon} alt={item.name} className="w-full h-full object-contain" />
                                                         </div>
                                                         <div>
@@ -155,15 +155,47 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="fixed inset-0 z-40 bg-paper/95 backdrop-blur-xl pt-32 px-6 md:hidden overflow-y-auto"
+                        className="fixed inset-0 z-40 bg-white/80 backdrop-blur-xl pt-32 px-6 md:hidden overflow-y-auto"
                     >
                         <div className="flex flex-col gap-6">
-                            <div className="space-y-4">
-                                <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-2">Products</div>
-                                <NavLink to="/spark" label="⚡ Spark (Live)" isActive={location.pathname === '/spark'} onClick={toggleMenu} />
-                                <NavLink to="/fable" label="🎬 Fable (2025)" isActive={location.pathname === '/fable'} onClick={toggleMenu} />
-                                <NavLink to="/citizen" label="👤 Citizen (2025)" isActive={location.pathname === '/citizen'} onClick={toggleMenu} />
-                                <NavLink to="/oasis" label="🌍 Oasis (2025)" isActive={location.pathname === '/oasis'} onClick={toggleMenu} />
+                            <div className="space-y-6">
+                                {/* Available Now Section */}
+                                <div>
+                                    <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Available Now</div>
+                                    <Link to="/spark" className="flex items-start gap-4 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-black transition-colors" onClick={toggleMenu}>
+                                        <div className="w-12 h-16 rounded-lg overflow-hidden shrink-0 border border-black/5 relative">
+                                            <img src={sparkImage} alt="Spark" className="w-full h-full object-cover" />
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className="font-medium text-primary text-lg group-hover:text-white transition-colors">Spark</span>
+                                                <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
+                                            </div>
+                                            <p className="text-sm text-secondary leading-snug group-hover:text-white/60 transition-colors">
+                                                Vertical Stories. Perfect consistency.
+                                            </p>
+                                        </div>
+                                    </Link>
+                                </div>
+
+                                {/* Coming Soon Section */}
+                                <div>
+                                    <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Coming 2026</div>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {[
+                                            { name: "Fable", icon: iconFable, link: "/fable" },
+                                            { name: "Citizen", icon: iconCitizen, link: "/citizen" },
+                                            { name: "Oasis", icon: iconOasis, link: "/oasis" }
+                                        ].map((item, i) => (
+                                            <Link key={i} to={item.link} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-black transition-colors" onClick={toggleMenu}>
+                                                <div className="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity">
+                                                    <img src={item.icon} alt={item.name} className="w-full h-full object-contain invert-0 group-hover:invert transition-all" />
+                                                </div>
+                                                <span className="text-xs font-medium text-primary group-hover:text-white transition-colors">{item.name}</span>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="h-px bg-ink/10" />
