@@ -200,9 +200,9 @@ const Home = () => {
                                 </p>
 
                                 <div className="flex flex-wrap gap-4 mb-12">
-                                    <Button to="/spark" className="bg-black text-white px-8 py-3 rounded-full text-sm hover:bg-[#333333] transition-colors duration-200 shadow-lg">
+                                    <Link to="/spark" className="bg-black text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg inline-flex items-center justify-center">
                                         Try Spark Free
-                                    </Button>
+                                    </Link>
                                     <Link to="/spark" className="px-8 py-3 rounded-full text-sm font-medium border border-black/10 hover:bg-black/5 hover:border-black/20 transition-all text-primary flex items-center gap-2">
                                         More Details <ArrowRight size={14} />
                                     </Link>
@@ -387,40 +387,23 @@ const Home = () => {
             </section>
 
             {/* SECTION 5 (Renumbered) — SOCIAL PROOF (Beige 2) */}
-            <section className="w-full py-32 bg-[#F0ECE2]">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-2xl font-medium text-primary mb-4">Built by creators, for creators.</h2>
+            <section className="w-full py-32 bg-[#F0ECE2] text-primary relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                    <div className="text-center mb-24">
+                        <h2 className="text-sm font-mono text-secondary/60 uppercase tracking-[0.2em] mb-4">Trusted by the best</h2>
+                        <h3 className="text-3xl md:text-5xl font-medium text-primary leading-tight tracking-tight">Built by creators, for creators.</h3>
                     </div>
 
-                    <div className="max-w-4xl mx-auto">
-                        {/* Stats */}
-                        <div className="grid grid-cols-3 gap-8 border-t border-b border-black/5 py-12 mb-20 bg-white/50 rounded-3xl backdrop-blur-sm">
-                            <div className="text-center">
-                                <div className="text-3xl md:text-5xl font-bold text-primary mb-2">10k+</div>
-                                <div className="text-xs font-mono text-secondary uppercase tracking-widest">Videos Generated</div>
-                            </div>
-                            <div className="text-center border-l border-r border-black/5">
-                                <div className="text-3xl md:text-5xl font-bold text-primary mb-2">500+</div>
-                                <div className="text-xs font-mono text-secondary uppercase tracking-widest">Creators in Beta</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="text-3xl md:text-5xl font-bold text-primary mb-2">50+</div>
-                                <div className="text-xs font-mono text-secondary uppercase tracking-widest">Brands using Spark</div>
-                            </div>
-                        </div>
 
-                        {/* Quote */}
-                        <div className="text-center relative">
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 text-6xl text-black/5 font-serif">"</div>
-                            <p className="text-2xl md:text-3xl font-serif italic text-primary leading-tight mb-8 relative z-10">
-                                Join 500+ creators already building with Spark.<br />
-                                Be first in line when the full ecosystem launches.
-                            </p>
-                            <Link to="/community" className="inline-flex items-center text-sm font-bold tracking-widest uppercase text-primary hover:text-orange-600 transition-colors border-b border-black/10 hover:border-orange-600 pb-0.5">
-                                Join the Community <ArrowRight size={14} className="ml-2" />
-                            </Link>
-                        </div>
+
+                    <div className="text-center">
+                        <p className="text-xl text-secondary mb-8 max-w-2xl mx-auto leading-relaxed">
+                            Join the filmmakers defining the next era of cinema. <br />
+                            Be first in line when the full ecosystem launches.
+                        </p>
+                        <a href="https://discord.gg/g9b4z5G9DR" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary border border-black/10 px-8 py-3 rounded-full hover:bg-black hover:text-white transition-all duration-300 font-medium text-sm">
+                            Join the Discord <ArrowRight size={14} />
+                        </a>
                     </div>
                 </div>
             </section>
