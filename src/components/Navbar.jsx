@@ -8,7 +8,7 @@ import iconCitizen from '../assets/citizen_icon_only.png';
 import iconOasis from '../assets/oasis_icon_only.png';
 import sparkImage from '../assets/spark_consistency_1.webp';
 
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowUpRight } from 'lucide-react';
 
 const NavLink = ({ to, label, isActive, onClick }) => (
     <Link
@@ -81,12 +81,12 @@ const Navbar = () => {
                                     >
                                         {/* Available Now Section (Header Removed) */}
                                         <div className="mb-4">
-                                            <Link to="/spark" className="flex items-start gap-4 p-1 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group">
+                                            <Link to="/spark" className="flex items-start gap-4 p-1 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group relative">
                                                 {/* Vertical Mobile Image */}
                                                 <div className="w-16 h-24 rounded-lg overflow-hidden shrink-0 border border-black/5 shadow-sm relative">
                                                     <img src={sparkImage} alt="Spark" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                                 </div>
-                                                <div>
+                                                <div className="flex-1 pr-6">
                                                     <div className="flex items-center gap-2 mb-1">
                                                         <span className="font-medium text-primary text-lg">Spark</span>
                                                         <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
@@ -95,6 +95,8 @@ const Navbar = () => {
                                                         Vertical Stories. Create 20-sec videos with perfect consistency.
                                                     </p>
                                                 </div>
+                                                {/* Hover Arrow with Animation */}
+                                                <ArrowUpRight className="absolute top-3 right-3 w-5 h-5 text-[#9D9480] opacity-0 translate-y-2 -translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-300" />
                                             </Link>
                                         </div>
 
@@ -114,7 +116,7 @@ const Navbar = () => {
                                                         <div>
                                                             <div className="font-medium text-primary text-sm mb-0.5">{item.name}</div>
                                                             <div className="text-[9px] text-secondary uppercase tracking-widest mb-2">{item.desc}</div>
-                                                            <div className="text-[9px] font-medium text-black/40 border border-black/10 rounded-full px-2 py-0.5 inline-block group-hover:bg-black group-hover:text-white transition-colors">
+                                                            <div className="text-[9px] font-medium text-black/40 border border-black/10 rounded-full px-2 py-0.5 inline-block group-hover:bg-black group-hover:text-white group-hover:border-black transition-colors duration-300">
                                                                 Waitlist
                                                             </div>
                                                         </div>
@@ -136,7 +138,7 @@ const Navbar = () => {
                         <Link to="/login" className="text-base font-medium text-secondary hover:text-primary transition-colors px-4">
                             Login
                         </Link>
-                        <button className="bg-black text-white rounded-full px-6 py-2.5 text-base font-medium hover:opacity-90 transition-opacity shadow-lg">
+                        <button className="bg-black text-white rounded-full px-6 py-2.5 text-base font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg cursor-pointer">
                             Try Spark
                         </button>
                     </div>
@@ -162,16 +164,16 @@ const Navbar = () => {
                                 {/* Available Now Section */}
                                 <div>
                                     <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Available Now</div>
-                                    <Link to="/spark" className="flex items-start gap-4 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-black transition-colors" onClick={toggleMenu}>
+                                    <Link to="/spark" className="flex items-start gap-4 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
                                         <div className="w-12 h-16 rounded-lg overflow-hidden shrink-0 border border-black/5 relative">
                                             <img src={sparkImage} alt="Spark" className="w-full h-full object-cover" />
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <span className="font-medium text-primary text-lg group-hover:text-white transition-colors">Spark</span>
+                                                <span className="font-medium text-primary text-lg transition-colors">Spark</span>
                                                 <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
                                             </div>
-                                            <p className="text-sm text-secondary leading-snug group-hover:text-white/60 transition-colors">
+                                            <p className="text-sm text-secondary leading-snug transition-colors">
                                                 Vertical Stories. Perfect consistency.
                                             </p>
                                         </div>
@@ -187,11 +189,11 @@ const Navbar = () => {
                                             { name: "Citizen", icon: iconCitizen, link: "/citizen" },
                                             { name: "Oasis", icon: iconOasis, link: "/oasis" }
                                         ].map((item, i) => (
-                                            <Link key={i} to={item.link} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-black transition-colors" onClick={toggleMenu}>
+                                            <Link key={i} to={item.link} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
                                                 <div className="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity">
-                                                    <img src={item.icon} alt={item.name} className="w-full h-full object-contain invert-0 group-hover:invert transition-all" />
+                                                    <img src={item.icon} alt={item.name} className="w-full h-full object-contain transition-all" />
                                                 </div>
-                                                <span className="text-xs font-medium text-primary group-hover:text-white transition-colors">{item.name}</span>
+                                                <span className="text-xs font-medium text-primary transition-colors">{item.name}</span>
                                             </Link>
                                         ))}
                                     </div>
@@ -208,7 +210,7 @@ const Navbar = () => {
                             <Link to="/login" className="text-center py-2 text-lg font-medium text-ink/60" onClick={toggleMenu}>
                                 Login
                             </Link>
-                            <button className="bg-black text-white rounded-xl py-4 text-lg font-medium shadow-lg w-full">
+                            <button className="bg-black text-white rounded-xl py-4 text-lg font-medium shadow-lg w-full hover:bg-[#333333] transition-colors duration-200">
                                 Try Spark
                             </button>
                         </div>

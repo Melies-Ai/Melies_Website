@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, Layers, Maximize, Sun, Mountain, Trees, Wind, MessageSquare, User, Sparkles, Network, GitBranch, Clock, Play, CheckCircle2 } from 'lucide-react';
+import { Globe, Layers, Maximize, Sun, Mountain, Trees, Wind, MessageSquare, User, Sparkles, Network, GitBranch, Clock, Play, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import Button from '../components/Button';
 
 // --- ARCHIVED COMPONENTS FROM CITIZEN ---
 
@@ -1593,6 +1595,52 @@ const TemporalConsistency = () => {
     );
 };
 
+const ArchivedSparkBanner = () => {
+    return (
+        <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center border-b border-black/5">
+            <div className="absolute top-4 left-4 text-xs font-mono text-ink/30 uppercase tracking-widest">Archive: Spark Module Banner</div>
+            <div className="max-w-5xl mx-auto px-4 w-full">
+                {/* SPARK MODULE (Archived) */}
+                <div className="relative w-full bg-white rounded-[32px] overflow-hidden p-8 md:p-12 border border-black/5 shadow-sm flex flex-col md:flex-row items-center gap-12 group/spark grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                    {/* Abstract Electric Background */}
+                    <div className="absolute inset-0 bg-[linear-gradient(120deg,#fdfbf7_0%,#fff_100%)] z-0" />
+                    <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-orange-50/50 to-transparent opacity-50" />
+
+                    <div className="relative z-10 flex-1">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="flex items-center gap-2 px-2 py-1 bg-black text-white rounded-full text-[10px] font-bold uppercase tracking-wider">
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                Live Now
+                            </div>
+                            <span className="text-xs font-mono text-black/40 uppercase tracking-widest">Standalone Module</span>
+                        </div>
+
+                        <div className="flex items-center gap-4 mb-4">
+                            <h3 className="text-4xl md:text-5xl font-bold text-black tracking-tighter">⚡ SPARK</h3>
+                        </div>
+
+                        <p className="text-black/60 text-lg md:text-xl leading-relaxed max-w-lg mb-8">
+                            Not building a universe? Spark is all three engines in one lightweight model. <span className="text-black font-medium">Perfect for Shorts.</span>
+                        </p>
+
+                        <Button to="/spark" className="bg-black text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#333] transition-colors shadow-xl inline-flex items-center gap-2">
+                            Try Spark Free <ArrowRight size={14} />
+                        </Button>
+                    </div>
+
+                    {/* Right Content / Visual Placeholder */}
+                    <div className="relative z-10 w-full md:w-[400px] aspect-video md:aspect-auto md:h-[240px] bg-black/5 rounded-2xl overflow-hidden border border-black/5 shadow-inner flex items-center justify-center">
+                        <div className="text-center p-6">
+                            <div className="text-4xl font-bold text-black/10 mb-2">~20s</div>
+                            <div className="text-sm font-mono text-black/30 uppercase tracking-widest">Video Generation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 // --- ARCHIVES PAGE COMPONENT ---
 
 const Archives = () => {
@@ -1630,6 +1678,7 @@ const Archives = () => {
                 <TraitTuner />
                 <TransparentThought />
                 <TotalRecall />
+                <ArchivedSparkBanner />
             </div>
         </div>
     );
