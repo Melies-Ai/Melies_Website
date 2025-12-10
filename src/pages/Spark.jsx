@@ -177,66 +177,67 @@ const AssetCard = ({ image, type, icon: Icon, delay }) => (
 );
 
 const AssetIntegration = () => {
-    const [animationState, setAnimationState] = React.useState(0); // 0: Empty, 1: Drop 1, 2: Show 1, 3: Drop 2, 4: Show 2
+    // Audit Findings: Using explicit string states for better control and debugging.
+    // Prevents race conditions with magic numbers.
+    const [phase, setPhase] = React.useState('IDLE');
 
     React.useEffect(() => {
         let isMounted = true;
         const sequence = async () => {
             while (isMounted) {
-                // CYCLE 1: Location -> Prop -> Character
                 if (!isMounted) break;
-                setAnimationState(0);
+                setPhase('IDLE');
+                await new Promise(r => setTimeout(r, 800));
+
+                // --- DROP 1: LOCATION ---
+                if (!isMounted) break;
+                setPhase('DROP_LOC');
+                await new Promise(r => setTimeout(r, 600));
+
+                if (!isMounted) break;
+                setPhase('SHOW_LOC');
+                await new Promise(r => setTimeout(r, 800));
+
+                // --- DROP 2: PROP ---
+                if (!isMounted) break;
+                setPhase('DROP_PROP');
+                await new Promise(r => setTimeout(r, 600));
+
+                if (!isMounted) break;
+                setPhase('SHOW_PROP_AND_LOC');
+                await new Promise(r => setTimeout(r, 800));
+
+                // --- DROP 3: CHARACTER ---
+                if (!isMounted) break;
+                setPhase('DROP_CHAR');
+                await new Promise(r => setTimeout(r, 600));
+
+                if (!isMounted) break;
+                setPhase('SHOW_ALL');
                 await new Promise(r => setTimeout(r, 1000));
 
+                // --- FINAL REVEAL ---
                 if (!isMounted) break;
-                setAnimationState(1); // Drop Location
-                await new Promise(r => setTimeout(r, 600));
-                if (!isMounted) break;
-                setAnimationState(2); // Show Location
+                setPhase('REVEAL_SCENE');
 
-                await new Promise(r => setTimeout(r, 1000));
-
-                if (!isMounted) break;
-                setAnimationState(3); // Drop Prop
-                await new Promise(r => setTimeout(r, 600));
-                if (!isMounted) break;
-                setAnimationState(4); // Show Prop
-
-                await new Promise(r => setTimeout(r, 1000));
-
-                if (!isMounted) break;
-                setAnimationState(5); // Drop Character
-                await new Promise(r => setTimeout(r, 600));
-                if (!isMounted) break;
-                setAnimationState(6); // Show Character
-
-                await new Promise(r => setTimeout(r, 3000));
-
-                // CYCLE 2: Character -> Character
-                if (!isMounted) break;
-                setAnimationState(7); // Reset
-                await new Promise(r => setTimeout(r, 1000));
-
-                if (!isMounted) break;
-                setAnimationState(8); // Drop Character 1
-                await new Promise(r => setTimeout(r, 600));
-                if (!isMounted) break;
-                setAnimationState(9); // Show Character 1
-
-                await new Promise(r => setTimeout(r, 1000));
-
-                if (!isMounted) break;
-                setAnimationState(10); // Drop Character 2
-                await new Promise(r => setTimeout(r, 600));
-                if (!isMounted) break;
-                setAnimationState(11); // Show Character 2
-
-                await new Promise(r => setTimeout(r, 3000));
+                // Explicit long hold as requested
+                await new Promise(r => setTimeout(r, 2500));
             }
         };
         sequence();
         return () => { isMounted = false; };
     }, []);
+
+    // Helper to determine what cards are visible based on phase
+    const isLocVisible = ['SHOW_LOC', 'DROP_PROP', 'SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
+    const isPropVisible = ['SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
+    const isCharVisible = ['SHOW_ALL'].includes(phase);
+
+    // Explicit check for dropping states to simplify rendering logic
+    const droppingImage =
+        phase === 'DROP_LOC' ? sparkLocation :
+            phase === 'DROP_PROP' ? sparkProduct :
+                phase === 'DROP_CHAR' ? sparkCharacter : null;
 
     return (
         <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
@@ -250,7 +251,7 @@ const AssetIntegration = () => {
                     </p>
                 </div>
 
-                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center h-[500px]">
+                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center h-[600px]">
                     <div className="absolute inset-0 opacity-20" style={{
                         backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
@@ -259,16 +260,17 @@ const AssetIntegration = () => {
                     {/* Drop Zone Container */}
                     <div className="relative w-full max-w-md h-full flex flex-col items-center justify-center">
 
-                        {/* Empty State / Drop Zone */}
+                        {/* 1. EMPTY STATE */}
                         <AnimatePresence mode="wait">
-                            {(animationState === 0 || animationState === 7) && (
+                            {phase === 'IDLE' && (
                                 <motion.div
+                                    key="empty-state" // CRITICAL FIX: Unique key
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     className="absolute inset-0 flex items-center justify-center"
                                 >
-                                    <div className="w-64 h-64 rounded-3xl border-2 border-dashed border-black/10 flex flex-col items-center justify-center gap-4">
+                                    <div className="w-64 h-64 rounded-3xl border-2 border-dashed border-black/10 flex flex-col items-center justify-center gap-4 text-ink/40">
                                         <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center text-accent">
                                             <ImageIcon size={32} />
                                         </div>
@@ -281,10 +283,11 @@ const AssetIntegration = () => {
                             )}
                         </AnimatePresence>
 
-                        {/* Dropping Files Animation */}
+                        {/* 2. DROPPING ANIMATION */}
                         <AnimatePresence>
-                            {(animationState === 1 || animationState === 3 || animationState === 5 || animationState === 8 || animationState === 10) && (
+                            {droppingImage && (
                                 <motion.div
+                                    key={`drop-${phase}`} // CRITICAL FIX: Unique key per drop phase
                                     initial={{ y: -100, opacity: 0, scale: 0.9, rotate: -10 }}
                                     animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
                                     exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.2 } }}
@@ -293,13 +296,7 @@ const AssetIntegration = () => {
                                 >
                                     <div className="w-32 h-32 bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden p-1">
                                         <img
-                                            src={
-                                                animationState === 1 ? sparkLocation :
-                                                    animationState === 3 ? sparkProduct :
-                                                        animationState === 5 ? sparkCharacter :
-                                                            animationState === 8 ? sparkCharacter : // consistency1 was character
-                                                                sparkCharacter // character2 was character
-                                            }
+                                            src={droppingImage}
                                             alt="Dropping Asset"
                                             className="w-full h-full object-cover rounded-xl"
                                         />
@@ -308,51 +305,37 @@ const AssetIntegration = () => {
                             )}
                         </AnimatePresence>
 
-                        {/* Revealed Cards */}
-                        <div className="flex gap-4 z-10">
+                        {/* 3. REVEALED CARDS GRID */}
+                        <div
+                            className="flex gap-4 z-10 transition-all duration-700 ease-out"
+                            style={{
+                                opacity: phase === 'REVEAL_SCENE' ? 0.3 : 1,
+                                filter: phase === 'REVEAL_SCENE' ? 'blur(2px) grayscale(50%)' : 'none',
+                                transform: phase === 'REVEAL_SCENE' ? 'scale(0.95)' : 'scale(1)'
+                            }}
+                        >
                             <AnimatePresence>
-                                {/* Cycle 1 Cards */}
-                                {animationState >= 2 && animationState < 7 && (
+                                {isLocVisible && (
                                     <AssetCard
-                                        key="c1-1"
+                                        key="card-location"
                                         image={sparkLocation}
                                         type="Location"
                                         icon={Palmtree}
                                         delay={0}
                                     />
                                 )}
-                                {animationState >= 4 && animationState < 7 && (
+                                {isPropVisible && (
                                     <AssetCard
-                                        key="c1-2"
+                                        key="card-prop"
                                         image={sparkProduct}
                                         type="Prop"
                                         icon={Box}
                                         delay={0}
                                     />
                                 )}
-                                {animationState >= 6 && animationState < 7 && (
+                                {isCharVisible && (
                                     <AssetCard
-                                        key="c1-3"
-                                        image={sparkCharacter}
-                                        type="Character"
-                                        icon={User}
-                                        delay={0}
-                                    />
-                                )}
-
-                                {/* Cycle 2 Cards */}
-                                {animationState >= 9 && (
-                                    <AssetCard
-                                        key="c2-1"
-                                        image={sparkCharacter}
-                                        type="Character"
-                                        icon={User}
-                                        delay={0}
-                                    />
-                                )}
-                                {animationState >= 11 && (
-                                    <AssetCard
-                                        key="c2-2"
+                                        key="card-char"
                                         image={sparkCharacter}
                                         type="Character"
                                         icon={User}
@@ -361,6 +344,34 @@ const AssetIntegration = () => {
                                 )}
                             </AnimatePresence>
                         </div>
+
+                        {/* 4. FINAL SCENE REVEAL - VERTICAL */}
+                        <AnimatePresence>
+                            {phase === 'REVEAL_SCENE' && (
+                                <motion.div
+                                    key="final-scene-container"
+                                    initial={{ opacity: 0, scale: 0.8, y: 40 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.5 } }}
+                                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                    className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none"
+                                >
+                                    <div className="relative w-[280px] aspect-[9/16] bg-black rounded-[32px] shadow-2xl overflow-hidden border-4 border-white ring-1 ring-black/10 group rotate-[-2deg]">
+                                        <div className="absolute top-4 left-4 z-20 flex gap-2">
+                                            <div className="bg-black/40 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                                Assets Integrated
+                                            </div>
+                                        </div>
+                                        <img src={consistency1} alt="Final Integrated Scene" className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" />
+
+                                        {/* Minimal Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                     </div>
                 </div>
             </div>

@@ -366,7 +366,7 @@ const Home = () => {
                         </Link>
                     </div>
 
-                    <div className="flex flex-col md:flex-row justify-between items-end mt-20 gap-6 text-left border-t border-black/5 pt-12">
+                    <div className="flex flex-col md:flex-row justify-between items-end mt-20 gap-6 text-left">
                         <div>
                             <h2 className="text-3xl font-medium text-primary mb-2">Coming 2026</h2>
                             <p className="text-secondary">The future of cinema is being built. Join the waitlist.</p>
@@ -405,6 +405,8 @@ const Home = () => {
                             Join the Discord <ArrowRight size={14} />
                         </a>
                     </div>
+
+
                 </div>
             </section>
 
