@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring, useMotionTemplate, AnimatePresence }
 import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box, ArrowRight } from 'lucide-react';
 import rawFrame from '../assets/spark_raw.png';
 import renderFrame from '../assets/spark_render.png';
-import consistency1 from '../assets/spark_consistency_1.webp';
+import consistency1 from '../assets/spark_consistency_1.png';
 import consistency2 from '../assets/spark_consistency_2.webp';
 import consistency3 from '../assets/spark_consistency_3.webp';
 import character2 from '../assets/character.png';
@@ -307,11 +307,12 @@ const AssetIntegration = () => {
 
                         {/* 3. REVEALED CARDS GRID */}
                         <div
-                            className="flex gap-4 z-10 transition-all duration-700 ease-out"
+                            className="flex gap-4 z-10"
                             style={{
-                                opacity: phase === 'REVEAL_SCENE' ? 0.3 : 1,
-                                filter: phase === 'REVEAL_SCENE' ? 'blur(2px) grayscale(50%)' : 'none',
-                                transform: phase === 'REVEAL_SCENE' ? 'scale(0.95)' : 'scale(1)'
+                                transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)', // Matches pop reveal
+                                opacity: phase === 'REVEAL_SCENE' ? 0.5 : 1,
+                                filter: phase === 'REVEAL_SCENE' ? 'blur(4px)' : 'blur(0px)',
+                                transform: phase === 'REVEAL_SCENE' ? 'scale(0.92)' : 'scale(1)'
                             }}
                         >
                             <AnimatePresence>

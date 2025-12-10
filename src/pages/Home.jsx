@@ -23,7 +23,7 @@ import iconSpark from '../assets/spark_icon_only.png';
 import sparkLocation from '../assets/spark_location_appartement.webp';
 import sparkCharacter from '../assets/spark_character_isabelle.png';
 import sparkProduct from '../assets/spark_product_parfume.png';
-import consistency1 from '../assets/spark_consistency_1.webp';
+import consistency1 from '../assets/spark_consistency_1.png';
 import consistency2 from '../assets/spark_consistency_2.webp';
 import consistency3 from '../assets/spark_consistency_3.webp';
 import character2 from '../assets/character.png';

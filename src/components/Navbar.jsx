@@ -6,7 +6,7 @@ import logo from '../assets/logo.png';
 import iconFable from '../assets/fable_icon_only.png';
 import iconCitizen from '../assets/citizen_icon_only.png';
 import iconOasis from '../assets/oasis_icon_only.png';
-import sparkImage from '../assets/spark_consistency_1.webp';
+import sparkImage from "../assets/spark_consistency_1.png";
 
 import { Menu, X, ChevronDown, ArrowUpRight } from 'lucide-react';
 
