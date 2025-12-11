@@ -390,7 +390,7 @@ const Home = () => {
             <section className="w-full py-32 bg-[#F0ECE2] text-primary relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="text-center mb-24">
-                        <h2 className="text-sm font-mono text-secondary/60 uppercase tracking-[0.2em] mb-4">Trusted by the best</h2>
+                        <h2 className="text-sm font-mono text-secondary/60 uppercase tracking-[0.2em] mb-4">Empowering Visionaries</h2>
                         <h3 className="text-3xl md:text-5xl font-medium text-primary leading-tight tracking-tight">Built by creators, for creators.</h3>
                     </div>
 

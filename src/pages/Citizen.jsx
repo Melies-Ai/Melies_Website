@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import banner from '../assets/citizen_banner.png';
 import iconVertical from '../assets/citizen_icon_vertical_white.png';
 
-import CTASection from '../components/CTASection';
+import WaitlistCTA from '../components/WaitlistCTA';
 
 import SystemText from '../components/SystemText';
 
@@ -78,12 +78,9 @@ const Citizen = () => {
 
 
 
-            <CTASection
+            <WaitlistCTA
                 title="Breathe life into AI."
-                description="Design complex personas that evolve with every interaction."
-                buttonText="Create Citizen"
-                buttonLink="/login"
-                gradient="from-rose to-pink-500"
+                description="Design complex personas that evolve with every interaction. Join the waitlist."
             />
         </motion.div >
     );

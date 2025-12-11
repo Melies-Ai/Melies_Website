@@ -102,8 +102,8 @@ const Footer = () => {
                 <div className="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-ink/30 uppercase tracking-wider font-mono">
                     <p>&copy; {new Date().getFullYear()} Melies.ai. All rights reserved.</p>
                     <div className="flex gap-8">
-                        <a href="#" className="hover:text-ink transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-ink transition-colors">Terms of Service</a>
+                        <Link to="/privacy" className="hover:text-ink transition-colors">Privacy Policy</Link>
+                        <Link to="/terms" className="hover:text-ink transition-colors">Terms of Service</Link>
                     </div>
                 </div>
             </div>

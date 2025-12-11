@@ -11,6 +11,8 @@ import Spark from './pages/Spark';
 import Pricing from './pages/Pricing';
 import Manifesto from './pages/Manifesto';
 import Archives from './pages/Archives';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 
 
 import ButtonShowcase from './pages/ButtonShowcase';
@@ -35,6 +37,10 @@ const AnimatedRoutes = () => {
 
         {/* TEST LAB ROUTE - REMOVE FOR PRODUCTION */}
         <Route path="/buttons" element={<ButtonShowcase />} />
+
+        {/* LEGAL */}
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
     </AnimatePresence>
   );

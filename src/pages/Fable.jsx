@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import banner from '../assets/fable_banner.png';
 import iconVertical from '../assets/fable_icon_vertical_white.png';
 
-import CTASection from '../components/CTASection';
+import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';
 
 const Fable = () => {
@@ -70,12 +70,9 @@ const Fable = () => {
                 </div>
             </div>
 
-            <CTASection
+            <WaitlistCTA
                 title="Direct your masterpiece."
-                description="Unleash infinite narrative possibilities with Fable."
-                buttonText="Enter Fable Studio"
-                buttonLink="/login"
-                gradient="from-cobalt to-blue-400"
+                description="Unleash infinite narrative possibilities with Fable. Join the waitlist for early access."
             />
         </motion.div>
     );

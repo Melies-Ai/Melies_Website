@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-import CTASection from '../components/CTASection';
+import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';
 
 import banner from '../assets/oasis_banner.png';
@@ -79,12 +79,9 @@ const Oasis = () => {
 
 
 
-            <CTASection
+            <WaitlistCTA
                 title="Forge your world."
-                description="Build immersive environments where your stories can live."
-                buttonText="Enter Oasis"
-                buttonLink="/login"
-                gradient="from-emerald to-teal-500"
+                description="Build immersive environments where your stories can live. Reserve your spot now."
             />
         </motion.div >
     );
