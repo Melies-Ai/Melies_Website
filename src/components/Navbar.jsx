@@ -9,6 +9,7 @@ import iconOasis from '../assets/oasis_icon_only.png';
 import sparkImage from "../assets/spark_consistency_1.png";
 
 import { Menu, X, ChevronDown, ArrowUpRight } from 'lucide-react';
+import BrandAssetsMenu from './BrandAssetsMenu';
 
 const NavLink = ({ to, label, isActive, onClick }) => (
     <Link
@@ -28,6 +29,18 @@ const Navbar = () => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const timeoutRef = useRef(null);
 
+    // Brand Assets Context Menu State
+    const [contextMenu, setContextMenu] = useState({ isOpen: false, x: 0, y: 0 });
+
+    const handleContextMenu = (e) => {
+        e.preventDefault();
+        setContextMenu({
+            isOpen: true,
+            x: e.clientX,
+            y: e.clientY + 10
+        });
+    };
+
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleMouseEnter = (menu) => {
@@ -43,6 +56,11 @@ const Navbar = () => {
 
     return (
         <>
+            <BrandAssetsMenu
+                isOpen={contextMenu.isOpen}
+                onClose={() => setContextMenu({ ...contextMenu, isOpen: false })}
+                position={{ x: contextMenu.x, y: contextMenu.y }}
+            />
             <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
                 <motion.nav
                     initial={{ y: -20, opacity: 0 }}
@@ -50,7 +68,11 @@ const Navbar = () => {
                     className="w-full max-w-5xl bg-white/40 backdrop-blur-xl border border-white/20 rounded-full px-6 py-3 flex items-center justify-between shadow-sm relative"
                 >
                     {/* Brand */}
-                    <Link to="/" className="flex items-center gap-3 shrink-0 mr-8">
+                    <Link
+                        to="/"
+                        className="flex items-center gap-3 shrink-0 mr-8"
+                        onContextMenu={handleContextMenu}
+                    >
                         <img src={logo} alt="Melies.ai" className="h-8 w-auto" />
                     </Link>
 
