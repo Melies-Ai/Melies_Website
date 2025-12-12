@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useMotionTemplate, AnimatePresence } from 'framer-motion';
-import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box, ArrowRight } from 'lucide-react';
+import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box, ArrowRight, Sparkles } from 'lucide-react';
 import rawFrame from '../assets/spark_raw.png';
 import renderFrame from '../assets/spark_render.png';
 import consistency1 from '../assets/spark_consistency_1.png';
@@ -249,6 +250,9 @@ const AssetIntegration = () => {
                         <br /><br />
                         Spark seamlessly blends them into the generated video, respecting lighting and physics.
                     </p>
+                    <Link to="/login" className="bg-black text-white px-8 py-3 rounded-full text-base font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg inline-flex items-center justify-center">
+                        Start Creating
+                    </Link>
                 </div>
 
                 <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center h-[600px]">
@@ -483,28 +487,28 @@ const FullExperience = () => {
 const UseCases = () => {
     const cases = [
         {
-            title: "Fashion",
-            icon: <ShoppingBag size={24} />,
-            desc: "Virtual try-ons and runway walks generated from a single photo.",
-            tags: ["Lookbook", "E-Comm", "Viral"],
+            title: "Product Demo",
+            icon: <Box size={24} />,
+            desc: "Showcase your product in action. Hero shots that sell.",
+            tags: ["ECOM", "BEAUTY", "TECH"],
             gradient: "from-pink-500/20 to-rose-500/20",
             border: "group-hover:border-pink-500/50",
             shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(236,72,153,0.3)]"
         },
         {
-            title: "Food & Bev",
-            icon: <Utensils size={24} />,
-            desc: "Steam, sizzle, and pour. Appetizing motion for static menus.",
-            tags: ["Menu", "Social", "Ads"],
+            title: "Story Ad",
+            icon: <Smartphone size={24} />,
+            desc: "Scroll-stopping paid content. Native to the feed.",
+            tags: ["UGC", "SPONSORED", "HOOK"],
             gradient: "from-orange-500/20 to-amber-500/20",
             border: "group-hover:border-orange-500/50",
             shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(249,115,22,0.3)]"
         },
         {
-            title: "Tech",
-            icon: <Cpu size={24} />,
-            desc: "Product reveals and exploded views without 3D rendering.",
-            tags: ["Unboxing", "Feature", "Demo"],
+            title: "Brand Moment",
+            icon: <Sparkles size={24} />,
+            desc: "Aesthetic loops for awareness. Vibes over conversion.",
+            tags: ["LIFESTYLE", "MOOD", "EDITORIAL"],
             gradient: "from-blue-500/20 to-cyan-500/20",
             border: "group-hover:border-blue-500/50",
             shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)]"
@@ -514,9 +518,9 @@ const UseCases = () => {
     return (
         <div className="max-w-7xl mx-auto px-6 py-32">
             <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">Built for every vertical.</h2>
+                <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">One engine. Every format.</h2>
                 <p className="text-xl text-ink/60 max-w-2xl mx-auto">
-                    Spark adapts its generation engine to your industry's specific visual language.
+                    Spark adapts to your content goal. Same consistency, different energy.
                 </p>
             </div>
 
@@ -588,7 +592,7 @@ const Spark = () => {
                         <span className="text-accent">SPARK.</span><br />Vertical Stories.
                     </motion.h1>
                     <p className="text-xl text-ink/60 max-w-xl mb-8">
-                        Create ~20-second vertical videos while keeping your background, characters, and objects consistent throughout the shot.
+                        The only AI video tool that keeps your characters consistent. No more Frankenstein videos.
                     </p>
                     <div className="flex items-center gap-4 mb-8 glass-panel p-4 rounded-2xl w-fit">
                         <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden">
@@ -618,6 +622,8 @@ const Spark = () => {
 
             {/* ASSET INTEGRATION */}
             <AssetIntegration />
+
+
 
             {/* FULL EXPERIENCE */}
             <FullExperience />

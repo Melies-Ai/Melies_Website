@@ -161,7 +161,7 @@ const Navbar = () => {
                             Login
                         </Link>
                         <button className="bg-black text-white rounded-full px-6 py-2.5 text-base font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg cursor-pointer">
-                            Try Spark
+                            Start Creating
                         </button>
                     </div>
 
@@ -233,7 +233,7 @@ const Navbar = () => {
                                 Login
                             </Link>
                             <button className="bg-black text-white rounded-xl py-4 text-lg font-medium shadow-lg w-full hover:bg-[#333333] transition-colors duration-200">
-                                Try Spark
+                                Start Creating
                             </button>
                         </div>
                     </motion.div>

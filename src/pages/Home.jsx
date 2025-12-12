@@ -201,7 +201,7 @@ const Home = () => {
 
                                 <div className="flex flex-wrap gap-4 mb-12">
                                     <Link to="/spark" className="bg-black text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg inline-flex items-center justify-center">
-                                        Try Spark Free
+                                        Start Creating
                                     </Link>
                                     <Link to="/spark" className="px-8 py-3 rounded-full text-sm font-medium border border-black/10 hover:bg-black/5 hover:border-black/20 transition-all text-primary flex items-center gap-2">
                                         More Details <ArrowRight size={14} />
@@ -414,8 +414,8 @@ const Home = () => {
             <CTASection
                 title={<span>Ready to direct the <span className="chroma-text">future</span>?</span>}
                 description="Start with Spark. Free. No credit card."
-                buttonText="Try Spark Free"
-                buttonLink="/spark"
+                buttonText="Start Creating"
+                buttonLink="/login"
                 buttonVariant="swipe"
                 className="bg-white mb-20"
             />

@@ -168,7 +168,7 @@ const getSubscribeLink = (planId, isYearly) => {
 };
 
 const Pricing = () => {
-    const [isYearly, setIsYearly] = useState(false);
+    const [isYearly, setIsYearly] = useState(true);
 
     return (
         <div className="min-h-screen pt-32 pb-24 px-6 bg-background">

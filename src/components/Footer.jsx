@@ -65,7 +65,7 @@ const Footer = () => {
                                 <Link to="/fable" className="text-ink/60 hover:text-ink transition-colors flex items-center gap-2">
                                     Fable
                                     <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-ink/40 border border-black/5">
-                                        SOON
+                                        2026
                                     </span>
                                 </Link>
                             </li>
@@ -73,7 +73,7 @@ const Footer = () => {
                                 <Link to="/citizen" className="text-ink/60 hover:text-ink transition-colors flex items-center gap-2">
                                     Citizen
                                     <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-ink/40 border border-black/5">
-                                        SOON
+                                        2026
                                     </span>
                                 </Link>
                             </li>
@@ -81,7 +81,7 @@ const Footer = () => {
                                 <Link to="/oasis" className="text-ink/60 hover:text-ink transition-colors flex items-center gap-2">
                                     Oasis
                                     <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-ink/40 border border-black/5">
-                                        SOON
+                                        2026
                                     </span>
                                 </Link>
                             </li>

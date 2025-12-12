@@ -72,7 +72,7 @@ const Fable = () => {
 
             <WaitlistCTA
                 title="Direct your masterpiece."
-                description="Unleash infinite narrative possibilities with Fable. Join the waitlist for early access."
+                description="Unlock infinite narrative possibilities with Fable. Join the waitlist for early access."
             />
         </motion.div>
     );
