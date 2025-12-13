@@ -6,7 +6,7 @@ import banner from '../assets/citizen_banner.png';
 import iconVertical from '../assets/citizen_icon_vertical_white.png';
 
 import WaitlistCTA from '../components/WaitlistCTA';
-
+import SEO from '../components/SEO';
 import SystemText from '../components/SystemText';
 
 
@@ -21,6 +21,12 @@ const Citizen = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-24 px-4 overflow-hidden"
         >
+            <SEO
+                title="Citizen - Create AI Characters"
+                description="Create living, breathing characters with Citizen. They remember everything. Coming 2026."
+                canonical="/citizen"
+            />
+
             {/* TECH ETHEREAL HEADER */}
             <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-black/20 z-10" />

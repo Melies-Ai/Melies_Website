@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const Section = ({ title, children }) => (
     <div className="mb-12">
@@ -22,6 +23,11 @@ const Terms = () => {
             exit={{ opacity: 0 }}
             className="pt-32 pb-20 px-6 bg-paper min-h-screen"
         >
+            <SEO
+                title="Terms and Conditions - Melies"
+                description="Review the Terms and Conditions for using Melies.ai."
+                canonical="/terms"
+            />
             <div className="max-w-3xl mx-auto">
                 <h1 className="text-4xl md:text-5xl font-medium mb-4 text-ink tracking-tight">Terms and Conditions</h1>
                 <p className="text-sm text-ink/60 mb-16">Last Updated: December 2025</p>

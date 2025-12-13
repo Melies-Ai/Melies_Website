@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';
+import SEO from '../components/SEO';
 
 import banner from '../assets/oasis_banner.png';
 import iconVertical from '../assets/oasis_icon_vertical_white.png';
@@ -23,6 +24,12 @@ const Oasis = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-24 px-4 overflow-hidden"
         >
+            <SEO
+                title="Oasis - Infinite Worlds"
+                description="Instant reality. Infinite landscapes, physics, and lighting generated instantly. Coming 2026."
+                canonical="/oasis"
+            />
+
             {/* HERO SECTION */}
             <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-black/20 z-10" />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import Button from '../components/Button';
+import SEO from '../components/SEO';
 
 const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommended, saveBadge, buttonText, delay, link }) => (
     <motion.div
@@ -172,6 +173,11 @@ const Pricing = () => {
 
     return (
         <div className="min-h-screen pt-32 pb-24 px-6 bg-background">
+            <SEO
+                title="Pricing - Melies"
+                description="Start for free, upgrade as you scale. Simple, transparent pricing for AI video generation."
+                canonical="/pricing"
+            />
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-5xl md:text-6xl font-medium tracking-tight text-primary mb-6">

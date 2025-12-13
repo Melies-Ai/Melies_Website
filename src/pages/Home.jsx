@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import SystemText from '../components/SystemText';
-import CTASection from '../components/CTASection'; // Added import
+import CTASection from '../components/CTASection';
+import SEO from '../components/SEO';
 import appLogo from '../assets/app_logo.png';
 
 import {
@@ -110,6 +111,11 @@ import commercialDesk from '../assets/commercial_desk.png';
 const Home = () => {
     return (
         <div className="bg-background min-h-screen pt-40">
+            <SEO
+                title="The Infinite Cinema Engine"
+                description="Orchestrate multi-agent systems to generate films. From script to screen, in real-time. Melies.ai is the future of filmmaking."
+                canonical="/"
+            />
 
             {/* HERO SECTION */}
             <section className="flex flex-col items-center justify-center text-center px-4 mb-20 md:mb-32 relative z-20">

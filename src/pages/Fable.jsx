@@ -7,6 +7,7 @@ import iconVertical from '../assets/fable_icon_vertical_white.png';
 
 import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';
+import SEO from '../components/SEO';
 
 const Fable = () => {
     return (
@@ -16,6 +17,12 @@ const Fable = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-24 px-4 overflow-hidden"
         >
+            <SEO
+                title="Fable - Direct Your Own AI Films"
+                description="Weave stories with Fable. The studio for infinite narrative arcs. Coming 2026."
+                canonical="/fable"
+            />
+
             {/* TECH ETHEREAL HEADER */}
             <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl group">
                 <div className="absolute inset-0 bg-black/20 z-10" />

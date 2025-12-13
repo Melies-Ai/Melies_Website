@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const Section = ({ title, children }) => (
     <div className="mb-12">
@@ -22,6 +23,11 @@ const Privacy = () => {
             exit={{ opacity: 0 }}
             className="pt-32 pb-20 px-6 bg-paper min-h-screen"
         >
+            <SEO
+                title="Privacy Policy - Melies"
+                description="Read our Privacy Policy. We are committed to protecting your data and privacy."
+                canonical="/privacy"
+            />
             <div className="max-w-3xl mx-auto">
                 <h1 className="text-4xl md:text-5xl font-medium mb-4 text-ink tracking-tight">Privacy Policy</h1>
                 <p className="text-ink/60 mb-16">Last Updated: December 2025</p>

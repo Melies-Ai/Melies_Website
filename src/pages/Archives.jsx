@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Layers, Maximize, Sun, Mountain, Trees, Wind, MessageSquare, User, Sparkles, Network, GitBranch, Clock, Play, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
+import SEO from '../components/SEO';
 
 // --- ARCHIVED COMPONENTS FROM CITIZEN ---
 
@@ -1646,6 +1647,11 @@ const ArchivedSparkBanner = () => {
 const Archives = () => {
     return (
         <div className="w-full min-h-screen pt-32 pb-24 bg-paper">
+            <SEO
+                title="Archives - Exploring the Melies Engine"
+                description="Explore the components of the Melies engine: Consciousness Stream, Memory Core, Physics Engine, and more."
+                canonical="/archives"
+            />
             <div className="max-w-[1400px] mx-auto px-4 mb-24">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

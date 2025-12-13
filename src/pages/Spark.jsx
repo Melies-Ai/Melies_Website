@@ -14,6 +14,7 @@ import sparkProduct from '../assets/spark_product_parfume.png';
 import moonieAvatar from '../assets/moonie_director_small.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
+import SEO from '../components/SEO';
 
 const PhoneFrame = ({ color, delay, content }) => (
     <motion.div
@@ -581,6 +582,12 @@ const Spark = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-36 px-4 overflow-hidden"
         >
+            <SEO
+                title="Spark - Vertical Story Engine"
+                description="Create perfect vertical videos with consistent characters and worlds. No hallucinations. Start creating today."
+                canonical="/spark"
+            />
+
             {/* HERO SECTION */}
             <section className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 mb-32 px-4">
                 <div className="flex-1 z-10">

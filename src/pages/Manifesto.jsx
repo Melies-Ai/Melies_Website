@@ -10,6 +10,7 @@ import filmmakingImg from '../assets/filmmaking.png';
 import creatorsImg from '../assets/creators.png';
 import meliesImg from '../assets/melies.png';
 import leavesImg from '../assets/leaves.png';
+import SEO from '../components/SEO';
 
 // Reusable section component with scroll-triggered animation
 const ManifestoSection = ({ children, className = '' }) => {
@@ -114,6 +115,12 @@ const Manifesto = () => {
             className={`manifesto-page ${isDark ? 'dark' : ''}`}
             onClick={handleToggle}
         >
+            <SEO
+                title="Manifesto - The Future of Cinema"
+                description="Melies.ai is shaping the future of cinema. We believe AI-assisted filmmaking will enrich human creativity and open a new era of the 7th art."
+                canonical="/manifesto"
+            />
+
             <DappledLight isDark={isDark} />
 
             <div className="manifesto-content-wrapper">
