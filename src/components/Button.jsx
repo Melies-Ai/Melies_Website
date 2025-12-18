@@ -36,7 +36,7 @@ const Button = ({
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
             )}
             {variant === 'swipe' && (
-                <span className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out will-change-transform" />
+                <span className="absolute -inset-[1px] bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out will-change-transform" />
             )}
         </motion.button>
     );

@@ -1,83 +1,90 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import Button from '../components/Button';
 import SEO from '../components/SEO';
 
-const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommended, saveBadge, buttonText, delay, link }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay, duration: 0.5 }}
-        className={`relative p-8 rounded-[30px] border flex flex-col h-full transition-transform hover:scale-[1.02] duration-300 ${recommended
-            ? 'border-primary bg-white shadow-xl'
-            : 'border-stroke bg-white/50'
-            }`}
-    >
-        {recommended && (
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-black text-white text-xs font-medium rounded-full uppercase tracking-wider shadow-lg">
-                Recommended
-            </div>
-        )}
+const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommended, saveBadge, buttonText, delay, link }) => {
+    const navigate = useNavigate();
 
-        <div className="mb-8">
-            <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg font-medium text-secondary">{tier}</h3>
-                {saveBadge && (
-                    <span className="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider border border-emerald-200">
-                        {saveBadge}
-                    </span>
+    const handleAction = () => {
+        if (!link) return;
+        if (link.startsWith('http')) {
+            window.location.href = link;
+        } else {
+            navigate(link);
+        }
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay, duration: 0.5 }}
+            className={`relative p-8 rounded-[30px] border flex flex-col h-full transition-transform hover:scale-[1.02] duration-300 ${recommended
+                ? 'border-primary bg-white shadow-xl'
+                : 'border-stroke bg-white/50'
+                }`}
+        >
+            {recommended && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-black text-white text-xs font-medium rounded-full uppercase tracking-wider shadow-lg">
+                    Recommended
+                </div>
+            )}
+
+            <div className="mb-8">
+                <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-lg font-medium text-secondary">{tier}</h3>
+                    {saveBadge && (
+                        <span className="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider border border-emerald-200">
+                            {saveBadge}
+                        </span>
+                    )}
+                </div>
+
+                <div className="flex items-baseline gap-1 mb-1 h-10 overflow-hidden relative">
+                    <AnimatePresence mode="wait">
+                        <motion.span
+                            key={price}
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -20, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="text-4xl font-medium text-primary tracking-tight block"
+                        >
+                            {price}
+                        </motion.span>
+                    </AnimatePresence>
+                    {price !== '$0' && <span className="text-secondary text-sm">/mo</span>}
+                </div>
+                {billingText && (
+                    <p className="text-xs text-secondary/70">{billingText}</p>
                 )}
             </div>
 
-            <div className="flex items-baseline gap-1 mb-1 h-10 overflow-hidden relative">
-                <AnimatePresence mode="wait">
-                    <motion.span
-                        key={price}
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: -20, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="text-4xl font-medium text-primary tracking-tight block"
-                    >
-                        {price}
-                    </motion.span>
-                </AnimatePresence>
-                {price !== '$0' && <span className="text-secondary text-sm">/mo</span>}
-            </div>
-            {billingText && (
-                <p className="text-xs text-secondary/70">{billingText}</p>
-            )}
-        </div>
+            <ul className="space-y-4 mb-8 flex-1">
+                {features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-secondary">
+                        <Check size={16} className="text-primary mt-0.5 shrink-0" />
+                        <span>{feature}</span>
+                    </li>
+                ))}
+            </ul>
 
-        <ul className="space-y-4 mb-8 flex-1">
-            {features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-secondary">
-                    <Check size={16} className="text-primary mt-0.5 shrink-0" />
-                    <span>{feature}</span>
-                </li>
-            ))}
-        </ul>
-
-        {link ? (
-            <a href={link} className="w-full">
-                <Button variant="custom" className={`w-full py-3 rounded-xl font-medium transition-transform ${recommended
+            <Button
+                variant="custom"
+                onClick={handleAction}
+                className={`w-full py-3 rounded-xl font-medium transition-transform ${recommended
                     ? 'bg-black text-white hover:bg-black/90'
                     : 'bg-white border border-stroke text-primary hover:bg-gray-50'
-                    }`}>
-                    {buttonText || 'Get Started'}
-                </Button>
-            </a>
-        ) : (
-            <Button variant="custom" className={`w-full py-3 rounded-xl font-medium transition-transform ${recommended
-                ? 'bg-black text-white hover:bg-black/90'
-                : 'bg-white border border-stroke text-primary hover:bg-gray-50'
-                }`}>
+                    }`}
+            >
                 {buttonText || 'Get Started'}
             </Button>
-        )}
-    </motion.div>
-);
+        </motion.div>
+    );
+};
 
 const INDIVIDUAL_PLANS = [
     {

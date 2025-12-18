@@ -1,48 +1,58 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Fable from './pages/Fable';
-import Citizen from './pages/Citizen';
-import Oasis from './pages/Oasis';
-import Spark from './pages/Spark';
-import Pricing from './pages/Pricing';
-import Manifesto from './pages/Manifesto';
-import Archives from './pages/Archives';
-import Terms from './pages/Terms';
-import Privacy from './pages/Privacy';
 
+// Lazy loading pages for better initial performance
+const Home = lazy(() => import('./pages/Home'));
+const Fable = lazy(() => import('./pages/Fable'));
+const Citizen = lazy(() => import('./pages/Citizen'));
+const Oasis = lazy(() => import('./pages/Oasis'));
+const Spark = lazy(() => import('./pages/Spark'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const Manifesto = lazy(() => import('./pages/Manifesto'));
+const Archives = lazy(() => import('./pages/Archives'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Privacy = lazy(() => import('./pages/Privacy'));
 
-import ButtonShowcase from './pages/ButtonShowcase';
-import TestLabOverlay from './components/TestLabOverlay';
+// Test Lab imports
+const ButtonShowcase = lazy(() => import('./pages/ButtonShowcase'));
+const TestLabOverlay = lazy(() => import('./components/TestLabOverlay'));
+
+const LoadingFallback = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-paper z-[100]">
+    <div className="w-8 h-8 border-2 border-accent/20 border-t-accent rounded-full animate-spin" />
+  </div>
+);
 
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/fable" element={<Fable />} />
-        <Route path="/citizen" element={<Citizen />} />
-        <Route path="/oasis" element={<Oasis />} />
-        <Route path="/spark" element={<Spark />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/manifesto" element={<Manifesto />} />
+    <Suspense fallback={<LoadingFallback />}>
+      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />} />
+          <Route path="/fable" element={<Fable />} />
+          <Route path="/citizen" element={<Citizen />} />
+          <Route path="/oasis" element={<Oasis />} />
+          <Route path="/spark" element={<Spark />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/manifesto" element={<Manifesto />} />
+          <Route path="/archives" element={<Archives />} />
 
-        {/* ARCHIVES */}
-        <Route path="/archives" element={<Archives />} />
+          {/* TEST LAB ROUTE - DEV ONLY */}
+          {import.meta.env.DEV && (
+            <Route path="/buttons" element={<ButtonShowcase />} />
+          )}
 
-        {/* TEST LAB ROUTE - REMOVE FOR PRODUCTION */}
-        <Route path="/buttons" element={<ButtonShowcase />} />
-
-        {/* LEGAL */}
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-      </Routes>
-    </AnimatePresence>
+          {/* LEGAL */}
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+        </Routes>
+      </AnimatePresence>
+    </Suspense>
   );
 };
 
@@ -54,8 +64,8 @@ function App() {
         <AnimatedRoutes />
         <Footer />
 
-        {/* TEST LAB OVERLAY - REMOVE FOR PRODUCTION */}
-        <TestLabOverlay />
+        {/* TEST LAB OVERLAY - DEV ONLY */}
+        {import.meta.env.DEV && <TestLabOverlay />}
       </div>
     </Router>
   );

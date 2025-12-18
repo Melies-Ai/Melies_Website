@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import PropTypes from 'prop-types';
+
 
 const SEO = ({ title, description, canonical, type = 'website', name, image }) => {
     // Default values
@@ -39,13 +39,6 @@ const SEO = ({ title, description, canonical, type = 'website', name, image }) =
     );
 };
 
-SEO.propTypes = {
-    title: PropTypes.string,
-    description: PropTypes.string,
-    canonical: PropTypes.string,
-    type: PropTypes.string,
-    name: PropTypes.string,
-    image: PropTypes.string
-};
+
 
 export default SEO;

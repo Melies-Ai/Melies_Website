@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Twitter, Instagram, Linkedin, Youtube, MessageCircle, Send, Music, BookOpen } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, BookOpen } from 'lucide-react';
+import { DiscordIcon, XIcon, TikTokIcon, TelegramIcon } from './SocialIcons';
 
 import logo from '../assets/logo.png';
 
@@ -17,10 +18,10 @@ const SocialLink = ({ href, icon: Icon, label }) => (
 );
 
 const SOCIAL_LINKS = [
-    { href: "https://discord.gg/g9b4z5G9DR", icon: MessageCircle, label: "Discord" },
-    { href: "https://x.com/MeliesAi", icon: Twitter, label: "Twitter (X)" },
-    { href: "https://t.me/melies_ai", icon: Send, label: "Telegram" },
-    { href: "https://tiktok.com/@melies_ai", icon: Music, label: "TikTok" },
+    { href: "https://discord.gg/g9b4z5G9DR", icon: DiscordIcon, label: "Discord" },
+    { href: "https://x.com/MeliesAi", icon: XIcon, label: "Twitter (X)" },
+    { href: "https://t.me/melies_ai", icon: TelegramIcon, label: "Telegram" },
+    { href: "https://tiktok.com/@melies_ai", icon: TikTokIcon, label: "TikTok" },
     { href: "https://www.instagram.com/melies_ai/", icon: Instagram, label: "Instagram" },
     { href: "https://www.youtube.com/@Melies-technology", icon: Youtube, label: "YouTube" },
     { href: "https://www.linkedin.com/company/melies-ai/", icon: Linkedin, label: "LinkedIn" }
