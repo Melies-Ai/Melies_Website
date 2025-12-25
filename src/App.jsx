@@ -16,9 +16,7 @@ const Archives = lazy(() => import('./pages/Archives'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 
-// Test Lab imports
-const ButtonShowcase = lazy(() => import('./pages/ButtonShowcase'));
-const TestLabOverlay = lazy(() => import('./components/TestLabOverlay'));
+
 
 const LoadingFallback = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-paper z-[100]">
@@ -42,10 +40,7 @@ const AnimatedRoutes = () => {
           <Route path="/manifesto" element={<Manifesto />} />
           <Route path="/archives" element={<Archives />} />
 
-          {/* TEST LAB ROUTE - DEV ONLY */}
-          {import.meta.env.DEV && (
-            <Route path="/buttons" element={<ButtonShowcase />} />
-          )}
+
 
           {/* LEGAL */}
           <Route path="/terms" element={<Terms />} />
@@ -64,8 +59,7 @@ function App() {
         <AnimatedRoutes />
         <Footer />
 
-        {/* TEST LAB OVERLAY - DEV ONLY */}
-        {import.meta.env.DEV && <TestLabOverlay />}
+
       </div>
     </Router>
   );

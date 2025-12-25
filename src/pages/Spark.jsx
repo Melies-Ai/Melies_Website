@@ -644,6 +644,7 @@ const Spark = () => {
                 buttonText="Start Creating"
                 buttonLink="/login"
                 gradient="from-accent to-orange-400"
+                showArrow={false}
             />
         </motion.div>
     );
