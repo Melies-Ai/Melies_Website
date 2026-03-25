@@ -2,8 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Button from '../components/Button';
 
-import banner from '../assets/fable_banner.png';
-import iconVertical from '../assets/fable_icon_vertical_white.png';
+import banner from '../assets/images/products/fable/fable-hero-banner.webp';
+import iconVertical from '../assets/icons/products/fable/fable-lockup-vertical-white.webp';
 
 import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';

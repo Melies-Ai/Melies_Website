@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import iconFable from '../assets/fable_icon_only.png';
-import iconCitizen from '../assets/citizen_icon_only.png';
-import iconOasis from '../assets/oasis_icon_only.png';
-import sparkImage from "../assets/spark_consistency_1.png";
+import iconFable from '../assets/icons/products/fable/fable-mark.webp';
+import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp';
+import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp';
+import sparkImage from '../assets/images/products/spark/spark-consistency-scene-01.webp';
 
 import { Menu, X, ChevronDown, ArrowUpRight, ArrowRight } from 'lucide-react';
 

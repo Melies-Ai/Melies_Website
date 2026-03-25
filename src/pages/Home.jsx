@@ -16,20 +16,17 @@ import {
     Palette,
     ArrowRight
 } from 'lucide-react';
-import iconFable from '../assets/fable_icon_only.png';
-import iconCitizen from '../assets/citizen_icon_only.png';
-import iconOasis from '../assets/oasis_icon_only.png';
-import iconSpark from '../assets/spark_icon_only.png';
-import sparkLocation from '../assets/spark_location_appartement.webp';
-import sparkCharacter from '../assets/spark_character_isabelle.png';
-import sparkProduct from '../assets/spark_product_parfume.png';
-import consistency1 from '../assets/spark_consistency_1.png';
-import consistency2 from '../assets/spark_consistency_2.webp';
-import consistency3 from '../assets/spark_consistency_3.webp';
-import character2 from '../assets/character.png';
-import bannerFable from '../assets/fable_banner.png';
-import bannerCitizen from '../assets/citizen_banner.png';
-import bannerOasis from '../assets/oasis_banner.png';
+import iconFable from '../assets/icons/products/fable/fable-mark.webp';
+import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp';
+import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp';
+import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
+import consistency1 from '../assets/images/products/spark/spark-consistency-scene-01.webp';
+import consistency2 from '../assets/images/products/spark/spark-consistency-scene-02.webp';
+import consistency3 from '../assets/images/products/spark/spark-consistency-scene-03.webp';
+import character2 from '../assets/images/products/spark/spark-feed-character.webp';
+import bannerFable from '../assets/images/products/fable/fable-hero-banner.webp';
+import bannerCitizen from '../assets/images/products/citizen/citizen-hero-banner.webp';
+import bannerOasis from '../assets/images/products/oasis/oasis-hero-banner.webp';
 
 const ViralFeedSimulator = () => {
     return (
@@ -105,7 +102,7 @@ const TestimonialCard = ({ quote, author, role }) => (
     </div>
 );
 
-import commercialDesk from '../assets/commercial_desk.png';
+import commercialDesk from '../assets/images/home/home-hero-workspace.webp';
 
 const Home = () => {
     return (

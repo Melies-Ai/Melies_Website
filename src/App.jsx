@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -11,7 +11,6 @@ const Citizen = lazy(() => import('./pages/Citizen'));
 const Oasis = lazy(() => import('./pages/Oasis'));
 const Spark = lazy(() => import('./pages/Spark'));
 const Pricing = lazy(() => import('./pages/Pricing'));
-const Archives = lazy(() => import('./pages/Archives'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 
@@ -36,7 +35,7 @@ const AnimatedRoutes = () => {
           <Route path="/oasis" element={<Oasis />} />
           <Route path="/spark" element={<Spark />} />
           <Route path="/pricing" element={<Pricing />} />
-          <Route path="/archives" element={<Archives />} />
+          <Route path="/archives" element={<Navigate to="/" replace />} />
 
 
 

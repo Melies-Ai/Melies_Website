@@ -5,8 +5,8 @@ import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';
 import SEO from '../components/SEO';
 
-import banner from '../assets/oasis_banner.png';
-import iconVertical from '../assets/oasis_icon_vertical_white.png';
+import banner from '../assets/images/products/oasis/oasis-hero-banner.webp';
+import iconVertical from '../assets/icons/products/oasis/oasis-lockup-vertical-white.webp';
 
 
 

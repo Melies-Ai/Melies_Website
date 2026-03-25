@@ -2,16 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useMotionTemplate, AnimatePresence } from 'framer-motion';
 import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box, ArrowRight, Sparkles } from 'lucide-react';
-import rawFrame from '../assets/spark_raw.png';
-import renderFrame from '../assets/spark_render.png';
-import consistency1 from '../assets/spark_consistency_1.png';
-import consistency2 from '../assets/spark_consistency_2.webp';
-import consistency3 from '../assets/spark_consistency_3.webp';
-import character2 from '../assets/character.png';
-import sparkLocation from '../assets/spark_location_appartement.webp';
-import sparkCharacter from '../assets/spark_character_isabelle.png';
-import sparkProduct from '../assets/spark_product_parfume.png';
-import moonieAvatar from '../assets/moonie_director_small.webp';
+import consistency1 from '../assets/images/products/spark/spark-consistency-scene-01.webp';
+import consistency2 from '../assets/images/products/spark/spark-consistency-scene-02.webp';
+import consistency3 from '../assets/images/products/spark/spark-consistency-scene-03.webp';
+import character2 from '../assets/images/products/spark/spark-feed-character.webp';
+import sparkLocation from '../assets/images/products/spark/spark-location-apartment.webp';
+import sparkCharacter from '../assets/images/products/spark/spark-character-isabelle.webp';
+import sparkProduct from '../assets/images/products/spark/spark-product-perfume.webp';
+import moonieAvatar from '../assets/images/products/spark/moonie-avatar.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
@@ -596,7 +594,14 @@ const Spark = () => {
                         animate={{ x: 0, opacity: 1 }}
                         className="text-5xl md:text-8xl font-medium mb-6 text-ink"
                     >
-                        <span className="text-accent">SPARK.</span><br />Vertical Stories.
+                        <span
+                            className="bg-clip-text text-transparent"
+                            style={{ backgroundImage: 'linear-gradient(to top, #3A362D 0%, #A0957D 100%)' }}
+                        >
+                            SPARK.
+                        </span>
+                        <br />
+                        Vertical Stories.
                     </motion.h1>
                     <p className="text-xl text-ink/60 max-w-xl mb-8">
                         The only AI video tool that keeps your characters consistent. No more Frankenstein videos.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, BookOpen } from 'lucide-react';
+import { Instagram, Linkedin, Youtube } from 'lucide-react';
 import { DiscordIcon, XIcon, TikTokIcon, TelegramIcon } from './SocialIcons';
 
 const SocialLink = ({ href, icon: Icon, label }) => (
@@ -43,13 +43,6 @@ const Footer = () => {
                         <p className="text-sm text-ink/40 max-w-xs mb-8">
                             Orchestrating the future of AI filmmaking with multi-agent systems.
                         </p>
-                        <Link
-                            to="/archives"
-                            className="inline-flex items-center text-xs font-bold tracking-widest uppercase text-ink/40 hover:text-accent transition-colors"
-                        >
-                            <BookOpen size={14} className="mr-2" />
-                            Explore the Archives
-                        </Link>
                     </div>
 
                     {/* Links Column 1 */}

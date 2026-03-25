@@ -2,8 +2,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 
 
-import banner from '../assets/citizen_banner.png';
-import iconVertical from '../assets/citizen_icon_vertical_white.png';
+import banner from '../assets/images/products/citizen/citizen-hero-banner.webp';
+import iconVertical from '../assets/icons/products/citizen/citizen-lockup-vertical-white.webp';
 
 import WaitlistCTA from '../components/WaitlistCTA';
 import SEO from '../components/SEO';

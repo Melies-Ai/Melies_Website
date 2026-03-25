@@ -9,7 +9,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Geist Sans', 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   /* Regular default */
