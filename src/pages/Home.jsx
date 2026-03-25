@@ -6,7 +6,6 @@ import Card from '../components/Card';
 import SystemText from '../components/SystemText';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
-import appLogo from '../assets/app_logo.png';
 
 import {
     Play,
@@ -68,7 +67,7 @@ const ViralFeedSimulator = () => {
                     {/* LEFT: Creator Info */}
                     <div className="flex-1 space-y-2 pb-1 pr-2">
                         <div className="font-bold text-white text-shadow-sm flex items-center gap-1.5 text-sm">
-                            @melies.creator
+                            @fantazia.creator
                         </div>
                         <p className="text-white/90 text-[10px] leading-snug line-clamp-2 text-shadow-sm font-light">
                             Line-drawn minimalist animation. The two characters...
@@ -113,7 +112,7 @@ const Home = () => {
         <div className="bg-background min-h-screen pt-40">
             <SEO
                 title="The Infinite Cinema Engine"
-                description="Orchestrate multi-agent systems to generate films. From script to screen, in real-time. Melies.ai is the future of filmmaking."
+                description="Orchestrate multi-agent systems to generate films. From script to screen, in real-time. Fantazia is the future of filmmaking."
                 canonical="/"
             />
 
@@ -158,7 +157,7 @@ const Home = () => {
                 >
                     <img
                         src={commercialDesk}
-                        alt="Melies AI Workspace"
+                        alt="Fantazia Workspace"
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent" />

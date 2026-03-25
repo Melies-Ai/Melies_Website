@@ -1,6 +1,6 @@
-# Melies.ai Design System
+# Fantazia Design System
 
-The visual language of Melies.ai. A blend of cinematic elegance and technical precision.
+The visual language of Fantazia. A blend of cinematic elegance and technical precision.
 
 ## 01. Colors
 
@@ -57,7 +57,7 @@ The visual language of Melies.ai. A blend of cinematic elegance and technical pr
 
 ## 05. Principles
 
-### Melies Magic
+### Fantazia Magic
 Every interaction should feel magical. Use subtle glows, smooth transitions, and "alive" states.
 
 ### Depth & Layering

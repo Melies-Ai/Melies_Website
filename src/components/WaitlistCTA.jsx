@@ -102,7 +102,7 @@ const WaitlistCTA = ({ title, description }) => {
                                         Limited spots for early access. No spam, ever.
                                     </p>
                                     <p className="text-ink/30 text-[10px] flex flex-col gap-1">
-                                        <span>By joining, you agree to receive project updates from Melies. Unsubscribe anytime.</span>
+                                        <span>By joining, you agree to receive project updates from Fantazia. Unsubscribe anytime.</span>
                                         <a href="/privacy" className="underline hover:text-ink/50">Privacy Policy</a>
                                     </p>
                                 </div>

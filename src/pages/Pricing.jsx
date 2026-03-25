@@ -95,7 +95,7 @@ const INDIVIDUAL_PLANS = [
             "Access to Standard models"
         ],
         buttonText: "Start for Free",
-        link: "https://app.melies.ai",
+        link: "https://app.fantazia.ai",
         delay: 0.1
     },
     {
@@ -172,7 +172,7 @@ const PROFESSIONAL_PLANS = [
 const getSubscribeLink = (planId, isYearly) => {
     if (!planId) return null;
     const period = isYearly ? 'yearly' : 'monthly';
-    return `https://app.melies.ai/subscribe?plan=${planId}&period=${period}`;
+    return `https://app.fantazia.ai/subscribe?plan=${planId}&period=${period}`;
 };
 
 const Pricing = () => {
@@ -181,7 +181,7 @@ const Pricing = () => {
     return (
         <div className="min-h-screen pt-32 pb-24 px-6 bg-background">
             <SEO
-                title="Pricing - Melies"
+                title="Pricing - Fantazia"
                 description="Start for free, upgrade as you scale. Simple, transparent pricing for AI video generation."
                 canonical="/pricing"
             />

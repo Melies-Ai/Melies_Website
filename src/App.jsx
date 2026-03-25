@@ -11,7 +11,6 @@ const Citizen = lazy(() => import('./pages/Citizen'));
 const Oasis = lazy(() => import('./pages/Oasis'));
 const Spark = lazy(() => import('./pages/Spark'));
 const Pricing = lazy(() => import('./pages/Pricing'));
-const Manifesto = lazy(() => import('./pages/Manifesto'));
 const Archives = lazy(() => import('./pages/Archives'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
@@ -37,7 +36,6 @@ const AnimatedRoutes = () => {
           <Route path="/oasis" element={<Oasis />} />
           <Route path="/spark" element={<Spark />} />
           <Route path="/pricing" element={<Pricing />} />
-          <Route path="/manifesto" element={<Manifesto />} />
           <Route path="/archives" element={<Archives />} />
 
 

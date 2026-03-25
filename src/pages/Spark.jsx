@@ -73,7 +73,7 @@ const ViralFeedSimulator = () => {
                     {/* LEFT: Creator Info */}
                     <div className="flex-1 space-y-3 pb-2 pr-4">
                         <div className="font-bold text-white text-shadow-sm flex items-center gap-2">
-                            @melies.creator
+                            @fantazia.creator
                         </div>
                         <p className="text-white/90 text-xs leading-snug line-clamp-2 text-shadow-sm font-light">
                             Line-drawn minimalist animation. The two characters are sitting on the long bench... <span className="opacity-60 font-semibold cursor-pointer hover:underline">more</span>

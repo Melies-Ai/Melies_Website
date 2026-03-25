@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import logo from '../assets/logo.png';
 import iconFable from '../assets/fable_icon_only.png';
 import iconCitizen from '../assets/citizen_icon_only.png';
 import iconOasis from '../assets/oasis_icon_only.png';
 import sparkImage from "../assets/spark_consistency_1.png";
 
 import { Menu, X, ChevronDown, ArrowUpRight, ArrowRight } from 'lucide-react';
-import BrandAssetsMenu from './BrandAssetsMenu';
 
 const NavLink = ({ to, label, isActive, onClick }) => (
     <Link
@@ -29,18 +27,6 @@ const Navbar = () => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const timeoutRef = useRef(null);
 
-    // Brand Assets Context Menu State
-    const [contextMenu, setContextMenu] = useState({ isOpen: false, x: 0, y: 0 });
-
-    const handleContextMenu = (e) => {
-        e.preventDefault();
-        setContextMenu({
-            isOpen: true,
-            x: e.clientX,
-            y: e.clientY + 10
-        });
-    };
-
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleMouseEnter = (menu) => {
@@ -56,11 +42,6 @@ const Navbar = () => {
 
     return (
         <>
-            <BrandAssetsMenu
-                isOpen={contextMenu.isOpen}
-                onClose={() => setContextMenu({ ...contextMenu, isOpen: false })}
-                position={{ x: contextMenu.x, y: contextMenu.y }}
-            />
             <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
                 <motion.nav
                     initial={{ y: -20, opacity: 0 }}
@@ -71,9 +52,10 @@ const Navbar = () => {
                     <Link
                         to="/"
                         className="flex items-center gap-3 shrink-0 mr-8"
-                        onContextMenu={handleContextMenu}
                     >
-                        <img src={logo} alt="Melies.ai" className="h-8 w-auto" />
+                        <span className="font-bricolage text-[1.35rem] font-semibold tracking-[-0.06em] lowercase text-ink">
+                            fantazia.ai
+                        </span>
                     </Link>
 
                     {/* Center Group: Navigation */}

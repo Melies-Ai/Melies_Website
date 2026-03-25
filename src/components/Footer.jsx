@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { Instagram, Linkedin, Youtube, BookOpen } from 'lucide-react';
 import { DiscordIcon, XIcon, TikTokIcon, TelegramIcon } from './SocialIcons';
 
-import logo from '../assets/logo.png';
-
 const SocialLink = ({ href, icon: Icon, label }) => (
     <a
         href={href}
@@ -19,12 +17,12 @@ const SocialLink = ({ href, icon: Icon, label }) => (
 
 const SOCIAL_LINKS = [
     { href: "https://discord.gg/g9b4z5G9DR", icon: DiscordIcon, label: "Discord" },
-    { href: "https://x.com/MeliesAi", icon: XIcon, label: "Twitter (X)" },
-    { href: "https://t.me/melies_ai", icon: TelegramIcon, label: "Telegram" },
-    { href: "https://tiktok.com/@melies_ai", icon: TikTokIcon, label: "TikTok" },
-    { href: "https://www.instagram.com/melies_ai/", icon: Instagram, label: "Instagram" },
-    { href: "https://www.youtube.com/@Melies-technology", icon: Youtube, label: "YouTube" },
-    { href: "https://www.linkedin.com/company/melies-ai/", icon: Linkedin, label: "LinkedIn" }
+    { href: "https://x.com/FantaziaAI", icon: XIcon, label: "Twitter (X)" },
+    { href: "https://t.me/fantazia_ai", icon: TelegramIcon, label: "Telegram" },
+    { href: "https://tiktok.com/@fantazia_ai", icon: TikTokIcon, label: "TikTok" },
+    { href: "https://www.instagram.com/fantazia_ai/", icon: Instagram, label: "Instagram" },
+    { href: "https://www.youtube.com/@FantaziaAI", icon: Youtube, label: "YouTube" },
+    { href: "https://www.linkedin.com/company/fantazia-ai/", icon: Linkedin, label: "LinkedIn" }
 ];
 
 const Footer = () => {
@@ -35,7 +33,9 @@ const Footer = () => {
                     {/* Brand */}
                     <div className="col-span-1 md:col-span-5">
                         <div className="flex items-center gap-2 mb-6">
-                            <img src={logo} alt="Melies.ai" className="h-8 w-auto opacity-80" />
+                            <span className="font-bricolage text-[1.5rem] font-semibold tracking-[-0.06em] lowercase text-ink/90">
+                                fantazia.ai
+                            </span>
                         </div>
                         <p className="text-ink/60 max-w-sm mb-8 text-lg font-serif italic leading-relaxed">
                             "The Infinite Cinema Engine."
@@ -44,11 +44,11 @@ const Footer = () => {
                             Orchestrating the future of AI filmmaking with multi-agent systems.
                         </p>
                         <Link
-                            to="/manifesto"
+                            to="/archives"
                             className="inline-flex items-center text-xs font-bold tracking-widest uppercase text-ink/40 hover:text-accent transition-colors"
                         >
                             <BookOpen size={14} className="mr-2" />
-                            Read the Manifesto
+                            Explore the Archives
                         </Link>
                     </div>
 
@@ -101,7 +101,7 @@ const Footer = () => {
                 </div>
 
                 <div className="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-ink/30 uppercase tracking-wider font-mono">
-                    <p>&copy; {new Date().getFullYear()} Melies.ai. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Fantazia. All rights reserved.</p>
                     <div className="flex gap-8">
                         <Link to="/privacy" className="hover:text-ink transition-colors">Privacy Policy</Link>
                         <Link to="/terms" className="hover:text-ink transition-colors">Terms of Service</Link>

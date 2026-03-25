@@ -24,8 +24,8 @@ const Terms = () => {
             className="pt-32 pb-20 px-6 bg-paper min-h-screen"
         >
             <SEO
-                title="Terms and Conditions - Melies"
-                description="Review the Terms and Conditions for using Melies.ai."
+                title="Terms and Conditions - Fantazia"
+                description="Review the Terms and Conditions for using Fantazia.ai."
                 canonical="/terms"
             />
             <div className="max-w-3xl mx-auto">
@@ -34,10 +34,10 @@ const Terms = () => {
 
                 <Section title="1. Introduction and Acceptance">
                     <h3 className="font-medium text-ink mt-4 mb-2">1.1 Agreement</h3>
-                    <p>These Terms and Conditions ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and MELIES TECHNOLOGIES, a French simplified joint-stock company (société par actions simplifiée), registered under number 94113277100010, with its registered office at QUAI DE RIVE NEUVE, 13007 MARSEILLE ("Melies," "we," "us," or "our").</p>
+                    <p>These Terms and Conditions ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and FANTAZIA TECHNOLOGIES, a French simplified joint-stock company (société par actions simplifiée), registered under number 94113277100010, with its registered office at QUAI DE RIVE NEUVE, 13007 MARSEILLE ("Fantazia," "we," "us," or "our").</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">1.2 Acceptance</h3>
-                    <p>By accessing or using the Melies.ai platform (the "Service"), you agree to be bound by these Terms, our Privacy Policy, and any additional terms that may apply. If you do not agree to these Terms, you must not use the Service.</p>
+                    <p>By accessing or using the Fantazia.ai platform (the "Service"), you agree to be bound by these Terms, our Privacy Policy, and any additional terms that may apply. If you do not agree to these Terms, you must not use the Service.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">1.3 Capacity</h3>
                     <p>You must be at least 18 years old and have the legal capacity to enter into binding contracts to use this Service. If you are using the Service on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.</p>
@@ -45,7 +45,7 @@ const Terms = () => {
 
                 <Section title="2. Description of Service">
                     <h3 className="font-medium text-ink mt-4 mb-2">2.1 Service Overview</h3>
-                    <p>Melies.ai is an AI-powered video creation platform that enables users to generate video content using artificial intelligence technologies. Users can create videos through text prompts and image inputs, which are processed by our AI models to produce video outputs.</p>
+                    <p>Fantazia.ai is an AI-powered video creation platform that enables users to generate video content using artificial intelligence technologies. Users can create videos through text prompts and image inputs, which are processed by our AI models to produce video outputs.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">2.2 Features</h3>
                     <p>The Service includes text-to-video generation from prompts, image-to-video generation, video editing and enhancement tools, content storage and management, and such additional features as may be introduced from time to time.</p>
@@ -62,7 +62,7 @@ const Terms = () => {
                     <p>You are responsible for maintaining the security of your Google account credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">3.3 Account Termination</h3>
-                    <p>We reserve the right to suspend or terminate your account if you violate these Terms, engage in fraudulent or illegal activity, use the Service in a manner that could harm Melies or other users, or fail to pay applicable fees.</p>
+                    <p>We reserve the right to suspend or terminate your account if you violate these Terms, engage in fraudulent or illegal activity, use the Service in a manner that could harm Fantazia or other users, or fail to pay applicable fees.</p>
                 </Section>
 
                 <Section title="4. User Conduct and Acceptable Use">
@@ -77,20 +77,20 @@ const Terms = () => {
                 </Section>
 
                 <Section title="5. Intellectual Property">
-                    <h3 className="font-medium text-ink mt-4 mb-2">5.1 Melies Property</h3>
-                    <p>The Service, including all software, AI models, algorithms, user interface, and underlying technology, is owned by Melies and protected by intellectual property laws. Nothing in these Terms grants you any right to use Melies trademarks, logos, or branding.</p>
+                    <h3 className="font-medium text-ink mt-4 mb-2">5.1 Fantazia Property</h3>
+                    <p>The Service, including all software, AI models, algorithms, user interface, and underlying technology, is owned by Fantazia and protected by intellectual property laws. Nothing in these Terms grants you any right to use Fantazia trademarks, logos, or branding.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">5.2 Your Content</h3>
-                    <p>You retain ownership of any content you upload to the Service (prompts, images, etc.). By uploading content, you grant Melies a worldwide, non-exclusive, royalty-free license to use, process, and store such content solely for the purpose of providing the Service to you.</p>
+                    <p>You retain ownership of any content you upload to the Service (prompts, images, etc.). By uploading content, you grant Fantazia a worldwide, non-exclusive, royalty-free license to use, process, and store such content solely for the purpose of providing the Service to you.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">5.3 AI-Generated Content</h3>
                     <p><span className="font-medium">License Grant:</span> Upon payment of applicable fees, you are granted a perpetual, worldwide, royalty-free license to use, modify, reproduce, distribute, and publicly display the video content generated through the Service for any lawful purpose, including commercial use.</p>
-                    <p><span className="font-medium">Melies Rights:</span> Melies does not claim ownership of your Generated Content. However, we retain the right to store technical copies as necessary for service delivery and to use anonymized, aggregated data derived from usage patterns for service improvement.</p>
+                    <p><span className="font-medium">Fantazia Rights:</span> Fantazia does not claim ownership of your Generated Content. However, we retain the right to store technical copies as necessary for service delivery and to use anonymized, aggregated data derived from usage patterns for service improvement.</p>
                     <p><span className="font-medium">No Exclusivity:</span> Due to the nature of AI generation, similar prompts from different users may produce similar outputs. We do not guarantee exclusivity of any Generated Content.</p>
                     <p><span className="font-medium">Your Responsibility:</span> You are solely responsible for ensuring your use of Generated Content complies with applicable laws, including intellectual property rights, privacy rights, and publicity rights of third parties.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">5.4 Feedback</h3>
-                    <p>If you provide feedback, suggestions, or ideas about the Service, you grant Melies an unlimited, irrevocable, perpetual license to use such feedback for any purpose without compensation to you.</p>
+                    <p>If you provide feedback, suggestions, or ideas about the Service, you grant Fantazia an unlimited, irrevocable, perpetual license to use such feedback for any purpose without compensation to you.</p>
                 </Section>
 
                 <Section title="6. AI and Generated Content">
@@ -98,7 +98,7 @@ const Terms = () => {
                     <p>You acknowledge that AI-generated content may not always be accurate, appropriate, or suitable for your intended purpose, may contain errors, artifacts, or unexpected results, may be subject to ongoing improvements and changes, and is generated based on AI models that have inherent limitations.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">6.2 Content Review</h3>
-                    <p>You are responsible for reviewing all generated content before use or distribution. Melies does not pre-screen AI-generated content and is not responsible for any issues arising from your use of such content.</p>
+                    <p>You are responsible for reviewing all generated content before use or distribution. Fantazia does not pre-screen AI-generated content and is not responsible for any issues arising from your use of such content.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">6.3 No Guarantees</h3>
                     <p>We do not guarantee that generated content will be free from third-party intellectual property claims, suitable for any particular purpose, or consistent in quality or style.</p>
@@ -139,16 +139,16 @@ const Terms = () => {
                     <p>We do not guarantee that the Service will be uninterrupted, error-free, or secure. We are not liable for any interruption or loss of access to the Service.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">9.3 Limitation of Liability</h3>
-                    <p className="uppercase text-xs font-bold tracking-wider mb-2">TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, MELIES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, OR GOODWILL.</p>
+                    <p className="uppercase text-xs font-bold tracking-wider mb-2">TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, FANTAZIA SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, OR GOODWILL.</p>
                     <p>Our total aggregate liability for any claims arising from or related to these Terms or the Service shall not exceed the amount paid by you in the three (3) months preceding the claim, with a minimum of €20.</p>
-                    <p>This limitation applies regardless of the theory of liability and even if Melies has been advised of the possibility of such damages.</p>
+                    <p>This limitation applies regardless of the theory of liability and even if Fantazia has been advised of the possibility of such damages.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">9.4 Consumer Rights</h3>
                     <p>Nothing in these Terms affects your statutory rights as a consumer under applicable law, including rights under the French Consumer Code (Code de la consommation) that cannot be waived by contract.</p>
                 </Section>
 
                 <Section title="10. Indemnification">
-                    <p>You agree to indemnify and hold harmless Melies and its officers, directors, employees, and agents from any claims, damages, losses, or expenses (including reasonable legal fees) arising from your use of the Service, your violation of these Terms, your violation of any third-party rights, or content you create, upload, or distribute using the Service.</p>
+                    <p>You agree to indemnify and hold harmless Fantazia and its officers, directors, employees, and agents from any claims, damages, losses, or expenses (including reasonable legal fees) arising from your use of the Service, your violation of these Terms, your violation of any third-party rights, or content you create, upload, or distribute using the Service.</p>
                 </Section>
 
                 <Section title="11. Term and Termination">
@@ -158,7 +158,7 @@ const Terms = () => {
                     <h3 className="font-medium text-ink mt-6 mb-2">11.2 Termination by You</h3>
                     <p>You may terminate your account at any time by contacting us or using the account deletion feature in your settings.</p>
 
-                    <h3 className="font-medium text-ink mt-6 mb-2">11.3 Termination by Melies</h3>
+                    <h3 className="font-medium text-ink mt-6 mb-2">11.3 Termination by Fantazia</h3>
                     <p>We may terminate or suspend your access to the Service immediately, without prior notice, for any reason, including breach of these Terms.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">11.4 Effects of Termination</h3>
@@ -181,7 +181,7 @@ const Terms = () => {
 
                 <Section title="13. General Provisions">
                     <h3 className="font-medium text-ink mt-4 mb-2">13.1 Entire Agreement</h3>
-                    <p>These Terms, together with the Privacy Policy and any additional terms you agree to, constitute the entire agreement between you and Melies regarding the Service.</p>
+                    <p>These Terms, together with the Privacy Policy and any additional terms you agree to, constitute the entire agreement between you and Fantazia regarding the Service.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">13.2 Severability</h3>
                     <p>If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions will continue in full force and effect.</p>
@@ -202,14 +202,14 @@ const Terms = () => {
                 <Section title="14. Contact Information">
                     <p>For any questions about these Terms, please contact us at:</p>
                     <div className="mt-4 bg-black/5 p-4 rounded text-sm font-mono text-ink/80">
-                        <p>Email: contact@melies.ai</p>
+                        <p>Email: contact@fantazia.ai</p>
                         <p>Address: QUAI DE RIVE NEUVE, 13007 MARSEILLE, France</p>
                         <p>SIRET: 94113277100010</p>
                     </div>
                 </Section>
 
                 <p className="text-sm text-ink/40 mt-16 pt-8 border-t border-black/10">
-                    By using Melies.ai, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+                    By using Fantazia.ai, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
                 </p>
             </div>
         </motion.div>

@@ -1148,11 +1148,11 @@ const FableEcosystem = () => {
 
     return (
         <div className="w-full py-32 relative overflow-hidden flex flex-col items-center justify-center min-h-[800px] border-b border-black/5">
-            <div className="absolute top-4 left-4 text-xs font-mono text-ink/30 uppercase tracking-widest">Archive: The Melies Ecosystem</div>
+            <div className="absolute top-4 left-4 text-xs font-mono text-ink/30 uppercase tracking-widest">Archive: The Fantazia Ecosystem</div>
             <div className="relative z-10 max-w-7xl w-full px-8 flex flex-col md:flex-row items-center gap-16">
                 {/* Left: Text Content */}
                 <div className="flex-1 text-left">
-                    <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">The Melies Ecosystem</h2>
+                    <h2 className="text-4xl md:text-5xl font-medium text-ink mb-6">The Fantazia Ecosystem</h2>
                     <p className="text-xl text-ink/60 leading-relaxed mb-8">
                         A living system where the world's most powerful AI models converge to fuel your creativity.
                         <br /><br />
@@ -1196,7 +1196,7 @@ const FableEcosystem = () => {
                             <div className="absolute inset-0 bg-cobalt/10 blur-2xl rounded-full animate-pulse" />
                             {/* Replaced image with a div as removing image imports */}
                             <div className="w-full h-full rounded-full bg-black/80 flex items-center justify-center relative z-10 drop-shadow-xl border border-white/20">
-                                <span className="text-3xl font-serif italic text-white/90">m*</span>
+                                <span className="text-3xl font-serif italic text-white/90">f*</span>
                             </div>
                         </div>
 
@@ -1648,8 +1648,8 @@ const Archives = () => {
     return (
         <div className="w-full min-h-screen pt-32 pb-24 bg-paper">
             <SEO
-                title="Archives - Exploring the Melies Engine"
-                description="Explore the components of the Melies engine: Consciousness Stream, Memory Core, Physics Engine, and more."
+                title="Archives - Exploring the Fantazia Engine"
+                description="Explore the components of the Fantazia engine: Consciousness Stream, Memory Core, Physics Engine, and more."
                 canonical="/archives"
             />
             <div className="max-w-[1400px] mx-auto px-4 mb-24">
@@ -1658,7 +1658,7 @@ const Archives = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center"
                 >
-                    <div className="text-xs font-mono text-ink/40 uppercase tracking-widest mb-4">Méliès Archive</div>
+                    <div className="text-xs font-mono text-ink/40 uppercase tracking-widest mb-4">Fantazia Archive</div>
                     <h1 className="text-5xl md:text-7xl font-medium text-ink mb-6">Concept Vault</h1>
                     <p className="text-xl text-ink/60 max-w-2xl mx-auto">
                         Experimental features, work in progress, and retired concepts.

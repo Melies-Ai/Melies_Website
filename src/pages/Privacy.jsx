@@ -24,7 +24,7 @@ const Privacy = () => {
             className="pt-32 pb-20 px-6 bg-paper min-h-screen"
         >
             <SEO
-                title="Privacy Policy - Melies"
+                title="Privacy Policy - Fantazia"
                 description="Read our Privacy Policy. We are committed to protecting your data and privacy."
                 canonical="/privacy"
             />
@@ -33,16 +33,16 @@ const Privacy = () => {
                 <p className="text-ink/60 mb-16">Last Updated: December 2025</p>
 
                 <Section title="1. Introduction">
-                    <p>MELIES TECHNOLOGIES ("we," "us," or "our"), operating Melies.ai, is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered video creation service.</p>
+                    <p>FANTAZIA TECHNOLOGIES ("we," "us," or "our"), operating Fantazia.ai, is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered video creation service.</p>
                     <p>This Privacy Policy complies with the General Data Protection Regulation (GDPR) (EU Regulation 2016/679) and the French Data Protection Act (Loi Informatique et Libertés).</p>
                     <div className="bg-black/5 p-6 rounded-lg mt-4 text-sm">
                         <p className="font-medium mb-2">Data Controller Information</p>
                         <ul className="space-y-1 text-ink/70">
-                            <li>Company Name: MELIES TECHNOLOGIES</li>
+                            <li>Company Name: FANTAZIA TECHNOLOGIES</li>
                             <li>Legal Form: Société par actions simplifiée (SAS)</li>
                             <li>Registration Number: 94113277100010</li>
                             <li>Registered Office: QUAI DE RIVE NEUVE, 13007 MARSEILLE</li>
-                            <li>Contact Email: contact@melies.ai</li>
+                            <li>Contact Email: contact@fantazia.ai</li>
                         </ul>
                     </div>
                 </Section>
@@ -150,7 +150,7 @@ const Privacy = () => {
                             </tbody>
                         </table>
                     </div>
-                    <p className="mt-4 text-sm text-ink/60">For details on safeguards or to request copies of applicable Standard Contractual Clauses, contact contact@melies.ai.</p>
+                    <p className="mt-4 text-sm text-ink/60">For details on safeguards or to request copies of applicable Standard Contractual Clauses, contact contact@fantazia.ai.</p>
                 </Section>
 
                 <Section title="7. Data Retention">
@@ -168,7 +168,7 @@ const Privacy = () => {
 
                     <div className="mt-6 bg-black/5 p-6 rounded-lg">
                         <p className="mb-2">To exercise any of these rights, please contact us at:</p>
-                        <p className="font-mono text-sm font-medium">contact@melies.ai</p>
+                        <p className="font-mono text-sm font-medium">contact@fantazia.ai</p>
                         <p className="mt-4 text-sm text-ink/60">We aim to respond within 30 days. You also have the right to lodge a complaint with the CNIL (Commission Nationale de l'Informatique et des Libertés).</p>
                     </div>
                 </Section>
@@ -217,7 +217,7 @@ const Privacy = () => {
                 <Section title="12. Use of Your Data for Service Improvement">
                     <p><span className="font-medium">What we use:</span> We may use the text prompts you submit to improve our AI systems and service quality.</p>
                     <p className="mt-2"><span className="font-medium">What we do NOT use:</span> We do not use your uploaded images or generated videos for AI training purposes.</p>
-                    <p className="mt-2"><span className="font-medium">How we protect you:</span> Prompts used for improvement are stripped of any personal identifiers. This processing is based on our legitimate interest in improving the Service. You may opt out at any time by contacting contact@melies.ai.</p>
+                    <p className="mt-2"><span className="font-medium">How we protect you:</span> Prompts used for improvement are stripped of any personal identifiers. This processing is based on our legitimate interest in improving the Service. You may opt out at any time by contacting contact@fantazia.ai.</p>
                     <p className="mt-2 text-sm text-ink/60">Note: Opting out will not affect prompts already processed but will apply to future submissions.</p>
                 </Section>
 
@@ -232,7 +232,7 @@ const Privacy = () => {
                 <Section title="15. Contact Us">
                     <p>For questions about this Privacy Policy, please contact us at:</p>
                     <div className="mt-4 bg-black/5 p-4 rounded text-sm font-mono text-ink/80">
-                        <p>Email: contact@melies.ai</p>
+                        <p>Email: contact@fantazia.ai</p>
                         <p>Postal Address: QUAI DE RIVE NEUVE, 13007 MARSEILLE</p>
                     </div>
                 </Section>
@@ -246,7 +246,7 @@ const Privacy = () => {
                 </Section>
 
                 <p className="text-sm text-ink/40 mt-16 pt-8 border-t border-black/10">
-                    By using Melies.ai, you acknowledge that you have read, understood, and agree to the collection and use of your information as described in this Privacy Policy.
+                    By using Fantazia.ai, you acknowledge that you have read, understood, and agree to the collection and use of your information as described in this Privacy Policy.
                 </p>
             </div>
         </motion.div>
