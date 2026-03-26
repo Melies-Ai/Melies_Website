@@ -2,14 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
-import Card from '../components/Card';
 import SystemText from '../components/SystemText';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
 
 import {
-    Play,
-    Pause,
     Volume2,
     User,
     Package,
@@ -140,7 +137,7 @@ const Home = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                 >
-                    <Button className="bg-btn-bg text-btn-text rounded-full px-8 py-4 text-lg font-medium">
+                    <Button shimmer={false} className="bg-btn-bg text-btn-text rounded-full px-8 py-4 text-lg font-medium">
                         Start Creating
                     </Button>
                 </motion.div>
@@ -202,12 +199,12 @@ const Home = () => {
                                 </p>
 
                                 <div className="flex flex-wrap gap-4 mb-12">
-                                    <Link to="/spark" className="bg-black text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg inline-flex items-center justify-center">
+                                    <Button to="/spark" variant="dark" className="px-8 py-3 text-sm">
                                         Start Creating
-                                    </Link>
-                                    <Link to="/spark" className="px-8 py-3 rounded-full text-sm font-medium border border-black/10 hover:bg-black/5 hover:border-black/20 transition-all text-primary flex items-center gap-2">
+                                    </Button>
+                                    <Button to="/spark" variant="outlineDark" className="px-8 py-3 text-sm">
                                         More Details <ArrowRight size={14} />
-                                    </Link>
+                                    </Button>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -380,9 +377,9 @@ const Home = () => {
                                 placeholder="email@address.com"
                                 className="bg-transparent px-4 py-2 outline-none text-sm w-full md:w-64 placeholder:text-black/20 text-black"
                             />
-                            <button className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-black/80 transition-colors">
+                            <Button variant="dark" className="px-6 py-2 text-sm whitespace-nowrap">
                                 Notify Me
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -403,9 +400,9 @@ const Home = () => {
                             Join the filmmakers defining the next era of cinema. <br />
                             Be first in line when the full ecosystem launches.
                         </p>
-                        <a href="https://discord.gg/g9b4z5G9DR" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary border border-black/10 px-8 py-3 rounded-full hover:bg-black hover:text-white transition-all duration-300 font-medium text-sm">
+                        <Button href="https://discord.gg/g9b4z5G9DR" target="_blank" rel="noopener noreferrer" variant="outlineDark" className="px-8 py-3 text-sm">
                             Join the Discord <ArrowRight size={14} />
-                        </a>
+                        </Button>
                     </div>
 
 

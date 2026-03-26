@@ -1,22 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import Button from '../components/Button';
 import SEO from '../components/SEO';
 
-const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommended, saveBadge, buttonText, delay, link }) => {
-    const navigate = useNavigate();
-
-    const handleAction = () => {
-        if (!link) return;
-        if (link.startsWith('http')) {
-            window.location.href = link;
-        } else {
-            navigate(link);
-        }
-    };
-
+const PricingCard = ({ tier, price, billingText, features, recommended, saveBadge, buttonText, delay, link }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -73,12 +61,9 @@ const PricingCard = ({ tier, price, yearlyPrice, billingText, features, recommen
             </ul>
 
             <Button
-                variant="custom"
-                onClick={handleAction}
-                className={`w-full py-3 rounded-xl font-medium transition-transform ${recommended
-                    ? 'bg-black text-white hover:bg-black/90'
-                    : 'bg-white border border-stroke text-primary hover:bg-gray-50'
-                    }`}
+                href={link}
+                variant={recommended ? 'dark' : 'outlineDark'}
+                className="w-full py-3 rounded-xl text-base"
             >
                 {buttonText || 'Get Started'}
             </Button>

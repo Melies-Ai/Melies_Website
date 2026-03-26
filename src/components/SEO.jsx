@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 
-const SEO = ({ title, description, canonical, type = 'website', name, image }) => {
+const SEO = ({ title, description, canonical, type = 'website', image }) => {
     // Default values
     const siteName = 'Fantazia';
     const siteUrl = 'https://fantazia.ai';

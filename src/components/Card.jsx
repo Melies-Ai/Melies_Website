@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { cn } from './Button'; // Reusing cn utility
+import { cn } from '../lib/cn';
 
 const Card = ({
     children,

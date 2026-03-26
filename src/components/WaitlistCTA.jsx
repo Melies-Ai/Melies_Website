@@ -82,10 +82,11 @@ const WaitlistCTA = ({ title, description }) => {
                                         required
                                     />
                                     <div className="absolute top-1.5 right-1.5 bottom-1.5">
-                                        <button
+                                        <Button
                                             type="submit"
+                                            variant="dark"
                                             disabled={status === 'loading'}
-                                            className="bg-black text-white rounded-full px-6 py-2.5 text-sm font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2 h-full"
+                                            className="px-6 py-2.5 text-sm h-full disabled:opacity-70 disabled:cursor-not-allowed"
                                         >
                                             {status === 'loading' ? (
                                                 <Loader2 size={18} className="animate-spin" />
@@ -94,7 +95,7 @@ const WaitlistCTA = ({ title, description }) => {
                                                     Join Waitlist <ArrowRight size={16} />
                                                 </>
                                             )}
-                                        </button>
+                                        </Button>
                                     </div>
                                 </div>
                                 <div className="mt-4 text-center space-y-1">

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';

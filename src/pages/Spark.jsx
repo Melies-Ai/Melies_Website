@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useMotionValue, useSpring, useMotionTemplate, AnimatePresence } from 'framer-motion';
-import { Zap, TrendingUp, Smartphone, Repeat, Layers, Image as ImageIcon, Music, Mic, Volume2, ShoppingBag, Utensils, Cpu, X, Palmtree, User, Box, ArrowRight, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Smartphone, Image as ImageIcon, Music, Mic, Volume2, X, Palmtree, User, Box, ArrowRight, Sparkles } from 'lucide-react';
 import consistency1 from '../assets/images/products/spark/spark-consistency-scene-01.webp';
 import consistency2 from '../assets/images/products/spark/spark-consistency-scene-02.webp';
 import consistency3 from '../assets/images/products/spark/spark-consistency-scene-03.webp';
@@ -13,26 +13,6 @@ import moonieAvatar from '../assets/images/products/spark/moonie-avatar.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
-
-const PhoneFrame = ({ color, delay, content }) => (
-    <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay, type: "spring", stiffness: 100 }}
-        className="glass-panel relative w-64 h-[500px] rounded-[3rem] overflow-hidden"
-    >
-        {/* Screen Content */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-10`} />
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-            {content}
-        </div>
-
-        {/* UI Elements */}
-        <div className="absolute bottom-8 left-6 right-6 flex justify-center">
-            <div className="h-1 w-24 bg-ink/10 rounded-full" />
-        </div>
-    </motion.div>
-);
 
 const ViralFeedSimulator = () => {
     return (
@@ -249,9 +229,9 @@ const AssetIntegration = () => {
                         <br /><br />
                         Spark seamlessly blends them into the generated video, respecting lighting and physics.
                     </p>
-                    <Link to="/login" className="bg-black text-white px-8 py-3 rounded-full text-base font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg inline-flex items-center justify-center">
+                    <Button to="/login" variant="dark" className="px-8 py-3 text-base">
                         Start Creating
-                    </Link>
+                    </Button>
                 </div>
 
                 <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center h-[600px]">
@@ -648,6 +628,7 @@ const Spark = () => {
                 description="Join the creators dominating the vertical feed with Spark."
                 buttonText="Start Creating"
                 buttonLink="/login"
+                buttonVariant="primary"
                 gradient="from-accent to-orange-400"
                 showArrow={false}
             />

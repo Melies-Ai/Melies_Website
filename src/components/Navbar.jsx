@@ -6,6 +6,7 @@ import iconFable from '../assets/icons/products/fable/fable-mark.webp';
 import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp';
 import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp';
 import sparkImage from '../assets/images/products/spark/spark-consistency-scene-01.webp';
+import Button from './Button';
 
 import { Menu, X, ChevronDown, ArrowUpRight, ArrowRight } from 'lucide-react';
 
@@ -142,10 +143,10 @@ const Navbar = () => {
                         <Link to="/login" className="text-base font-medium text-secondary hover:text-primary transition-colors px-4">
                             Login
                         </Link>
-                        <button className="group flex items-center bg-black text-white rounded-full px-6 py-2.5 text-base font-medium hover:bg-[#333333] transition-colors duration-200 shadow-lg cursor-pointer">
+                        <Button variant="dark" className="px-6 py-2.5 text-base">
                             Start Creating
                             <ArrowRight className="w-0 opacity-0 -translate-x-2 ml-0 group-hover:ml-2 group-hover:w-5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                        </button>
+                        </Button>
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -215,10 +216,10 @@ const Navbar = () => {
                             <Link to="/login" className="text-center py-2 text-lg font-medium text-ink/60" onClick={toggleMenu}>
                                 Login
                             </Link>
-                            <button className="group flex items-center justify-center bg-black text-white rounded-xl py-4 text-lg font-medium shadow-lg w-full hover:bg-[#333333] transition-colors duration-200">
+                            <Button variant="dark" className="w-full py-4 text-lg">
                                 Start Creating
                                 <ArrowRight className="w-0 opacity-0 -translate-x-2 ml-0 group-hover:ml-2 group-hover:w-5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                            </button>
+                            </Button>
                         </div>
                     </motion.div>
                 )}

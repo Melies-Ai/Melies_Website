@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { ArrowRight } from 'lucide-react';
 
-const CTASection = ({ title, description, buttonText, buttonLink, gradient = "from-ink to-ink/80", buttonVariant = "primary", showArrow = true, className = "" }) => {
+const CTASection = ({ title, description, buttonText, buttonLink, buttonVariant = "primary", showArrow = true, className = "" }) => {
     const navigate = useNavigate();
 
     return (

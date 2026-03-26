@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Button from '../components/Button';
 
 import banner from '../assets/images/products/fable/fable-hero-banner.webp';
 import iconVertical from '../assets/icons/products/fable/fable-lockup-vertical-white.webp';

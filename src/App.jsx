@@ -35,6 +35,7 @@ const AnimatedRoutes = () => {
           <Route path="/oasis" element={<Oasis />} />
           <Route path="/spark" element={<Spark />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/button-lab" element={<Navigate to="/" replace />} />
           <Route path="/archives" element={<Navigate to="/" replace />} />
 
 
