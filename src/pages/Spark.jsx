@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Smartphone, Image as ImageIcon, Music, Mic, Volume2, X, Palmtree, User, Box, ArrowRight, Sparkles } from 'lucide-react';
 import consistency1 from '../assets/images/products/spark/spark-consistency-scene-01.webp';
@@ -95,25 +94,22 @@ const ConsistencyEngine = () => {
                     </p>
                 </div>
 
-                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-8 relative overflow-hidden group">
+                <div className="w-full md:flex-1 sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-6 md:p-8 relative overflow-hidden group">
                     <div className="absolute inset-0 opacity-20" style={{
                         backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
                     }} />
 
                     <motion.div
-                        className="flex gap-4 relative p-2 cursor-grab active:cursor-grabbing"
+                        className="flex flex-col md:flex-row items-center gap-4 relative p-2 md:cursor-grab md:active:cursor-grabbing"
                         drag="x"
                         dragConstraints={{ left: -100, right: 0 }}
                         dragElastic={0.1}
                     >
                         {[consistency1, consistency2, consistency3].map((img, i) => (
-                            <motion.div
+                            <div
                                 key={i}
-                                initial={{ opacity: 0, x: 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8, delay: i * 0.2, ease: "circOut" }}
-                                className="w-48 h-80 bg-white rounded-xl border border-black/5 shadow-lg flex-shrink-0 relative overflow-hidden pointer-events-none"
+                                className="w-40 h-72 md:w-48 md:h-80 bg-white rounded-xl border border-black/5 shadow-lg flex-shrink-0 relative overflow-hidden pointer-events-none"
                             >
                                 <img
                                     src={img}
@@ -121,7 +117,7 @@ const ConsistencyEngine = () => {
                                     className="absolute inset-0 w-full h-full object-cover"
                                 />
                                 <div className="absolute top-2 left-2 text-[10px] font-mono text-white/80 bg-black/20 px-1.5 py-0.5 rounded backdrop-blur-sm">SCENE_0{i + 1}</div>
-                            </motion.div>
+                            </div>
                         ))}
                     </motion.div>
                 </div>
@@ -234,7 +230,7 @@ const AssetIntegration = () => {
                     </Button>
                 </div>
 
-                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center h-[600px]">
+                <div className="w-full md:flex-1 sunken-canvas bg-[#F0ECE2] shadow-inner rounded-[40px] p-6 md:p-12 relative overflow-hidden flex items-center justify-center min-h-[600px]">
                     <div className="absolute inset-0 opacity-20" style={{
                         backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
@@ -376,7 +372,7 @@ const FullExperience = () => {
                     </p>
                 </div>
 
-                <div className="flex-1 w-full sunken-canvas bg-[#F0ECE2]/50 shadow-inner rounded-[40px] p-12 relative overflow-hidden flex items-center justify-center min-h-[500px]">
+                <div className="w-full md:flex-1 sunken-canvas bg-[#F0ECE2]/50 shadow-inner rounded-[40px] p-4 md:p-12 relative overflow-hidden flex items-center justify-center min-h-[500px]">
                     <div className="absolute inset-0 opacity-10" style={{
                         backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
@@ -402,14 +398,14 @@ const FullExperience = () => {
                             <motion.div
                                 key={i}
                                 initial={{ x: -20, opacity: 0 }}
-                                whileInView={{ x: 0, opacity: 1 }}
+                                animate={{ x: 0, opacity: 1 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="h-20 bg-white rounded-2xl shadow-sm flex items-center px-6 gap-6 relative overflow-hidden group hover:shadow-md transition-shadow duration-300"
+                                className="h-20 bg-white rounded-2xl shadow-sm flex items-center px-3 md:px-6 gap-3 md:gap-6 relative overflow-hidden group hover:shadow-md transition-shadow duration-300"
                             >
                                 <div className={`w-10 h-10 rounded-xl ${layer.color} text-white flex items-center justify-center shrink-0 shadow-sm`}>
                                     {layer.icon}
                                 </div>
-                                <div className="font-medium text-ink text-sm w-24 shrink-0">{layer.label}</div>
+                                <div className="font-medium text-ink text-xs md:text-sm w-16 md:w-24 shrink-0">{layer.label}</div>
 
                                 {/* Animated Visuals: Filmstrip vs Waveforms */}
                                 <div className="flex-1 flex items-center gap-[3px] h-full py-5 overflow-hidden">
@@ -600,10 +596,10 @@ const Spark = () => {
                     </Button>
                 </div>
 
-                <div className="flex-1 relative h-[600px] w-full flex items-center justify-center perspective-1000">
+                <div className="w-full md:flex-1 relative min-h-[600px] flex items-center justify-center perspective-1000">
                     {/* Shadow / Grounding Element (Replaces Chair context) */}
                     <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-48 h-12 bg-black/20 blur-2xl rounded-[100%] z-0 scale-x-150 opacity-60" />
-                    <div className="absolute z-10">
+                    <div className="relative z-10">
                         <ViralFeedSimulator />
                     </div>
                 </div>
