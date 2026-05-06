@@ -1,56 +1,133 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import Button from './Button';
 import { ArrowRight } from 'lucide-react';
+import Button from './Button';
+import { cn } from '../lib/cn';
 
-const CTASection = ({ title, description, buttonText, buttonLink, buttonVariant = "primary", showArrow = true, className = "" }) => {
+// CTASection — terminal section template for pages.
+//
+// Composition:
+//   eyebrow (optional, mono uppercase) → title → description → primary CTA
+//   (optional secondary action)
+//
+// All children are optional except `title` so callers can compose:
+//   - title only:               minimal hero block
+//   - title + cta:               most common, was the original CTASection
+//   - eyebrow + title + cta:    structured launch / announcement section
+//   - title + cta + secondary:  primary + alt path (e.g. waitlist + docs link)
+
+const ALIGNMENTS = {
+    center: 'text-center items-center',
+    left: 'text-left items-start',
+};
+
+const SURFACES = {
+    default: '',
+    'paper-light': 'surface-section',
+    paper: 'surface-page',
+    card: 'surface-card',
+};
+
+const useGoTo = () => {
     const navigate = useNavigate();
+    return (link) => {
+        if (!link) return;
+        if (link.startsWith('http')) window.location.href = link;
+        else navigate(link);
+    };
+};
+
+const SectionAction = ({ action, withArrow }) => {
+    const goTo = useGoTo();
+    if (!action) return null;
+    return (
+        <Button
+            variant={action.variant ?? 'primary'}
+            onClick={() => goTo(action.href)}
+            className="px-10 py-5 text-xl"
+        >
+            {action.text}
+            {withArrow && (
+                <ArrowRight className="w-0 opacity-0 -translate-x-2 ml-0 group-hover:ml-2 group-hover:w-5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+            )}
+        </Button>
+    );
+};
+
+const CTASection = ({
+    // Content
+    eyebrow,
+    title,
+    description,
+    // Actions
+    primaryAction,
+    secondaryAction,
+    // Layout
+    align = 'center',
+    surface = 'default',
+    showArrow = true,
+    className = '',
+    // ─── Legacy props (kept for back-compat with existing callers) ───
+    buttonText,
+    buttonLink,
+    buttonVariant = 'primary',
+}) => {
+    // Coerce legacy buttonText/buttonLink/buttonVariant into primaryAction
+    const primary = primaryAction ?? (buttonText
+        ? { text: buttonText, href: buttonLink, variant: buttonVariant }
+        : null);
+
+    const alignClasses = ALIGNMENTS[align] ?? ALIGNMENTS.center;
+    const surfaceClass = SURFACES[surface] ?? '';
 
     return (
-        <section className={`py-32 px-4 ${className}`}>
-            <div className="max-w-5xl mx-auto text-center">
+        <section className={cn('py-32 px-4', surfaceClass, className)}>
+            <div className={cn('max-w-5xl mx-auto flex flex-col gap-8', alignClasses)}>
+                {eyebrow && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-badge font-mono uppercase tracking-[0.3em] text-faint"
+                    >
+                        {eyebrow}
+                    </motion.div>
+                )}
+
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-5xl md:text-7xl font-medium tracking-tighter text-ink mb-8"
+                    className="text-5xl md:text-7xl font-medium tracking-tighter text-strong"
                 >
                     {title}
                 </motion.h2>
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
-                    className="text-xl text-ink/60 max-w-2xl mx-auto mb-12 font-light"
-                >
-                    {description}
-                </motion.p>
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                    className="flex justify-center"
-                >
-                    <Button
-                        variant={buttonVariant}
-                        onClick={() => {
-                            if (buttonLink?.startsWith('http')) {
-                                window.location.href = buttonLink;
-                            } else {
-                                navigate(buttonLink || '#');
-                            }
-                        }}
-                        className="px-10 py-5 text-xl"
+
+                {description && (
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className={cn('text-xl text-muted max-w-2xl font-light', align === 'center' && 'mx-auto')}
                     >
-                        {buttonText || "Get Started"}
-                        {showArrow && (
-                            <ArrowRight className="w-0 opacity-0 -translate-x-2 ml-0 group-hover:ml-2 group-hover:w-5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                        )}
-                    </Button>
-                </motion.div>
+                        {description}
+                    </motion.p>
+                )}
+
+                {(primary || secondaryAction) && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className={cn('flex flex-col md:flex-row gap-4 mt-4', align === 'center' && 'justify-center')}
+                    >
+                        <SectionAction action={primary} withArrow={showArrow} />
+                        {secondaryAction && <SectionAction action={secondaryAction} withArrow={false} />}
+                    </motion.div>
+                )}
             </div>
         </section>
     );

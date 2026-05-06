@@ -14,11 +14,9 @@ import {
     ArrowRight
 } from 'lucide-react';
 import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
-import consistency1 from '../assets/images/products/spark/spark-consistency-scene-01.webp';
-import consistency2 from '../assets/images/products/spark/spark-consistency-scene-02.webp';
-import consistency3 from '../assets/images/products/spark/spark-consistency-scene-03.webp';
-import character2 from '../assets/images/products/spark/spark-feed-character.webp';
+import commercialDesk from '../assets/images/home/home-hero-workspace.webp';
 import { upcomingProducts } from '../config/products';
+import ViralFeedSimulator from '../components/sections/ViralFeedSimulator';
 
 // Home-specific narrative copy keyed by product id. The product registry
 // owns name/route/icon/banner/accent; this map owns the page-narrative
@@ -52,82 +50,6 @@ const HOME_CARD_COPY = {
         },
     },
 };
-
-const ViralFeedSimulator = () => {
-    return (
-        <div className="relative w-72 h-[580px] bg-black rounded-[3rem] border-[8px] border-ink/10 overflow-hidden shadow-2xl mx-auto z-10 box-border transform rotate-3 hover:rotate-0 transition-all duration-500">
-            {/* Feed Content */}
-            <div className="absolute inset-0 overflow-hidden bg-[#111]">
-                <motion.div
-                    animate={{ y: [0, -1160] }} // Adjusted for shorter height
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="space-y-0"
-                >
-                    {[consistency1, consistency2, consistency3, character2, consistency1].map((img, i) => (
-                        <div key={i} className="w-full h-[580px] relative border-b border-white/5">
-                            {/* Simulated Video Content */}
-                            <img src={img} alt="Feed content" className="w-full h-full object-cover opacity-90" />
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
-
-                            {/* Floating Reaction */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.5, y: 0 }}
-                                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 1], y: -200 }}
-                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.8 + 1, ease: "easeOut" }}
-                                className="absolute bottom-40 right-4 text-4xl drop-shadow-lg z-30"
-                            >
-                                {['❤️', '✨', '🔥'][i % 3]}
-                            </motion.div>
-                        </div>
-                    ))}
-                </motion.div>
-            </div>
-
-            {/* UI Overlay (TikTok Style) */}
-            <div className="absolute inset-0 z-20 pointer-events-none p-5 flex flex-col justify-end">
-                <div className="flex justify-between items-end">
-                    {/* LEFT: Creator Info */}
-                    <div className="flex-1 space-y-2 pb-1 pr-2">
-                        <div className="font-bold text-white text-shadow-sm flex items-center gap-1.5 text-sm">
-                            @fantazia.creator
-                        </div>
-                        <p className="text-white/90 text-[10px] leading-snug line-clamp-2 text-shadow-sm font-light">
-                            Line-drawn minimalist animation. The two characters...
-                        </p>
-                        <div className="inline-flex items-center px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[9px] font-medium text-white/90 shadow-sm">
-                            Spark 1.0
-                        </div>
-                    </div>
-
-                    {/* RIGHT: Actions */}
-                    <div className="flex flex-col gap-4 items-center w-8 pb-1">
-                        <div className="flex flex-col items-center gap-1">
-                            <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white">
-                                <span className="text-lg text-red-500 drop-shadow-md">♥</span>
-                            </div>
-                            <span className="text-white text-[9px] font-medium drop-shadow-md">84K</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const TestimonialCard = ({ quote, author, role }) => (
-    <div className="bg-white/90 backdrop-blur-sm p-8 rounded-[20px] border border-stroke break-inside-avoid mb-6 hover:-translate-y-1 transition-transform duration-300">
-        <p className="text-lg text-primary mb-6 leading-relaxed">"{quote}"</p>
-        <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-stroke" />
-            <div>
-                <div className="font-medium text-sm text-primary">{author}</div>
-                <div className="text-xs text-secondary">{role}</div>
-            </div>
-        </div>
-    </div>
-);
-
-import commercialDesk from '../assets/images/home/home-hero-workspace.webp';
 
 const Home = () => {
     return (
@@ -193,7 +115,7 @@ const Home = () => {
                         {/* LEFT: Visuals (ViralFeedSimulator) */}
                         <div className="flex-1 w-full flex justify-center relative">
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-gradient-to-tr from-orange-200/20 to-purple-200/20 rounded-full blur-3xl mix-blend-multiply pointer-events-none" />
-                            <ViralFeedSimulator />
+                            <ViralFeedSimulator variant="compact" />
                         </div>
 
                         {/* RIGHT: Text Content */}
