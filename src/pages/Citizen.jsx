@@ -1,19 +1,14 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 
-
-
-import banner from '../assets/images/products/citizen/citizen-hero-banner.webp';
-import iconVertical from '../assets/icons/products/citizen/citizen-lockup-vertical-white.webp';
-
 import WaitlistCTA from '../components/WaitlistCTA';
-import SEO from '../components/SEO';
 import SystemText from '../components/SystemText';
-
-
-
-
+import SEO from '../components/SEO';
+import { getProduct } from '../config/products';
 
 const Citizen = () => {
+    const product = getProduct('citizen');
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -21,44 +16,33 @@ const Citizen = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-24 px-4 overflow-hidden"
         >
-            <SEO
-                title="Citizen - Create AI Characters"
-                description="Create living, breathing characters with Citizen. They remember everything. Coming 2026."
-                canonical="/citizen"
-            />
+            <SEO title={product.seo.title} description={product.seo.description} canonical={product.route} />
 
             {/* TECH ETHEREAL HEADER */}
             <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-black/20 z-10" />
                 <img
-                    src={banner}
-                    alt="Citizen Header"
+                    src={product.images.banner}
+                    alt={`${product.name} Header`}
                     className="absolute inset-0 w-full h-full object-cover"
                 />
 
                 {/* Availability Tag */}
                 <div className="absolute top-8 right-8 bg-white/10 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-lg font-mono text-white/60 tracking-widest uppercase z-30">
-                    Coming 2026
+                    {product.releaseLabel}
                 </div>
+
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="mb-8"
                     >
-                        <img src={iconVertical} alt="Citizen" className="h-32 w-auto drop-shadow-lg" />
+                        <img src={product.icons.lockup} alt={product.name} className="h-32 w-auto drop-shadow-lg" />
                     </motion.div>
 
                     <div className="absolute bottom-8 left-8">
-                        <SystemText
-                            lines={[
-                                "> citizen.wake",
-                                "> personality layers emerging",
-                                "> emotional core forming...",
-                                "> ready to dream, to choose, to become"
-                            ]}
-                            delay={0.5}
-                        />
+                        <SystemText lines={product.terminal} delay={0.5} />
                     </div>
 
                     <motion.h1
@@ -67,7 +51,7 @@ const Citizen = () => {
                         transition={{ delay: 0.2 }}
                         className="text-7xl md:text-9xl font-medium text-white mb-6 tracking-tighter"
                     >
-                        Create Life.
+                        {product.heroTitle}
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -75,20 +59,13 @@ const Citizen = () => {
                         transition={{ delay: 0.3 }}
                         className="text-xl text-white/90 max-w-xl font-light leading-relaxed"
                     >
-                        Create living, breathing characters.
+                        {product.heroSubtitle}
                     </motion.p>
                 </div>
             </div>
 
-
-
-
-
-            <WaitlistCTA
-                title="Breathe life into AI."
-                description="Design complex personas that evolve with every interaction. Join the waitlist."
-            />
-        </motion.div >
+            <WaitlistCTA title={product.waitlistCTA.title} description={product.waitlistCTA.description} />
+        </motion.div>
     );
 };
 

@@ -13,17 +13,45 @@ import {
     Palette,
     ArrowRight
 } from 'lucide-react';
-import iconFable from '../assets/icons/products/fable/fable-mark.webp';
-import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp';
-import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp';
 import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
 import consistency1 from '../assets/images/products/spark/spark-consistency-scene-01.webp';
 import consistency2 from '../assets/images/products/spark/spark-consistency-scene-02.webp';
 import consistency3 from '../assets/images/products/spark/spark-consistency-scene-03.webp';
 import character2 from '../assets/images/products/spark/spark-feed-character.webp';
-import bannerFable from '../assets/images/products/fable/fable-hero-banner.webp';
-import bannerCitizen from '../assets/images/products/citizen/citizen-hero-banner.webp';
-import bannerOasis from '../assets/images/products/oasis/oasis-hero-banner.webp';
+import { upcomingProducts } from '../config/products';
+
+// Home-specific narrative copy keyed by product id. The product registry
+// owns name/route/icon/banner/accent; this map owns the page-narrative
+// pieces ("One Story. Three Ways In.") that don't belong on the product.
+const HOME_CARD_COPY = {
+    fable: {
+        verbBadge: 'Watch & Direct',
+        hoverHeadline: 'Direct the Film',
+        description: <>Create and direct AI films. <br />The genesis of your universe.</>,
+        tint: {
+            imageOverlay: 'bg-blue-900/20 group-hover/card:bg-blue-900/30',
+            iconHoverBg: 'group-hover/card:bg-blue-500/20 group-hover/card:border-blue-500/30',
+        },
+    },
+    citizen: {
+        verbBadge: 'Talk',
+        hoverHeadline: 'Chat with the Cast',
+        description: <>Chat with the characters you created. <br />They remember everything.</>,
+        tint: {
+            imageOverlay: 'bg-orange-900/20 group-hover/card:bg-orange-900/30',
+            iconHoverBg: 'group-hover/card:bg-orange-500/20 group-hover/card:border-orange-500/30',
+        },
+    },
+    oasis: {
+        verbBadge: 'Explore',
+        hoverHeadline: 'Walk the Set',
+        description: <>Walk through the worlds you built. <br />Full immersion.</>,
+        tint: {
+            imageOverlay: 'bg-teal-900/20 group-hover/card:bg-teal-900/30',
+            iconHoverBg: 'group-hover/card:bg-teal-500/20 group-hover/card:border-teal-500/30',
+        },
+    },
+};
 
 const ViralFeedSimulator = () => {
     return (
@@ -259,110 +287,48 @@ const Home = () => {
                     {/* Core Grid (Flex Layout for "Bento" expansion) */}
                     <div className="flex flex-col md:flex-row gap-4 h-[1200px] md:h-[600px] mb-12 group/grid">
 
-                        {/* FABLE CARD */}
-                        <Link to="/fable" className="relative flex-1 group/card overflow-hidden rounded-[32px] bg-black border border-black/5 transition-[flex] duration-500 ease-out hover:flex-[1.5]">
-                            {/* Background & Overlay */}
-                            <div className="absolute inset-0 z-0">
-                                <img src={bannerFable} alt="Fable" className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/90" />
-                                <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay group-hover/card:bg-blue-900/30 transition-colors" />
-                            </div>
-
-                            <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100 pointer-events-none">
-                                <span className="text-3xl md:text-3xl font-bold text-white tracking-tighter text-center px-4 drop-shadow-lg">
-                                    Direct the Film
-                                </span>
-                            </div>
-
-                            <div className="relative z-10 p-8 h-full flex flex-col justify-end">
-                                <div className="mb-auto pt-4 flex justify-between items-start">
-                                    <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center mb-6 group-hover/card:bg-blue-500/20 group-hover/card:border-blue-500/30 transition-all">
-                                        <img src={iconFable} alt="Fable" className="w-6 h-6 object-contain invert" />
+                        {upcomingProducts.map((product) => {
+                            const copy = HOME_CARD_COPY[product.id];
+                            return (
+                                <Link
+                                    key={product.id}
+                                    to={product.route}
+                                    className="relative flex-1 group/card overflow-hidden rounded-[32px] bg-black border border-black/5 transition-[flex] duration-500 ease-out hover:flex-[1.5]"
+                                >
+                                    {/* Background & Overlay */}
+                                    <div className="absolute inset-0 z-0">
+                                        <img src={product.images.banner} alt={product.name} className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700" />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/90" />
+                                        <div className={`absolute inset-0 mix-blend-overlay transition-colors ${copy.tint.imageOverlay}`} />
                                     </div>
-                                    <span className="text-xs font-mono text-white/40 border border-white/10 px-2 py-1 rounded-full uppercase tracking-widest bg-black/20 backdrop-blur-sm">Coming 2026</span>
-                                </div>
 
-                                <div className="min-w-max group-hover/card:opacity-0 transition-opacity duration-500">
-                                    <h4 className="text-3xl font-bold mb-2 tracking-tight text-white">FABLE</h4>
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm border border-white/5 text-white">Watch & Direct</span>
+                                    <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100 pointer-events-none">
+                                        <span className="text-3xl md:text-3xl font-bold text-white tracking-tighter text-center px-4 drop-shadow-lg">
+                                            {copy.hoverHeadline}
+                                        </span>
                                     </div>
-                                    <p className="text-white/60 text-sm leading-relaxed max-w-xs transition-colors">
-                                        Create and direct AI films. <br />The genesis of your universe.
-                                    </p>
-                                </div>
-                            </div>
-                        </Link>
 
-                        {/* CITIZEN CARD */}
-                        <Link to="/citizen" className="relative flex-1 group/card overflow-hidden rounded-[32px] bg-black border border-black/5 transition-[flex] duration-500 ease-out hover:flex-[1.5]">
-                            {/* Background & Overlay */}
-                            <div className="absolute inset-0 z-0">
-                                <img src={bannerCitizen} alt="Citizen" className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/90" />
-                                <div className="absolute inset-0 bg-orange-900/20 mix-blend-overlay group-hover/card:bg-orange-900/30 transition-colors" />
-                            </div>
+                                    <div className="relative z-10 p-8 h-full flex flex-col justify-end">
+                                        <div className="mb-auto pt-4 flex justify-between items-start">
+                                            <div className={`w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center mb-6 transition-all ${copy.tint.iconHoverBg}`}>
+                                                <img src={product.icons.mark} alt={product.name} className="w-6 h-6 object-contain invert" />
+                                            </div>
+                                            <span className="text-xs font-mono text-white/40 border border-white/10 px-2 py-1 rounded-full uppercase tracking-widest bg-black/20 backdrop-blur-sm">{product.releaseLabel}</span>
+                                        </div>
 
-                            <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100 pointer-events-none">
-                                <span className="text-3xl md:text-3xl font-bold text-white tracking-tighter text-center px-4 drop-shadow-lg">
-                                    Chat with the Cast
-                                </span>
-                            </div>
-
-                            <div className="relative z-10 p-8 h-full flex flex-col justify-end">
-                                <div className="mb-auto pt-4 flex justify-between items-start">
-                                    <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center mb-6 group-hover/card:bg-orange-500/20 group-hover/card:border-orange-500/30 transition-all">
-                                        <img src={iconCitizen} alt="Citizen" className="w-6 h-6 object-contain invert" />
+                                        <div className="min-w-max group-hover/card:opacity-0 transition-opacity duration-500">
+                                            <h4 className="text-3xl font-bold mb-2 tracking-tight text-white">{product.name.toUpperCase()}</h4>
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm border border-white/5 text-white">{copy.verbBadge}</span>
+                                            </div>
+                                            <p className="text-white/60 text-sm leading-relaxed max-w-xs transition-colors">
+                                                {copy.description}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <span className="text-xs font-mono text-white/40 border border-white/10 px-2 py-1 rounded-full uppercase tracking-widest bg-black/20 backdrop-blur-sm">Coming 2026</span>
-                                </div>
-
-                                <div className="min-w-max group-hover/card:opacity-0 transition-opacity duration-500">
-                                    <h4 className="text-3xl font-bold mb-2 tracking-tight text-white">CITIZEN</h4>
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm border border-white/5 text-white">Talk</span>
-                                    </div>
-                                    <p className="text-white/60 text-sm leading-relaxed max-w-xs transition-colors">
-                                        Chat with the characters you created. <br />They remember everything.
-                                    </p>
-                                </div>
-                            </div>
-                        </Link>
-
-                        {/* OASIS CARD */}
-                        <Link to="/oasis" className="relative flex-1 group/card overflow-hidden rounded-[32px] bg-black border border-black/5 transition-[flex] duration-500 ease-out hover:flex-[1.5]">
-                            {/* Background & Overlay */}
-                            <div className="absolute inset-0 z-0">
-                                <img src={bannerOasis} alt="Oasis" className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/90" />
-                                <div className="absolute inset-0 bg-teal-900/20 mix-blend-overlay group-hover/card:bg-teal-900/30 transition-colors" />
-                            </div>
-
-                            <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100 pointer-events-none">
-                                <span className="text-3xl md:text-3xl font-bold text-white tracking-tighter text-center px-4 drop-shadow-lg">
-                                    Walk the Set
-                                </span>
-                            </div>
-
-                            <div className="relative z-10 p-8 h-full flex flex-col justify-end">
-                                <div className="mb-auto pt-4 flex justify-between items-start">
-                                    <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center mb-6 group-hover/card:bg-teal-500/20 group-hover/card:border-teal-500/30 transition-all">
-                                        <img src={iconOasis} alt="Oasis" className="w-6 h-6 object-contain invert" />
-                                    </div>
-                                    <span className="text-xs font-mono text-white/40 border border-white/10 px-2 py-1 rounded-full uppercase tracking-widest bg-black/20 backdrop-blur-sm">Coming 2026</span>
-                                </div>
-
-                                <div className="min-w-max group-hover/card:opacity-0 transition-opacity duration-500">
-                                    <h4 className="text-3xl font-bold mb-2 tracking-tight text-white">OASIS</h4>
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm border border-white/5 text-white">Explore</span>
-                                    </div>
-                                    <p className="text-white/60 text-sm leading-relaxed max-w-xs transition-colors">
-                                        Walk through the worlds you built. <br />Full immersion.
-                                    </p>
-                                </div>
-                            </div>
-                        </Link>
+                                </Link>
+                            );
+                        })}
                     </div>
 
                     <div className="flex flex-col md:flex-row justify-between items-end mt-20 gap-6 text-left">

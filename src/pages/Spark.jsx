@@ -12,6 +12,9 @@ import moonieAvatar from '../assets/images/products/spark/moonie-avatar.webp';
 import Button from '../components/Button';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
+import { getProduct } from '../config/products';
+
+const SPARK = getProduct('spark');
 
 const ViralFeedSimulator = () => {
     return (
@@ -556,11 +559,7 @@ const Spark = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-24 md:pt-36 px-4 overflow-hidden"
         >
-            <SEO
-                title="Spark - Vertical Story Engine"
-                description="Create perfect vertical videos with consistent characters and worlds. No hallucinations. Start creating today."
-                canonical="/spark"
-            />
+            <SEO title={SPARK.seo.title} description={SPARK.seo.description} canonical={SPARK.route} />
 
             {/* HERO SECTION */}
             <section className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-6 md:gap-16 mb-20 md:mb-32 px-4">

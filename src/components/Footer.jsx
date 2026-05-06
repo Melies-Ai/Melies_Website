@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Linkedin, Youtube } from 'lucide-react';
 import { DiscordIcon, XIcon, TikTokIcon, TelegramIcon } from './SocialIcons';
+import { PRODUCTS } from '../config/products';
 
 const SocialLink = ({ href, icon: Icon, label }) => (
     <a
@@ -49,36 +50,29 @@ const Footer = () => {
                     <div className="col-span-1 md:col-span-3 md:col-start-7">
                         <h4 className="font-mono text-xs uppercase tracking-widest text-ink/40 mb-8">Product Suite</h4>
                         <ul className="space-y-4">
-                            <li>
-                                <Link to="/spark" className="text-ink/80 hover:text-accent transition-colors flex items-center gap-2 group">
-                                    Spark
-                                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-accent">→</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/fable" className="text-ink/60 hover:text-ink transition-colors flex items-center gap-2">
-                                    Fable
-                                    <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-ink/40 border border-black/5">
-                                        2026
-                                    </span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/citizen" className="text-ink/60 hover:text-ink transition-colors flex items-center gap-2">
-                                    Citizen
-                                    <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-ink/40 border border-black/5">
-                                        2026
-                                    </span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/oasis" className="text-ink/60 hover:text-ink transition-colors flex items-center gap-2">
-                                    Oasis
-                                    <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-ink/40 border border-black/5">
-                                        2026
-                                    </span>
-                                </Link>
-                            </li>
+                            {PRODUCTS.map((product) => (
+                                <li key={product.id}>
+                                    {product.status === 'live' ? (
+                                        <Link
+                                            to={product.route}
+                                            className="text-ink/80 hover:text-accent transition-colors flex items-center gap-2 group"
+                                        >
+                                            {product.name}
+                                            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-accent">→</span>
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            to={product.route}
+                                            className="text-ink/60 hover:text-ink transition-colors flex items-center gap-2"
+                                        >
+                                            {product.name}
+                                            <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-ink/40 border border-black/5">
+                                                {product.releaseLabel.replace(/^Coming\s+/, '')}
+                                            </span>
+                                        </Link>
+                                    )}
+                                </li>
+                            ))}
                         </ul>
                     </div>
 

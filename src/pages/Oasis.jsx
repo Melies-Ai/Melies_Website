@@ -4,19 +4,11 @@ import { motion } from 'framer-motion';
 import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';
 import SEO from '../components/SEO';
-
-import banner from '../assets/images/products/oasis/oasis-hero-banner.webp';
-import iconVertical from '../assets/icons/products/oasis/oasis-lockup-vertical-white.webp';
-
-
-
-
-
-
-
-
+import { getProduct } from '../config/products';
 
 const Oasis = () => {
+    const product = getProduct('oasis');
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -24,44 +16,33 @@ const Oasis = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-24 px-4 overflow-hidden"
         >
-            <SEO
-                title="Oasis - Infinite Worlds"
-                description="Instant reality. Infinite landscapes, physics, and lighting generated instantly. Coming 2026."
-                canonical="/oasis"
-            />
+            <SEO title={product.seo.title} description={product.seo.description} canonical={product.route} />
 
             {/* HERO SECTION */}
             <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-black/20 z-10" />
                 <img
-                    src={banner}
-                    alt="Oasis Header"
+                    src={product.images.banner}
+                    alt={`${product.name} Header`}
                     className="absolute inset-0 w-full h-full object-cover"
                 />
 
                 {/* Availability Tag */}
                 <div className="absolute top-8 right-8 bg-white/10 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-lg font-mono text-white/60 tracking-widest uppercase z-30">
-                    Coming 2026
+                    {product.releaseLabel}
                 </div>
+
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="mb-8"
                     >
-                        <img src={iconVertical} alt="Oasis" className="h-32 w-auto drop-shadow-lg" />
+                        <img src={product.icons.lockup} alt={product.name} className="h-32 w-auto drop-shadow-lg" />
                     </motion.div>
 
                     <div className="absolute bottom-8 left-8">
-                        <SystemText
-                            lines={[
-                                "> oasis.forge",
-                                "> spawning civilizations...",
-                                "> weaving magic into matter",
-                                "> world pulse detected"
-                            ]}
-                            delay={0.5}
-                        />
+                        <SystemText lines={product.terminal} delay={0.5} />
                     </div>
 
                     <motion.h1
@@ -70,7 +51,7 @@ const Oasis = () => {
                         transition={{ delay: 0.2 }}
                         className="text-7xl md:text-9xl font-medium text-white mb-6 tracking-tighter"
                     >
-                        Infinite Worlds.
+                        {product.heroTitle}
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -78,19 +59,13 @@ const Oasis = () => {
                         transition={{ delay: 0.3 }}
                         className="text-xl text-white/90 max-w-xl font-light leading-relaxed"
                     >
-                        Instant Reality. Infinite landscapes, physics, and lighting generated instantly.
+                        {product.heroSubtitle}
                     </motion.p>
-
                 </div>
             </div>
 
-
-
-            <WaitlistCTA
-                title="Forge your world."
-                description="Build immersive environments where your stories can live. Reserve your spot now."
-            />
-        </motion.div >
+            <WaitlistCTA title={product.waitlistCTA.title} description={product.waitlistCTA.description} />
+        </motion.div>
     );
 };
 

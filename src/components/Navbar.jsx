@@ -2,10 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import iconFable from '../assets/icons/products/fable/fable-mark.webp';
-import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp';
-import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp';
-import sparkImage from '../assets/images/products/spark/spark-consistency-scene-01.webp';
+import { liveProducts, upcomingProducts } from '../config/products';
 import Button from './Button';
 
 import { Menu, X, ChevronDown, ArrowUpRight, ArrowRight } from 'lucide-react';
@@ -85,42 +82,40 @@ const Navbar = () => {
                                         className="absolute top-full left-1/2 mt-6 w-[480px] bg-white rounded-2xl border border-black/5 shadow-xl p-2 overflow-hidden z-50"
                                     >
                                         {/* Available Now Section (Header Removed) */}
-                                        <div className="mb-4">
-                                            <Link to="/spark" className="flex items-start gap-4 p-1 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group relative">
-                                                {/* Vertical Mobile Image */}
-                                                <div className="w-16 h-24 rounded-lg overflow-hidden shrink-0 border border-black/5 shadow-sm relative">
-                                                    <img src={sparkImage} alt="Spark" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                                </div>
-                                                <div className="flex-1 pr-6">
-                                                    <div className="flex items-center gap-2 mb-1">
-                                                        <span className="font-medium text-primary text-lg">Spark</span>
-                                                        <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
+                                        {liveProducts.map((product) => (
+                                            <div key={product.id} className="mb-4">
+                                                <Link to={product.route} className="flex items-start gap-4 p-1 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group relative">
+                                                    {/* Vertical Mobile Image */}
+                                                    <div className="w-16 h-24 rounded-lg overflow-hidden shrink-0 border border-black/5 shadow-sm relative">
+                                                        <img src={product.images.spotlight} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                                     </div>
-                                                    <p className="text-sm text-secondary leading-snug">
-                                                        Vertical Stories. Create 20-sec videos with perfect consistency.
-                                                    </p>
-                                                </div>
-                                                {/* Hover Arrow with Animation */}
-                                                <ArrowUpRight className="absolute top-3 right-3 w-5 h-5 text-[#9D9480] opacity-0 translate-y-2 -translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-300" />
-                                            </Link>
-                                        </div>
+                                                    <div className="flex-1 pr-6">
+                                                        <div className="flex items-center gap-2 mb-1">
+                                                            <span className="font-medium text-primary text-lg">{product.name}</span>
+                                                            <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
+                                                        </div>
+                                                        <p className="text-sm text-secondary leading-snug">
+                                                            {product.tagline}. {product.description}
+                                                        </p>
+                                                    </div>
+                                                    {/* Hover Arrow with Animation */}
+                                                    <ArrowUpRight className="absolute top-3 right-3 w-5 h-5 text-[#9D9480] opacity-0 translate-y-2 -translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-300" />
+                                                </Link>
+                                            </div>
+                                        ))}
 
                                         {/* Coming Soon Section */}
                                         <div>
                                             <div className="text-[10px] font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Coming 2026</div>
                                             <div className="grid grid-cols-3 gap-2">
-                                                {[
-                                                    { name: "Fable", icon: iconFable, desc: "AI Director", link: "/fable" },
-                                                    { name: "Citizen", icon: iconCitizen, desc: "AI Characters", link: "/citizen" },
-                                                    { name: "Oasis", icon: iconOasis, desc: "Living Worlds", link: "/oasis" }
-                                                ].map((item, i) => (
-                                                    <Link key={i} to={item.link} className="flex flex-col gap-3 p-2 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group text-center border border-transparent hover:border-black/5">
+                                                {upcomingProducts.map((product) => (
+                                                    <Link key={product.id} to={product.route} className="flex flex-col gap-3 p-2 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group text-center border border-transparent hover:border-black/5">
                                                         <div className="w-8 h-8 mx-auto group-hover:scale-110 transition-transform">
-                                                            <img src={item.icon} alt={item.name} className="w-full h-full object-contain" />
+                                                            <img src={product.icons.mark} alt={product.name} className="w-full h-full object-contain" />
                                                         </div>
                                                         <div>
-                                                            <div className="font-medium text-primary text-sm mb-0.5">{item.name}</div>
-                                                            <div className="text-[9px] text-secondary uppercase tracking-widest mb-2">{item.desc}</div>
+                                                            <div className="font-medium text-primary text-sm mb-0.5">{product.name}</div>
+                                                            <div className="text-[9px] text-secondary uppercase tracking-widest mb-2">{product.tagline}</div>
                                                             <div className="text-[9px] font-medium text-black/40 border border-black/10 rounded-full px-2 py-0.5 inline-block group-hover:bg-black group-hover:text-white group-hover:border-black transition-colors duration-300">
                                                                 Waitlist
                                                             </div>
@@ -168,38 +163,36 @@ const Navbar = () => {
                         <div className="flex flex-col gap-6">
                             <div className="space-y-6">
                                 {/* Available Now Section */}
-                                <div>
-                                    <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Available Now</div>
-                                    <Link to="/spark" className="flex items-start gap-4 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
-                                        <div className="w-12 h-16 rounded-lg overflow-hidden shrink-0 border border-black/5 relative">
-                                            <img src={sparkImage} alt="Spark" className="w-full h-full object-cover" />
-                                        </div>
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <span className="font-medium text-primary text-lg transition-colors">Spark</span>
-                                                <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
+                                {liveProducts.map((product) => (
+                                    <div key={product.id}>
+                                        <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Available Now</div>
+                                        <Link to={product.route} className="flex items-start gap-4 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
+                                            <div className="w-12 h-16 rounded-lg overflow-hidden shrink-0 border border-black/5 relative">
+                                                <img src={product.images.spotlight} alt={product.name} className="w-full h-full object-cover" />
                                             </div>
-                                            <p className="text-sm text-secondary leading-snug transition-colors">
-                                                Vertical Stories. Perfect consistency.
-                                            </p>
-                                        </div>
-                                    </Link>
-                                </div>
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <span className="font-medium text-primary text-lg transition-colors">{product.name}</span>
+                                                    <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
+                                                </div>
+                                                <p className="text-sm text-secondary leading-snug transition-colors">
+                                                    {product.tagline}. {product.description}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))}
 
                                 {/* Coming Soon Section */}
                                 <div>
                                     <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Coming 2026</div>
                                     <div className="grid grid-cols-3 gap-3">
-                                        {[
-                                            { name: "Fable", icon: iconFable, link: "/fable" },
-                                            { name: "Citizen", icon: iconCitizen, link: "/citizen" },
-                                            { name: "Oasis", icon: iconOasis, link: "/oasis" }
-                                        ].map((item, i) => (
-                                            <Link key={i} to={item.link} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
+                                        {upcomingProducts.map((product) => (
+                                            <Link key={product.id} to={product.route} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
                                                 <div className="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity">
-                                                    <img src={item.icon} alt={item.name} className="w-full h-full object-contain transition-all" />
+                                                    <img src={product.icons.mark} alt={product.name} className="w-full h-full object-contain transition-all" />
                                                 </div>
-                                                <span className="text-xs font-medium text-primary transition-colors">{item.name}</span>
+                                                <span className="text-xs font-medium text-primary transition-colors">{product.name}</span>
                                             </Link>
                                         ))}
                                     </div>
