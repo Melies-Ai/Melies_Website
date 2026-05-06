@@ -15,7 +15,7 @@ import SEO from '../components/SEO';
 
 const ViralFeedSimulator = () => {
     return (
-        <div className="relative w-80 h-[640px] bg-black rounded-[3.5rem] border-[8px] border-ink/10 overflow-hidden shadow-2xl mx-auto z-10 box-border">
+        <div className="relative w-56 h-[420px] md:w-80 md:h-[640px] bg-black rounded-[2.5rem] md:rounded-[3.5rem] border-[6px] md:border-[8px] border-ink/10 overflow-hidden shadow-2xl mx-auto z-10 box-border">
             {/* Feed Content */}
             <div className="absolute inset-0 overflow-hidden bg-[#111]">
                 <motion.div
@@ -554,7 +554,7 @@ const Spark = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="pb-0 pt-36 px-4 overflow-hidden"
+            className="pb-0 pt-24 md:pt-36 px-4 overflow-hidden"
         >
             <SEO
                 title="Spark - Vertical Story Engine"
@@ -563,12 +563,12 @@ const Spark = () => {
             />
 
             {/* HERO SECTION */}
-            <section className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 mb-32 px-4">
+            <section className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-6 md:gap-16 mb-20 md:mb-32 px-4">
                 <div className="flex-1 z-10">
                     <motion.h1
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        className="text-5xl md:text-8xl font-medium mb-6 text-ink"
+                        className="text-4xl md:text-8xl font-medium mb-4 md:mb-6 text-ink"
                     >
                         <span
                             className="bg-clip-text text-transparent"
@@ -579,27 +579,44 @@ const Spark = () => {
                         <br />
                         Vertical Stories.
                     </motion.h1>
-                    <p className="text-xl text-ink/60 max-w-xl mb-8">
+                    <p className="text-base md:text-xl text-ink/60 max-w-xl mb-5 md:mb-8">
                         The only AI video tool that keeps your characters consistent. No more Frankenstein videos.
                     </p>
-                    <div className="flex items-center gap-4 mb-8 glass-panel p-4 rounded-2xl w-fit">
-                        <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden">
+                    <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-8 glass-panel p-3 md:p-4 rounded-2xl w-fit">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden shrink-0">
                             <img src={moonieAvatar} alt="Moonie" className="w-full h-full object-cover scale-150 translate-y-2 translate-x-1" />
                         </div>
-                        <div className="text-sm text-ink/70 italic">
+                        <div className="text-xs md:text-sm text-ink/70 italic">
                             "Perfect loops, zero effort." <br />
                             <span className="font-medium not-italic">- Moonie, Chief Cat Officer</span>
                         </div>
                     </div>
-                    <Button variant="swipe" className="px-8 py-4 text-xl">
+                    <Button variant="swipe" className="px-6 md:px-8 py-3 md:py-4 text-lg md:text-xl">
                         Start Creating
                     </Button>
                 </div>
 
-                <div className="w-full md:flex-1 relative min-h-[600px] flex items-center justify-center perspective-1000">
-                    {/* Shadow / Grounding Element (Replaces Chair context) */}
-                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-48 h-12 bg-black/20 blur-2xl rounded-[100%] z-0 scale-x-150 opacity-60" />
-                    <div className="relative z-10">
+                <div className="w-full md:flex-1 relative min-h-[460px] md:min-h-[600px] flex items-center justify-center perspective-1000">
+                    {/* Ambient glow — warm spotlight behind the phone */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div
+                            className="w-[110%] md:w-[80%] h-[80%] rounded-full opacity-70 blur-3xl"
+                            style={{ background: 'radial-gradient(closest-side, rgba(157,148,128,0.45), rgba(157,148,128,0.12) 55%, transparent 75%)' }}
+                        />
+                    </div>
+                    {/* Subtle grid texture */}
+                    <div
+                        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+                        style={{
+                            backgroundImage: 'linear-gradient(rgba(0,0,0,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.6) 1px, transparent 1px)',
+                            backgroundSize: '32px 32px',
+                            maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)',
+                            WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)'
+                        }}
+                    />
+                    {/* Ground shadow */}
+                    <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 w-32 h-8 md:w-48 md:h-12 bg-black/25 blur-2xl rounded-[100%] z-0 scale-x-150 opacity-60" />
+                    <div className="relative z-10 rotate-[-2deg] md:rotate-0 transition-transform duration-500 hover:rotate-0">
                         <ViralFeedSimulator />
                     </div>
                 </div>
