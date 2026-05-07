@@ -5,8 +5,8 @@ import { DiscordIcon, XIcon, TikTokIcon, TelegramIcon } from './SocialIcons';
 import { PRODUCTS } from '../config/products';
 import { cn } from '../lib/cn';
 
-import footerBgSrc from '../assets/images/home/footer-desk.png?w=1200&format=webp';
-import footerBgSrcSet from '../assets/images/home/footer-desk.png?w=800;1200;1800;2400&format=webp&as=srcset';
+import footerBgSrc from '../assets/images/home/footer-desk.webp?w=1200&format=webp';
+import footerBgSrcSet from '../assets/images/home/footer-desk.webp?w=800;1200;1800&format=webp&as=srcset';
 
 const SocialLink = ({ href, icon: Icon, label }) => (
     <a
