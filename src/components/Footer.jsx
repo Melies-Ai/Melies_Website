@@ -74,36 +74,14 @@ const Footer = () => (
             <div className="absolute inset-0 bg-gradient-to-l from-ink/60 via-ink/20 to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative flex flex-col">
-            {/* Top row — Product Suite + Connect, anchored top-right to leave the
-                cinematic image breathing on the left. */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 md:mb-48">
-                <div className="col-span-1 md:col-span-3 md:col-start-7">
-                    <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Product Suite</h4>
-                    <ul className="space-y-4">
-                        {PRODUCTS.map((product) => (
-                            <li key={product.id}>
-                                <ProductLink product={product} />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div className="col-span-1 md:col-span-3">
-                    <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Connect</h4>
-                    <div className="flex flex-wrap gap-2">
-                        {SOCIAL_LINKS.map((link, i) => (
-                            <SocialLink key={i} {...link} />
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Bottom strip — brand block on the left, legal row aligned with it
-                on the right. Items end-aligned so the wordmark/tagline base
-                sits on the same baseline as © + privacy/terms. */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                <div className="max-w-md">
+        <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative">
+            {/* Three-column row, bottom-aligned. The brand block is the tallest
+                so it dictates the row height; Product Suite and Connect drop
+                down to match — their last items (Oasis 2026, social bubbles)
+                land on the same baseline as the brand description. */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:items-end mb-12">
+                {/* Brand */}
+                <div className="col-span-1 md:col-span-5">
                     <div className="flex items-center gap-2 mb-4">
                         <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                             fantazia.ai
@@ -117,12 +95,35 @@ const Footer = () => (
                     </p>
                 </div>
 
-                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 text-[10px] text-white/40 uppercase tracking-wider font-mono">
-                    <p>&copy; {new Date().getFullYear()} Fantazia. All rights reserved.</p>
-                    <div className="flex gap-8">
-                        <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                        <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+                {/* Product Suite */}
+                <div className="col-span-1 md:col-span-3 md:col-start-7">
+                    <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Product Suite</h4>
+                    <ul className="space-y-4">
+                        {PRODUCTS.map((product) => (
+                            <li key={product.id}>
+                                <ProductLink product={product} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Connect */}
+                <div className="col-span-1 md:col-span-3">
+                    <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Connect</h4>
+                    <div className="flex flex-wrap gap-2">
+                        {SOCIAL_LINKS.map((link, i) => (
+                            <SocialLink key={i} {...link} />
+                        ))}
                     </div>
+                </div>
+            </div>
+
+            {/* Legal row — separate sibling under the bottom-aligned grid */}
+            <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/40 uppercase tracking-wider font-mono">
+                <p>&copy; {new Date().getFullYear()} Fantazia. All rights reserved.</p>
+                <div className="flex gap-8">
+                    <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                    <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                 </div>
             </div>
         </div>
