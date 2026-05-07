@@ -66,8 +66,6 @@ const Footer = () => (
                 decoding="async"
                 className="w-full h-full object-cover"
             />
-            {/* Top fade — soft transition into the footer from the page above */}
-            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-paper/60 to-transparent" />
             {/* Body overlay — keeps text readable while letting the scene breathe */}
             <div className="absolute inset-0 bg-ink/45" />
             {/* Subtle right-side vignette to anchor the text columns */}
