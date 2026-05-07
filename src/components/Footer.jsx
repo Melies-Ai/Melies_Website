@@ -5,12 +5,15 @@ import { DiscordIcon, XIcon, TikTokIcon, TelegramIcon } from './SocialIcons';
 import { PRODUCTS } from '../config/products';
 import { cn } from '../lib/cn';
 
+import footerBgSrc from '../assets/images/home/footer-desk.png?w=1200&format=webp';
+import footerBgSrcSet from '../assets/images/home/footer-desk.png?w=800;1200;1800;2400&format=webp&as=srcset';
+
 const SocialLink = ({ href, icon: Icon, label }) => (
     <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="w-10 h-10 rounded-full bg-ink/5 flex items-center justify-center text-muted hover:bg-ink hover:text-paper transition-all duration-300 group"
+        className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:bg-white/95 hover:text-ink hover:border-white transition-all duration-300 group"
         aria-label={label}
     >
         <Icon size={18} className="group-hover:scale-110 transition-transform" />
@@ -34,14 +37,14 @@ const ProductLink = ({ product }) => {
             to={product.route}
             className={cn(
                 'transition-colors flex items-center gap-2',
-                isLive ? 'text-default hover:text-accent group' : 'text-muted hover:text-strong'
+                isLive ? 'text-white/90 hover:text-accent group' : 'text-white/60 hover:text-white'
             )}
         >
             {product.name}
             {isLive ? (
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity text-accent">→</span>
             ) : (
-                <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-black/5 text-faint border-subtle">
+                <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-white/10 text-white/50 border border-white/10">
                     {product.releaseLabel.replace(/^Coming\s+/, '')}
                 </span>
             )}
@@ -50,27 +53,47 @@ const ProductLink = ({ product }) => {
 };
 
 const Footer = () => (
-    <footer className="surface-page border-t border-subtle pt-20 pb-10 px-6">
-        <div className="max-w-7xl mx-auto">
+    <footer className="relative overflow-hidden border-t border-white/5 mt-32">
+        {/* Cinematic background — daffodils, laptop, distant city through morning light. */}
+        <div className="absolute inset-0 -z-10">
+            <img
+                src={footerBgSrc}
+                srcSet={footerBgSrcSet}
+                sizes="100vw"
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+            />
+            {/* Top fade — soft transition into the footer from the page above */}
+            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-paper/60 to-transparent" />
+            {/* Body overlay — keeps text readable while letting the scene breathe */}
+            <div className="absolute inset-0 bg-ink/45" />
+            {/* Subtle right-side vignette to anchor the text columns */}
+            <div className="absolute inset-0 bg-gradient-to-l from-ink/60 via-ink/20 to-transparent" />
+        </div>
+
+        <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
                 {/* Brand */}
                 <div className="col-span-1 md:col-span-5">
                     <div className="flex items-center gap-2 mb-6">
-                        <span className="font-display text-[1.6rem] lowercase text-strong leading-none">
+                        <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                             fantazia.ai
                         </span>
                     </div>
-                    <p className="text-muted max-w-sm mb-8 text-lg font-serif italic leading-relaxed">
+                    <p className="text-white/80 max-w-sm mb-8 text-lg font-serif italic leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
                         "The Infinite Cinema Engine."
                     </p>
-                    <p className="text-sm text-faint max-w-xs mb-8">
+                    <p className="text-sm text-white/55 max-w-xs mb-8">
                         Orchestrating the future of AI filmmaking with multi-agent systems.
                     </p>
                 </div>
 
                 {/* Product Suite */}
                 <div className="col-span-1 md:col-span-3 md:col-start-7">
-                    <h4 className="font-mono text-xs uppercase tracking-widest text-faint mb-8">Product Suite</h4>
+                    <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Product Suite</h4>
                     <ul className="space-y-4">
                         {PRODUCTS.map((product) => (
                             <li key={product.id}>
@@ -82,7 +105,7 @@ const Footer = () => (
 
                 {/* Connect */}
                 <div className="col-span-1 md:col-span-3">
-                    <h4 className="font-mono text-xs uppercase tracking-widest text-faint mb-8">Connect</h4>
+                    <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Connect</h4>
                     <div className="flex flex-wrap gap-2">
                         {SOCIAL_LINKS.map((link, i) => (
                             <SocialLink key={i} {...link} />
@@ -91,11 +114,11 @@ const Footer = () => (
                 </div>
             </div>
 
-            <div className="border-t border-subtle pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-faint uppercase tracking-wider font-mono">
+            <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/40 uppercase tracking-wider font-mono">
                 <p>&copy; {new Date().getFullYear()} Fantazia. All rights reserved.</p>
                 <div className="flex gap-8">
-                    <Link to="/privacy" className="hover:text-strong transition-colors">Privacy Policy</Link>
-                    <Link to="/terms" className="hover:text-strong transition-colors">Terms of Service</Link>
+                    <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                    <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                 </div>
             </div>
         </div>
