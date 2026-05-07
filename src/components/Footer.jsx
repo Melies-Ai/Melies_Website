@@ -75,13 +75,13 @@ const Footer = () => (
         </div>
 
         <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative">
-            {/* Three-column row, bottom-aligned. The brand block is the tallest
-                so it dictates the row height; Product Suite and Connect drop
-                down to match — their last items (Oasis 2026, social bubbles)
-                land on the same baseline as the brand description. */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:items-end mb-12">
+            {/* Three-column row. Brand alone is bottom-aligned (its description
+                tail sits down toward the desk surface in the image). Product
+                Suite and Connect stay top-aligned so their headings line up
+                on the same baseline. */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
                 {/* Brand */}
-                <div className="col-span-1 md:col-span-5">
+                <div className="col-span-1 md:col-span-5 md:self-end">
                     <div className="flex items-center gap-2 mb-4">
                         <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                             fantazia.ai
