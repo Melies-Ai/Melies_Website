@@ -328,7 +328,7 @@ const Home = () => {
                 buttonText="Start Creating"
                 buttonLink="/login"
                 buttonVariant="swipe"
-                className="bg-white mb-20"
+                className="bg-white"
             />
         </div>
     );
