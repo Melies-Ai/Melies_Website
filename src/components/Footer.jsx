@@ -107,7 +107,7 @@ const Footer = () => (
                 {/* Connect */}
                 <div className="col-span-1 md:col-span-3">
                     <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Connect</h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="grid grid-cols-4 gap-2 w-fit">
                         {SOCIAL_LINKS.map((link, i) => (
                             <SocialLink key={i} {...link} />
                         ))}
