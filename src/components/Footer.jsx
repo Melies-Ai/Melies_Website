@@ -76,12 +76,11 @@ const Footer = () => (
 
         <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
-                {/* Brand — pushed right with responsive left padding so the
-                    wordmark clears the bouquet on the left of the cinematic
-                    backdrop. Padding instead of col-start because the image
-                    is full-bleed: the bouquet extends further into the
-                    centered max-w-7xl container as the viewport widens. */}
-                <div className="col-span-1 md:col-span-5 md:pl-12 lg:pl-32 xl:pl-56 2xl:pl-72">
+                {/* Brand — pulled down vertically so the wordmark sits below
+                    the bouquet, near the desk surface in the cinematic image.
+                    The other two columns stay top-aligned, creating a
+                    magazine-spread feel. */}
+                <div className="col-span-1 md:col-span-5 md:mt-32 lg:mt-44 xl:mt-56">
                     <div className="flex items-center gap-2 mb-6">
                         <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                             fantazia.ai
