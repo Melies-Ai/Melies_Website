@@ -57,7 +57,7 @@ export default {
 
       // ─── Font families ─────────────────────────────────────────────────
       fontFamily: {
-        display: ['"IM Fell Double Pica"', 'serif'],
+        display: ['"IM Fell English"', 'serif'],
       },
 
       // ─── Background images ─────────────────────────────────────────────

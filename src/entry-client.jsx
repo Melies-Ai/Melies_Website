@@ -8,7 +8,7 @@ import '@fontsource/inter/latin-400.css';
 import '@fontsource/inter/latin-500.css';
 import '@fontsource/inter/latin-600.css';
 import '@fontsource/inter/latin-700.css';
-import '@fontsource/im-fell-double-pica/latin-400.css';
+import '@fontsource/im-fell-english/latin-400.css';
 
 import './index.css';
 import { HelmetProvider } from 'react-helmet-async';
