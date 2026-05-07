@@ -53,7 +53,7 @@ const ProductLink = ({ product }) => {
 };
 
 const Footer = () => (
-    <footer className="relative overflow-hidden border-t border-white/5 mt-32">
+    <footer className="relative isolate overflow-hidden border-t border-white/5 mt-32">
         {/* Cinematic background — daffodils, laptop, distant city through morning light. */}
         <div className="absolute inset-0 -z-10">
             <img
@@ -114,7 +114,7 @@ const Footer = () => (
                 </div>
             </div>
 
-            <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/40 uppercase tracking-wider font-mono">
+            <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/40 uppercase tracking-wider font-mono">
                 <p>&copy; {new Date().getFullYear()} Fantazia. All rights reserved.</p>
                 <div className="flex gap-8">
                     <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
