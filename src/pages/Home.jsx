@@ -105,7 +105,7 @@ const Home = () => {
                     <img
                         src={commercialDesk}
                         alt="Fantazia Workspace"
-                        fetchpriority="high"
+                        fetchPriority="high"
                         decoding="async"
                         className="w-full h-full object-cover"
                     />

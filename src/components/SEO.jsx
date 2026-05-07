@@ -76,7 +76,7 @@ const SEO = ({
                     rel="preload"
                     as="image"
                     href={preloadImage}
-                    fetchpriority="high"
+                    fetchPriority="high"
                 />
             )}
 

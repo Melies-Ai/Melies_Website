@@ -37,7 +37,7 @@ const Citizen = () => {
                     srcSet={media.banner.srcSet}
                     sizes="(max-width: 1400px) 100vw, 1400px"
                     alt={`${product.name} Header`}
-                    fetchpriority="high"
+                    fetchPriority="high"
                     decoding="async"
                     className="absolute inset-0 w-full h-full object-cover"
                 />
