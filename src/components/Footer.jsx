@@ -53,7 +53,7 @@ const ProductLink = ({ product }) => {
 };
 
 const Footer = () => (
-    <footer className="relative isolate overflow-hidden border-t border-white/5">
+    <footer className="relative isolate overflow-hidden">
         {/* Cinematic background — daffodils, laptop, distant city through morning light. */}
         <div className="absolute inset-0 -z-10">
             <img
