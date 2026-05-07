@@ -80,7 +80,7 @@ const Footer = () => (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
                 {/* Brand */}
                 <div className="col-span-1 md:col-span-5 md:self-end">
-                    <div className="flex items-center gap-2 mb-4">
+                    <div className="flex items-center gap-2 mb-2">
                         <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                             fantazia.ai
                         </span>
