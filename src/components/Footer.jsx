@@ -74,27 +74,10 @@ const Footer = () => (
             <div className="absolute inset-0 bg-gradient-to-l from-ink/60 via-ink/20 to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
-                {/* Brand — pulled down vertically so the wordmark sits below
-                    the bouquet, near the desk surface in the cinematic image.
-                    The other two columns stay top-aligned, creating a
-                    magazine-spread feel. */}
-                <div className="col-span-1 md:col-span-5 md:mt-32 lg:mt-44 xl:mt-56">
-                    <div className="flex items-center gap-2 mb-6">
-                        <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
-                            fantazia.ai
-                        </span>
-                    </div>
-                    <p className="text-white/80 max-w-sm mb-8 text-lg font-serif italic leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
-                        "The Infinite Cinema Engine."
-                    </p>
-                    <p className="text-sm text-white/55 max-w-xs mb-8">
-                        Orchestrating the future of AI filmmaking with multi-agent systems.
-                    </p>
-                </div>
-
-                {/* Product Suite */}
+        <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative flex flex-col">
+            {/* Top row — Product Suite + Connect, anchored top-right to leave the
+                cinematic image breathing on the left. */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 md:mb-48">
                 <div className="col-span-1 md:col-span-3 md:col-start-7">
                     <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Product Suite</h4>
                     <ul className="space-y-4">
@@ -106,7 +89,6 @@ const Footer = () => (
                     </ul>
                 </div>
 
-                {/* Connect */}
                 <div className="col-span-1 md:col-span-3">
                     <h4 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8">Connect</h4>
                     <div className="flex flex-wrap gap-2">
@@ -117,11 +99,30 @@ const Footer = () => (
                 </div>
             </div>
 
-            <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-white/40 uppercase tracking-wider font-mono">
-                <p>&copy; {new Date().getFullYear()} Fantazia. All rights reserved.</p>
-                <div className="flex gap-8">
-                    <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                    <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            {/* Bottom strip — brand block on the left, legal row aligned with it
+                on the right. Items end-aligned so the wordmark/tagline base
+                sits on the same baseline as © + privacy/terms. */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div className="max-w-md">
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+                            fantazia.ai
+                        </span>
+                    </div>
+                    <p className="text-white/80 max-w-sm mb-3 text-lg font-serif italic leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
+                        "The Infinite Cinema Engine."
+                    </p>
+                    <p className="text-sm text-white/55 max-w-xs">
+                        Orchestrating the future of AI filmmaking with multi-agent systems.
+                    </p>
+                </div>
+
+                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 text-[10px] text-white/40 uppercase tracking-wider font-mono">
+                    <p>&copy; {new Date().getFullYear()} Fantazia. All rights reserved.</p>
+                    <div className="flex gap-8">
+                        <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+                    </div>
                 </div>
             </div>
         </div>
