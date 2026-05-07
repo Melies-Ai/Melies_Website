@@ -17,7 +17,7 @@ const Oasis = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="pb-0 pt-24 px-4 overflow-hidden"
+            className="pb-0 pt-32 md:pt-40 px-4 overflow-hidden"
         >
             <SEO
                 title={product.seo.title}
