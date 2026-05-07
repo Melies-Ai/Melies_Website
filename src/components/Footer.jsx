@@ -76,8 +76,8 @@ const Footer = () => (
 
         <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
-                {/* Brand */}
-                <div className="col-span-1 md:col-span-5">
+                {/* Brand — shifted one column right so the wordmark sits past the bouquet on wide viewports */}
+                <div className="col-span-1 md:col-span-5 md:col-start-2">
                     <div className="flex items-center gap-2 mb-6">
                         <span className="font-display text-[1.7rem] lowercase text-white leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                             fantazia.ai
