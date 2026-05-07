@@ -74,7 +74,7 @@ const Footer = () => (
             <div className="absolute inset-0 bg-gradient-to-l from-ink/60 via-ink/20 to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto pt-28 pb-10 px-6 relative">
+        <div className="max-w-7xl mx-auto pt-[19.5rem] pb-10 px-6 relative">
             {/* Three-column row. Brand alone is bottom-aligned (its description
                 tail sits down toward the desk surface in the image). Product
                 Suite and Connect stay top-aligned so their headings line up
