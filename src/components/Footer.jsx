@@ -74,7 +74,7 @@ const Footer = () => (
             <div className="absolute inset-0 bg-gradient-to-l from-ink/60 via-ink/20 to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto pt-[19.5rem] pb-10 px-6 relative">
+        <div className="max-w-7xl mx-auto pt-[12.5rem] pb-10 px-6 relative">
             {/* Three-column row. Brand alone is bottom-aligned (its description
                 tail sits down toward the desk surface in the image). Product
                 Suite and Connect stay top-aligned so their headings line up
@@ -87,11 +87,8 @@ const Footer = () => (
                             fantazia.ai
                         </span>
                     </div>
-                    <p className="text-white/80 max-w-sm mb-3 text-lg font-serif italic leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
+                    <p className="text-white/80 max-w-sm text-lg font-serif italic leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
                         "The Infinite Cinema Engine."
-                    </p>
-                    <p className="text-sm text-white/55 max-w-xs">
-                        Orchestrating the future of AI filmmaking with multi-agent systems.
                     </p>
                 </div>
 
