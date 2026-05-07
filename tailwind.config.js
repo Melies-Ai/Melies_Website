@@ -57,7 +57,7 @@ export default {
 
       // ─── Font families ─────────────────────────────────────────────────
       fontFamily: {
-        display: ['"IM Fell Great Primer"', 'serif'],
+        display: ['"IM Fell Double Pica"', 'serif'],
       },
 
       // ─── Background images ─────────────────────────────────────────────

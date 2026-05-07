@@ -89,7 +89,7 @@ Rule of thumb: if you're typing `bg-[#F0ECE2]` or `text-ink/55`, you're skipping
 | Family | Loader | Use |
 | :--- | :--- | :--- |
 | **Inter** | Google Fonts (300, 400, 500, 600, 700) | Default. Body, UI, headings. |
-| **Bricolage Grotesque** | Google Fonts (200–800) | Display only — currently the `fantazia.ai` wordmark. |
+| **IM Fell Double Pica** | @fontsource (latin 400) | Display only — the `fantazia.ai` wordmark. Classical English serif, gives the brand its literary/cinematic feel. |
 | **System mono** | `ui-monospace, SFMono-Regular, Menlo, …` (Tailwind default `font-mono`) | Tech labels, terminal text, badges. |
 
 > **Removed**: Geist Mono and the `.font-mono-tech` utility. Never actually loaded; was falling back to Monaco. Replaced by Tailwind's `font-mono` (system stack).
