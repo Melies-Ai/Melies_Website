@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 
 import moonieAvatar from '../assets/images/products/spark/moonie-avatar.webp';
@@ -9,11 +9,16 @@ import SEO from '../components/SEO';
 import ViralFeedSimulator from '../components/sections/ViralFeedSimulator';
 import ConsistencyEngine from '../components/sections/spark/ConsistencyEngine';
 import AssetIntegration from '../components/sections/spark/AssetIntegration';
-import FullExperience from '../components/sections/spark/FullExperience';
-import UseCases from '../components/sections/spark/UseCases';
+// Below-the-fold sections: lazy-load so the Spark hero paints faster.
+// The user has to scroll past Consistency + AssetIntegration to see them.
+const FullExperience = lazy(() => import('../components/sections/spark/FullExperience'));
+const UseCases = lazy(() => import('../components/sections/spark/UseCases'));
 import { getProduct } from '../config/products';
+import { getProductIcons } from '../config/products-icons';
+import { productSchema } from '../config/products-schema';
 
 const SPARK = getProduct('spark');
+const SPARK_SPOTLIGHT = getProductIcons('spark')?.spotlight;
 
 const Spark = () => (
     <motion.div
@@ -22,7 +27,15 @@ const Spark = () => (
         exit={{ opacity: 0 }}
         className="pb-0 pt-24 md:pt-36 px-4 overflow-hidden"
     >
-        <SEO title={SPARK.seo.title} description={SPARK.seo.description} canonical={SPARK.route} />
+        <SEO
+            title={SPARK.seo.title}
+            description={SPARK.seo.description}
+            canonical={SPARK.route}
+            type="product"
+            image={SPARK_SPOTLIGHT}
+            preloadImage={SPARK_SPOTLIGHT}
+            structuredData={productSchema('spark')}
+        />
 
         {/* HERO SECTION */}
         <section className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-6 md:gap-16 mb-20 md:mb-32 px-4">
@@ -79,8 +92,10 @@ const Spark = () => (
 
         <ConsistencyEngine />
         <AssetIntegration />
-        <FullExperience />
-        <UseCases />
+        <Suspense fallback={<div className="h-[500px]" />}>
+            <FullExperience />
+            <UseCases />
+        </Suspense>
 
         <CTASection
             title="Ready to ignite?"

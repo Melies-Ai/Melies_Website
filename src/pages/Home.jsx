@@ -58,8 +58,9 @@ const Home = () => {
         <div className="bg-background min-h-screen pt-40">
             <SEO
                 title="The Infinite Cinema Engine"
-                description="Orchestrate multi-agent systems to generate films. From script to screen, in real-time. Fantazia is the future of filmmaking."
+                description="Orchestrate multi-agent AI systems to generate films from script to screen, in real-time. The future of filmmaking starts with Fantazia."
                 canonical="/"
+                preloadImage={commercialDesk}
             />
 
             {/* HERO SECTION */}
@@ -234,7 +235,15 @@ const Home = () => {
                                 >
                                     {/* Background & Overlay */}
                                     <div className="absolute inset-0 z-0">
-                                        <img src={media?.banner} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700" />
+                                        <img
+                                            src={media?.banner?.src}
+                                            srcSet={media?.banner?.srcSet}
+                                            sizes="(max-width: 768px) 100vw, 33vw"
+                                            alt={product.name}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700"
+                                        />
                                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/90" />
                                         <div className={`absolute inset-0 mix-blend-overlay transition-colors ${copy.tint.imageOverlay}`} />
                                     </div>

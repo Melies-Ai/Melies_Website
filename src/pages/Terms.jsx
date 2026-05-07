@@ -24,8 +24,8 @@ const Terms = () => {
             className="pt-32 pb-20 px-6 bg-paper min-h-screen"
         >
             <SEO
-                title="Terms and Conditions - Fantazia"
-                description="Review the Terms and Conditions for using Fantazia.ai."
+                title="Terms of Service"
+                description="The rules of the road for using Fantazia.ai and our AI filmmaking tools — accounts, content rights, acceptable use, and account termination."
                 canonical="/terms"
             />
             <div className="max-w-3xl mx-auto">

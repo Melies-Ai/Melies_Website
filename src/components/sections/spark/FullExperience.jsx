@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Image as ImageIcon, Music, Mic, Volume2 } from 'lucide-react';
+import { useInView } from '../../../lib/useInView';
 
 const TIMELINE_LAYERS = [
     { label: 'Video Track', icon: <ImageIcon size={18} />, color: 'bg-blue-500', barColor: 'bg-blue-400' },
@@ -9,8 +10,12 @@ const TIMELINE_LAYERS = [
     { label: 'Sound FX', icon: <Volume2 size={18} />, color: 'bg-amber-500', barColor: 'bg-amber-400' },
 ];
 
-const FullExperience = () => (
-    <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
+const FullExperience = () => {
+    const sectionRef = useRef(null);
+    const inView = useInView(sectionRef);
+
+    return (
+    <div ref={sectionRef} className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
         <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row items-center gap-16">
             <div className="flex-1 text-left">
                 <h2 className="text-4xl md:text-5xl font-medium text-strong mb-6">The Full Experience</h2>
@@ -29,7 +34,7 @@ const FullExperience = () => (
                     {/* Playhead */}
                     <motion.div
                         className="absolute top-0 bottom-0 w-[1px] bg-accent/50 z-20"
-                        animate={{ left: ['15%', '85%'] }}
+                        animate={inView ? { left: ['15%', '85%'] } : { left: '15%' }}
                         transition={{ duration: 8, ease: 'linear', repeat: Infinity }}
                     >
                         <div className="absolute -top-1 -left-1.5 w-3 h-3 bg-accent rounded-full shadow-card" />
@@ -56,7 +61,7 @@ const FullExperience = () => (
                                             <motion.div
                                                 key={j}
                                                 className={`h-full aspect-video rounded-md ${layer.barColor} opacity-40`}
-                                                animate={{ opacity: [0.4, 0.7, 0.4] }}
+                                                animate={inView ? { opacity: [0.4, 0.7, 0.4] } : { opacity: 0.4 }}
                                                 transition={{
                                                     duration: 2 + Math.random(),
                                                     repeat: Infinity,
@@ -72,10 +77,10 @@ const FullExperience = () => (
                                         <motion.div
                                             key={j}
                                             className={`w-1.5 rounded-full ${layer.barColor} opacity-30`}
-                                            animate={{
+                                            animate={inView ? {
                                                 height: ['20%', `${40 + Math.random() * 60}%`, '20%'],
                                                 opacity: [0.3, 0.6, 0.3],
-                                            }}
+                                            } : { height: '20%', opacity: 0.3 }}
                                             transition={{
                                                 duration: 1.5 + Math.random(),
                                                 repeat: Infinity,
@@ -93,6 +98,7 @@ const FullExperience = () => (
             </div>
         </div>
     </div>
-);
+    );
+};
 
 export default FullExperience;

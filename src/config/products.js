@@ -46,8 +46,8 @@ export const PRODUCTS = [
         heroTitle: 'Vertical Stories.',
         accent: { tint: null },
         seo: {
-            title: 'Spark - Vertical Story Engine',
-            description: 'Create perfect vertical videos with consistent characters and worlds. No hallucinations. Start creating today.',
+            title: 'Spark — AI Vertical Video Engine',
+            description: 'Generate 20-second vertical videos with characters, worlds, and props that stay consistent across every frame. No Frankenstein cuts. Start creating today.',
         },
     },
     {
@@ -62,8 +62,8 @@ export const PRODUCTS = [
         heroSubtitle: 'The studio for infinite narrative arcs.',
         accent: { tint: 'blue-900' },
         seo: {
-            title: 'Fable - Direct Your Own AI Films',
-            description: 'Weave stories with Fable. The studio for infinite narrative arcs. Coming 2026.',
+            title: 'Fable — Direct Your Own AI Films',
+            description: 'Fable is the AI studio for filmmakers. Cast assemble, sets rise, lights drop on cue — direct infinite narrative arcs from a single prompt. Coming 2026.',
         },
         terminal: [
             '> fable.direct',
@@ -88,8 +88,8 @@ export const PRODUCTS = [
         heroSubtitle: 'Create living, breathing characters.',
         accent: { tint: 'orange-900' },
         seo: {
-            title: 'Citizen - Create AI Characters',
-            description: 'Create living, breathing characters with Citizen. They remember everything. Coming 2026.',
+            title: 'Citizen — Create AI Characters With Memory',
+            description: 'Citizen designs living characters for your stories. Personality layers, emotional cores, and full memory — they evolve with every scene. Coming 2026.',
         },
         terminal: [
             '> citizen.wake',
@@ -114,8 +114,8 @@ export const PRODUCTS = [
         heroSubtitle: 'Instant Reality. Infinite landscapes, physics, and lighting generated instantly.',
         accent: { tint: 'teal-900' },
         seo: {
-            title: 'Oasis - Infinite Worlds',
-            description: 'Instant reality. Infinite landscapes, physics, and lighting generated instantly. Coming 2026.',
+            title: 'Oasis — Infinite Living Worlds, On Demand',
+            description: 'Oasis spawns immersive worlds with native physics, lighting, and weather — landscapes you can walk through, not just look at. Coming 2026.',
         },
         terminal: [
             '> oasis.forge',

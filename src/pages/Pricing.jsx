@@ -166,8 +166,8 @@ const Pricing = () => {
     return (
         <div className="min-h-screen pt-32 pb-24 px-6 bg-background">
             <SEO
-                title="Pricing - Fantazia"
-                description="Start for free, upgrade as you scale. Simple, transparent pricing for AI video generation."
+                title="Pricing — Simple, Transparent Plans"
+                description="Start for free, upgrade as you scale. Transparent pricing for AI video generation with Spark, plus early access to Fable, Citizen, and Oasis."
                 canonical="/pricing"
             />
             <div className="max-w-7xl mx-auto">

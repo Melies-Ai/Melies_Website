@@ -24,8 +24,8 @@ const Privacy = () => {
             className="pt-32 pb-20 px-6 bg-paper min-h-screen"
         >
             <SEO
-                title="Privacy Policy - Fantazia"
-                description="Read our Privacy Policy. We are committed to protecting your data and privacy."
+                title="Privacy Policy"
+                description="How Fantazia collects, uses, and protects your data when you use Spark and our other AI filmmaking tools. Read the full policy."
                 canonical="/privacy"
             />
             <div className="max-w-3xl mx-auto">

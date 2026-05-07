@@ -6,6 +6,7 @@ import SystemText from '../components/SystemText';
 import SEO from '../components/SEO';
 import { getProduct } from '../config/products';
 import { getProductMedia } from '../config/products-media';
+import { productSchema } from '../config/products-schema';
 
 const Fable = () => {
     const product = getProduct('fable');
@@ -18,13 +19,23 @@ const Fable = () => {
             exit={{ opacity: 0 }}
             className="pb-0 pt-24 px-4 overflow-hidden"
         >
-            <SEO title={product.seo.title} description={product.seo.description} canonical={product.route} />
+            <SEO
+                title={product.seo.title}
+                description={product.seo.description}
+                canonical={product.route}
+                type="product"
+                image={media.banner.src}
+                preloadImage={media.banner.src}
+                structuredData={productSchema('fable')}
+            />
 
             {/* TECH ETHEREAL HEADER */}
             <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl group">
                 <div className="absolute inset-0 bg-black/20 z-10" />
                 <img
-                    src={media.banner}
+                    src={media.banner.src}
+                    srcSet={media.banner.srcSet}
+                    sizes="(max-width: 1400px) 100vw, 1400px"
                     alt={`${product.name} Header`}
                     fetchpriority="high"
                     decoding="async"

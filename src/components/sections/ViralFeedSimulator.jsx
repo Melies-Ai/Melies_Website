@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/cn';
+import { useInView } from '../../lib/useInView';
 
 import consistency1 from '../../assets/images/products/spark/spark-consistency-scene-01.webp';
 import consistency2 from '../../assets/images/products/spark/spark-consistency-scene-02.webp';
@@ -52,9 +53,12 @@ const VARIANTS = {
 
 const ViralFeedSimulator = ({ variant = 'hero', className = '' }) => {
     const v = VARIANTS[variant] ?? VARIANTS.hero;
+    const containerRef = useRef(null);
+    const inView = useInView(containerRef);
 
     return (
         <div
+            ref={containerRef}
             className={cn(
                 'relative bg-black border-ink/10 overflow-hidden shadow-2xl z-10 box-border',
                 v.outer,
@@ -64,7 +68,7 @@ const ViralFeedSimulator = ({ variant = 'hero', className = '' }) => {
             {/* Feed Content */}
             <div className="absolute inset-0 overflow-hidden bg-[#111]">
                 <motion.div
-                    animate={{ y: [0, v.scrollDistance] }}
+                    animate={inView ? { y: [0, v.scrollDistance] } : { y: 0 }}
                     transition={{ duration: v.scrollDuration, repeat: Infinity, ease: 'linear' }}
                     className="space-y-0"
                 >
@@ -74,7 +78,7 @@ const ViralFeedSimulator = ({ variant = 'hero', className = '' }) => {
                             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.5, y: 0 }}
-                                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 1], y: -200 }}
+                                animate={inView ? { opacity: [0, 1, 0], scale: [0.5, 1.2, 1], y: -200 } : { opacity: 0 }}
                                 transition={{ duration: 2, repeat: Infinity, delay: i * 0.8 + 1, ease: 'easeOut' }}
                                 className="absolute bottom-40 right-4 text-4xl drop-shadow-lg z-30"
                             >
