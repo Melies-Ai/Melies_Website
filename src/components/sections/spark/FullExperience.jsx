@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Image as ImageIcon, Music, Mic, Volume2 } from 'lucide-react';
 import { useInView } from '../../../lib/useInView';
 
@@ -13,6 +13,8 @@ const TIMELINE_LAYERS = [
 const FullExperience = () => {
     const sectionRef = useRef(null);
     const inView = useInView(sectionRef);
+    const reducedMotion = useReducedMotion();
+    const animate = inView && !reducedMotion;
 
     return (
     <div ref={sectionRef} className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
@@ -34,7 +36,7 @@ const FullExperience = () => {
                     {/* Playhead */}
                     <motion.div
                         className="absolute top-0 bottom-0 w-[1px] bg-accent/50 z-20"
-                        animate={inView ? { left: ['15%', '85%'] } : { left: '15%' }}
+                        animate={animate ? { left: ['15%', '85%'] } : { left: '15%' }}
                         transition={{ duration: 8, ease: 'linear', repeat: Infinity }}
                     >
                         <div className="absolute -top-1 -left-1.5 w-3 h-3 bg-accent rounded-full shadow-card" />
@@ -61,7 +63,7 @@ const FullExperience = () => {
                                             <motion.div
                                                 key={j}
                                                 className={`h-full aspect-video rounded-md ${layer.barColor} opacity-40`}
-                                                animate={inView ? { opacity: [0.4, 0.7, 0.4] } : { opacity: 0.4 }}
+                                                animate={animate ? { opacity: [0.4, 0.7, 0.4] } : { opacity: 0.4 }}
                                                 transition={{
                                                     duration: 2 + Math.random(),
                                                     repeat: Infinity,
@@ -77,7 +79,7 @@ const FullExperience = () => {
                                         <motion.div
                                             key={j}
                                             className={`w-1.5 rounded-full ${layer.barColor} opacity-30`}
-                                            animate={inView ? {
+                                            animate={animate ? {
                                                 height: ['20%', `${40 + Math.random() * 60}%`, '20%'],
                                                 opacity: [0.3, 0.6, 0.3],
                                             } : { height: '20%', opacity: 0.3 }}

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../lib/cn';
 import { useInView } from '../../lib/useInView';
 
@@ -55,6 +55,11 @@ const ViralFeedSimulator = ({ variant = 'hero', className = '' }) => {
     const v = VARIANTS[variant] ?? VARIANTS.hero;
     const containerRef = useRef(null);
     const inView = useInView(containerRef);
+    const reducedMotion = useReducedMotion();
+    // Animate only when visible AND when the user hasn't asked to reduce
+    // motion. Vestibular-sensitive users see a static phone with the first
+    // feed frame instead of the looped scroll + reactions.
+    const animate = inView && !reducedMotion;
 
     return (
         <div
@@ -68,7 +73,7 @@ const ViralFeedSimulator = ({ variant = 'hero', className = '' }) => {
             {/* Feed Content */}
             <div className="absolute inset-0 overflow-hidden bg-[#111]">
                 <motion.div
-                    animate={inView ? { y: [0, v.scrollDistance] } : { y: 0 }}
+                    animate={animate ? { y: [0, v.scrollDistance] } : { y: 0 }}
                     transition={{ duration: v.scrollDuration, repeat: Infinity, ease: 'linear' }}
                     className="space-y-0"
                 >
@@ -78,7 +83,7 @@ const ViralFeedSimulator = ({ variant = 'hero', className = '' }) => {
                             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.5, y: 0 }}
-                                animate={inView ? { opacity: [0, 1, 0], scale: [0.5, 1.2, 1], y: -200 } : { opacity: 0 }}
+                                animate={animate ? { opacity: [0, 1, 0], scale: [0.5, 1.2, 1], y: -200 } : { opacity: 0 }}
                                 transition={{ duration: 2, repeat: Infinity, delay: i * 0.8 + 1, ease: 'easeOut' }}
                                 className="absolute bottom-40 right-4 text-4xl drop-shadow-lg z-30"
                             >

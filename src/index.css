@@ -90,3 +90,21 @@ body {
   letter-spacing: -0.01em;
   font-weight: 400;
 }
+
+/* Reduced-motion safety net.
+ *
+ * Per-component animations also use framer-motion's useReducedMotion()
+ * hook. This rule catches any CSS-based transition/animation we missed
+ * (Tailwind transition utilities, hover scales, etc.) so users who set
+ * the OS preference get a calm experience site-wide.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

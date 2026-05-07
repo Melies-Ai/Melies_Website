@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Image as ImageIcon, X, Palmtree, User, Box } from 'lucide-react';
 
 import sparkLocation from '../../../assets/images/products/spark/spark-location-apartment.webp';
@@ -8,6 +8,7 @@ import sparkProduct from '../../../assets/images/products/spark/spark-product-pe
 import consistency1 from '../../../assets/images/products/spark/spark-consistency-scene-01.webp';
 
 import Button from '../../Button';
+import { useInView } from '../../../lib/useInView';
 
 // AssetCard — small floating card showing one user-supplied asset.
 const AssetCard = ({ image, type, icon: Icon, delay }) => (
@@ -46,33 +47,52 @@ const PHASES = {
     REVEAL_SCENE: 'REVEAL_SCENE',
 };
 
-const usePhaseSequence = () => {
+// Run the phase loop only when `active` is true. We track the latest
+// pending timeout so cleanup actually cancels the in-flight wait —
+// otherwise pending setTimeouts pile up across active/inactive cycles.
+const usePhaseSequence = (active = true) => {
     const [phase, setPhase] = React.useState(PHASES.IDLE);
 
     React.useEffect(() => {
-        let isMounted = true;
-        const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+        if (!active) {
+            setPhase(PHASES.IDLE);
+            return;
+        }
+        let cancelled = false;
+        let pendingTimeout;
+        const wait = (ms) => new Promise((resolve) => {
+            pendingTimeout = setTimeout(resolve, ms);
+        });
         const sequence = async () => {
-            while (isMounted) {
-                if (!isMounted) break; setPhase(PHASES.IDLE); await wait(800);
-                if (!isMounted) break; setPhase(PHASES.DROP_LOC); await wait(600);
-                if (!isMounted) break; setPhase(PHASES.SHOW_LOC); await wait(800);
-                if (!isMounted) break; setPhase(PHASES.DROP_PROP); await wait(600);
-                if (!isMounted) break; setPhase(PHASES.SHOW_PROP_AND_LOC); await wait(800);
-                if (!isMounted) break; setPhase(PHASES.DROP_CHAR); await wait(600);
-                if (!isMounted) break; setPhase(PHASES.SHOW_ALL); await wait(1000);
-                if (!isMounted) break; setPhase(PHASES.REVEAL_SCENE); await wait(2500);
+            while (!cancelled) {
+                if (cancelled) break; setPhase(PHASES.IDLE); await wait(800);
+                if (cancelled) break; setPhase(PHASES.DROP_LOC); await wait(600);
+                if (cancelled) break; setPhase(PHASES.SHOW_LOC); await wait(800);
+                if (cancelled) break; setPhase(PHASES.DROP_PROP); await wait(600);
+                if (cancelled) break; setPhase(PHASES.SHOW_PROP_AND_LOC); await wait(800);
+                if (cancelled) break; setPhase(PHASES.DROP_CHAR); await wait(600);
+                if (cancelled) break; setPhase(PHASES.SHOW_ALL); await wait(1000);
+                if (cancelled) break; setPhase(PHASES.REVEAL_SCENE); await wait(2500);
             }
         };
         sequence();
-        return () => { isMounted = false; };
-    }, []);
+        return () => {
+            cancelled = true;
+            clearTimeout(pendingTimeout);
+        };
+    }, [active]);
 
     return phase;
 };
 
 const AssetIntegration = () => {
-    const phase = usePhaseSequence();
+    const sectionRef = useRef(null);
+    const inView = useInView(sectionRef);
+    const reducedMotion = useReducedMotion();
+    // Pause the phase machine when off-screen or when the user prefers
+    // reduced motion. Off-screen: no point burning timers + re-renders the
+    // user can't see. Reduced motion: respect the system preference.
+    const phase = usePhaseSequence(inView && !reducedMotion);
 
     const isLocVisible = ['SHOW_LOC', 'DROP_PROP', 'SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
     const isPropVisible = ['SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
@@ -86,7 +106,7 @@ const AssetIntegration = () => {
     const isReveal = phase === PHASES.REVEAL_SCENE;
 
     return (
-        <div className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
+        <div ref={sectionRef} className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
             <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row-reverse items-center gap-16">
                 <div className="flex-1 text-left">
                     <h2 className="text-4xl md:text-5xl font-medium text-strong mb-6">Bring Your Own Assets</h2>
