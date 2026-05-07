@@ -5,9 +5,11 @@ import WaitlistCTA from '../components/WaitlistCTA';
 import SystemText from '../components/SystemText';
 import SEO from '../components/SEO';
 import { getProduct } from '../config/products';
+import { getProductMedia } from '../config/products-media';
 
 const Fable = () => {
     const product = getProduct('fable');
+    const media = getProductMedia('fable');
 
     return (
         <motion.div
@@ -22,8 +24,10 @@ const Fable = () => {
             <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl group">
                 <div className="absolute inset-0 bg-black/20 z-10" />
                 <img
-                    src={product.images.banner}
+                    src={media.banner}
                     alt={`${product.name} Header`}
+                    fetchpriority="high"
+                    decoding="async"
                     className="absolute inset-0 w-full h-full object-cover"
                 />
 
@@ -38,7 +42,7 @@ const Fable = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         className="mb-8"
                     >
-                        <img src={product.icons.lockup} alt={product.name} className="h-32 w-auto drop-shadow-lg" />
+                        <img src={media.lockup} alt={product.name} className="h-32 w-auto drop-shadow-lg" />
                     </motion.div>
 
                     <div className="absolute bottom-8 left-8">

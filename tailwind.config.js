@@ -6,20 +6,6 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  // TODO(phase-D): remove once new tokens are referenced in JSX
-  safelist: [
-    'text-strong', 'text-default', 'text-muted', 'text-faint',
-    'border-subtle', 'border-default', 'border-strong',
-    'border-glass-subtle', 'border-glass-default',
-    'surface-page', 'surface-section', 'surface-card',
-    'grid-texture-subtle', 'grid-texture-medium', 'glow-accent',
-    'rounded-card', 'rounded-card-lg', 'rounded-canvas',
-    'shadow-card', 'shadow-card-hover', 'shadow-lifted', 'shadow-heavy',
-    'shadow-inset-canvas', 'shadow-retro', 'shadow-retro-pressed',
-    'text-badge', 'text-label', 'text-body', 'text-lead',
-    'text-h3', 'text-h2', 'text-h1', 'text-hero',
-    'bg-paper-light', 'text-paper-light', 'bg-info', 'text-info', 'border-info',
-  ],
   theme: {
     extend: {
       // ─── Color primitives ───────────────────────────────────────────────
@@ -67,6 +53,11 @@ export default {
         'inset-canvas': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)',
         retro:          '4px 4px 0px 0px rgba(0, 0, 0, 1)',
         'retro-pressed':'2px 2px 0px 0px rgba(0, 0, 0, 1)',
+      },
+
+      // ─── Font families ─────────────────────────────────────────────────
+      fontFamily: {
+        display: ['"IM Fell Great Primer"', 'serif'],
       },
 
       // ─── Background images ─────────────────────────────────────────────

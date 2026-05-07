@@ -33,7 +33,7 @@ const ConsistencyEngine = () => (
                             key={i}
                             className="w-40 h-72 md:w-48 md:h-80 surface-card rounded-xl border-subtle shadow-lifted flex-shrink-0 relative overflow-hidden pointer-events-none"
                         >
-                            <img src={img} alt={`Consistency Scene ${i + 1}`} className="absolute inset-0 w-full h-full object-cover" />
+                            <img src={img} alt={`Consistency Scene ${i + 1}`} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
                             <div className="absolute top-2 left-2 text-badge font-mono text-white/80 bg-black/20 px-1.5 py-0.5 rounded backdrop-blur-sm">
                                 SCENE_0{i + 1}
                             </div>

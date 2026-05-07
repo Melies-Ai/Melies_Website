@@ -1,27 +1,10 @@
-// Product registry — single source of truth for all product metadata.
-// Consumers: Navbar (mega-menu), Footer (links), Home (product grid),
-// individual product pages (hero, SEO, SystemText, WaitlistCTA).
+// Product metadata — pure data, no asset imports.
 //
-// Adding a product: add an entry below, ensure assets exist under
-// `src/assets/icons/products/<id>/` and `src/assets/images/products/<id>/`,
-// and the rest follows automatically wherever consumers iterate.
+// Always-mounted UI (Navbar, Footer) imports from this file safely without
+// dragging hero banners and product lockups into the main JS chunk. Pages
+// that need imagery import from `./products-media.js` separately so those
+// assets stay in the route's lazy chunk.
 
-// ─── Asset imports ────────────────────────────────────────────────────────
-import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
-import iconFable from '../assets/icons/products/fable/fable-mark.webp';
-import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp';
-import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp';
-
-import lockupFable from '../assets/icons/products/fable/fable-lockup-vertical-white.webp';
-import lockupCitizen from '../assets/icons/products/citizen/citizen-lockup-vertical-white.webp';
-import lockupOasis from '../assets/icons/products/oasis/oasis-lockup-vertical-white.webp';
-
-import sparkSpotlight from '../assets/images/products/spark/spark-consistency-scene-01.webp';
-import bannerFable from '../assets/images/products/fable/fable-hero-banner.webp';
-import bannerCitizen from '../assets/images/products/citizen/citizen-hero-banner.webp';
-import bannerOasis from '../assets/images/products/oasis/oasis-hero-banner.webp';
-
-// ─── Registry ─────────────────────────────────────────────────────────────
 /**
  * @typedef {Object} ProductWaitlistCTA
  * @property {string} title
@@ -31,16 +14,8 @@ import bannerOasis from '../assets/images/products/oasis/oasis-hero-banner.webp'
  * @property {string} title
  * @property {string} description
  *
- * @typedef {Object} ProductImages
- * @property {string|null} spotlight  // featured image (Spark in Navbar mega-menu)
- * @property {string|null} banner     // wide hero banner (Home product grid card)
- *
- * @typedef {Object} ProductIcons
- * @property {string} mark            // square brand mark (favicons, nav icons)
- * @property {string=} lockup         // tall white lockup used in coming-soon page heroes
- *
  * @typedef {Object} ProductAccent
- * @property {string|null} tint       // Tailwind color token used for card overlay (e.g. 'blue-900')
+ * @property {string|null} tint  // Tailwind color token (e.g. 'blue-900') for card overlays
  *
  * @typedef {Object} Product
  * @property {string} id
@@ -51,9 +26,7 @@ import bannerOasis from '../assets/images/products/oasis/oasis-hero-banner.webp'
  * @property {string} tagline
  * @property {string} description
  * @property {string} heroTitle
- * @property {string=} heroSubtitle           // poetic one-liner under the page hero (coming-soon only)
- * @property {ProductIcons} icons
- * @property {ProductImages} images
+ * @property {string=} heroSubtitle
  * @property {ProductAccent} accent
  * @property {ProductSEO} seo
  * @property {string[]=} terminal              // present iff status === 'coming-soon'
@@ -62,110 +35,100 @@ import bannerOasis from '../assets/images/products/oasis/oasis-hero-banner.webp'
 
 /** @type {Product[]} */
 export const PRODUCTS = [
-  {
-    id: 'spark',
-    name: 'Spark',
-    route: '/spark',
-    status: 'live',
-    releaseLabel: 'Spark 1.0',
-    tagline: 'Vertical Stories',
-    description: 'Create 20-sec videos with perfect consistency.',
-    heroTitle: 'Vertical Stories.',
-    icons: { mark: iconSpark },
-    images: { spotlight: sparkSpotlight, banner: null },
-    accent: { tint: null }, // Spark has bespoke styling, not a tinted card
-    seo: {
-      title: 'Spark - Vertical Story Engine',
-      description: 'Create perfect vertical videos with consistent characters and worlds. No hallucinations. Start creating today.',
+    {
+        id: 'spark',
+        name: 'Spark',
+        route: '/spark',
+        status: 'live',
+        releaseLabel: 'Spark 1.0',
+        tagline: 'Vertical Stories',
+        description: 'Create 20-sec videos with perfect consistency.',
+        heroTitle: 'Vertical Stories.',
+        accent: { tint: null },
+        seo: {
+            title: 'Spark - Vertical Story Engine',
+            description: 'Create perfect vertical videos with consistent characters and worlds. No hallucinations. Start creating today.',
+        },
     },
-  },
-  {
-    id: 'fable',
-    name: 'Fable',
-    route: '/fable',
-    status: 'coming-soon',
-    releaseLabel: 'Coming 2026',
-    tagline: 'AI Director',
-    description: 'Weave stories with infinite narrative arcs.',
-    heroTitle: 'Weave Stories.',
-    heroSubtitle: 'The studio for infinite narrative arcs.',
-    icons: { mark: iconFable, lockup: lockupFable },
-    images: { spotlight: null, banner: bannerFable },
-    accent: { tint: 'blue-900' },
-    seo: {
-      title: 'Fable - Direct Your Own AI Films',
-      description: 'Weave stories with Fable. The studio for infinite narrative arcs. Coming 2026.',
+    {
+        id: 'fable',
+        name: 'Fable',
+        route: '/fable',
+        status: 'coming-soon',
+        releaseLabel: 'Coming 2026',
+        tagline: 'AI Director',
+        description: 'Weave stories with infinite narrative arcs.',
+        heroTitle: 'Weave Stories.',
+        heroSubtitle: 'The studio for infinite narrative arcs.',
+        accent: { tint: 'blue-900' },
+        seo: {
+            title: 'Fable - Direct Your Own AI Films',
+            description: 'Weave stories with Fable. The studio for infinite narrative arcs. Coming 2026.',
+        },
+        terminal: [
+            '> fable.direct',
+            '> cast assembling in costume',
+            '> cameras loaded, sets rising',
+            '> lights, camera [ACTION]',
+        ],
+        waitlistCTA: {
+            title: 'Direct your masterpiece.',
+            description: 'Unlock infinite narrative possibilities with Fable. Join the waitlist for early access.',
+        },
     },
-    terminal: [
-      '> fable.direct',
-      '> cast assembling in costume',
-      '> cameras loaded, sets rising',
-      '> lights, camera [ACTION]',
-    ],
-    waitlistCTA: {
-      title: 'Direct your masterpiece.',
-      description: 'Unlock infinite narrative possibilities with Fable. Join the waitlist for early access.',
+    {
+        id: 'citizen',
+        name: 'Citizen',
+        route: '/citizen',
+        status: 'coming-soon',
+        releaseLabel: 'Coming 2026',
+        tagline: 'AI Characters',
+        description: 'Living, breathing characters that remember everything.',
+        heroTitle: 'Create Life.',
+        heroSubtitle: 'Create living, breathing characters.',
+        accent: { tint: 'orange-900' },
+        seo: {
+            title: 'Citizen - Create AI Characters',
+            description: 'Create living, breathing characters with Citizen. They remember everything. Coming 2026.',
+        },
+        terminal: [
+            '> citizen.wake',
+            '> personality layers emerging',
+            '> emotional core forming...',
+            '> ready to dream, to choose, to become',
+        ],
+        waitlistCTA: {
+            title: 'Breathe life into AI.',
+            description: 'Design complex personas that evolve with every interaction. Join the waitlist.',
+        },
     },
-  },
-  {
-    id: 'citizen',
-    name: 'Citizen',
-    route: '/citizen',
-    status: 'coming-soon',
-    releaseLabel: 'Coming 2026',
-    tagline: 'AI Characters',
-    description: 'Living, breathing characters that remember everything.',
-    heroTitle: 'Create Life.',
-    heroSubtitle: 'Create living, breathing characters.',
-    icons: { mark: iconCitizen, lockup: lockupCitizen },
-    images: { spotlight: null, banner: bannerCitizen },
-    accent: { tint: 'orange-900' },
-    seo: {
-      title: 'Citizen - Create AI Characters',
-      description: 'Create living, breathing characters with Citizen. They remember everything. Coming 2026.',
+    {
+        id: 'oasis',
+        name: 'Oasis',
+        route: '/oasis',
+        status: 'coming-soon',
+        releaseLabel: 'Coming 2026',
+        tagline: 'Living Worlds',
+        description: 'Infinite landscapes, physics, and lighting generated instantly.',
+        heroTitle: 'Infinite Worlds.',
+        heroSubtitle: 'Instant Reality. Infinite landscapes, physics, and lighting generated instantly.',
+        accent: { tint: 'teal-900' },
+        seo: {
+            title: 'Oasis - Infinite Worlds',
+            description: 'Instant reality. Infinite landscapes, physics, and lighting generated instantly. Coming 2026.',
+        },
+        terminal: [
+            '> oasis.forge',
+            '> spawning civilizations...',
+            '> weaving magic into matter',
+            '> world pulse detected',
+        ],
+        waitlistCTA: {
+            title: 'Forge your world.',
+            description: 'Build immersive environments where your stories can live. Reserve your spot now.',
+        },
     },
-    terminal: [
-      '> citizen.wake',
-      '> personality layers emerging',
-      '> emotional core forming...',
-      '> ready to dream, to choose, to become',
-    ],
-    waitlistCTA: {
-      title: 'Breathe life into AI.',
-      description: 'Design complex personas that evolve with every interaction. Join the waitlist.',
-    },
-  },
-  {
-    id: 'oasis',
-    name: 'Oasis',
-    route: '/oasis',
-    status: 'coming-soon',
-    releaseLabel: 'Coming 2026',
-    tagline: 'Living Worlds',
-    description: 'Infinite landscapes, physics, and lighting generated instantly.',
-    heroTitle: 'Infinite Worlds.',
-    heroSubtitle: 'Instant Reality. Infinite landscapes, physics, and lighting generated instantly.',
-    icons: { mark: iconOasis, lockup: lockupOasis },
-    images: { spotlight: null, banner: bannerOasis },
-    accent: { tint: 'teal-900' },
-    seo: {
-      title: 'Oasis - Infinite Worlds',
-      description: 'Instant reality. Infinite landscapes, physics, and lighting generated instantly. Coming 2026.',
-    },
-    terminal: [
-      '> oasis.forge',
-      '> spawning civilizations...',
-      '> weaving magic into matter',
-      '> world pulse detected',
-    ],
-    waitlistCTA: {
-      title: 'Forge your world.',
-      description: 'Build immersive environments where your stories can live. Reserve your spot now.',
-    },
-  },
 ];
-
-// ─── Helpers ──────────────────────────────────────────────────────────────
 
 /**
  * Look up a product by id.

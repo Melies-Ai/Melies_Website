@@ -56,7 +56,7 @@ const Footer = () => (
                 {/* Brand */}
                 <div className="col-span-1 md:col-span-5">
                     <div className="flex items-center gap-2 mb-6">
-                        <span className="font-bricolage text-[1.5rem] font-semibold tracking-[-0.06em] lowercase text-strong">
+                        <span className="font-display text-[1.6rem] lowercase text-strong leading-none">
                             fantazia.ai
                         </span>
                     </div>

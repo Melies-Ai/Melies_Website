@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { liveProducts, upcomingProducts } from '../config/products';
+import { getProductIcons } from '../config/products-icons';
 import Button from './Button';
 
 import { Menu, X, ChevronDown, ArrowUpRight, ArrowRight } from 'lucide-react';
@@ -51,7 +52,7 @@ const Navbar = () => {
                         to="/"
                         className="flex items-center gap-3 shrink-0 mr-8"
                     >
-                        <span className="font-bricolage text-[1.35rem] font-semibold tracking-[-0.06em] lowercase text-ink">
+                        <span className="font-display text-[1.45rem] lowercase text-ink leading-none">
                             fantazia.ai
                         </span>
                     </Link>
@@ -87,7 +88,7 @@ const Navbar = () => {
                                                 <Link to={product.route} className="flex items-start gap-4 p-1 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group relative">
                                                     {/* Vertical Mobile Image */}
                                                     <div className="w-16 h-24 rounded-lg overflow-hidden shrink-0 border border-black/5 shadow-sm relative">
-                                                        <img src={product.images.spotlight} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                                        <img src={getProductIcons(product.id)?.spotlight} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                                     </div>
                                                     <div className="flex-1 pr-6">
                                                         <div className="flex items-center gap-2 mb-1">
@@ -111,7 +112,7 @@ const Navbar = () => {
                                                 {upcomingProducts.map((product) => (
                                                     <Link key={product.id} to={product.route} className="flex flex-col gap-3 p-2 rounded-xl hover:bg-[#F0ECE2]/50 transition-colors group text-center border border-transparent hover:border-black/5">
                                                         <div className="w-8 h-8 mx-auto group-hover:scale-110 transition-transform">
-                                                            <img src={product.icons.mark} alt={product.name} className="w-full h-full object-contain" />
+                                                            <img src={getProductIcons(product.id)?.mark} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                                                         </div>
                                                         <div>
                                                             <div className="font-medium text-primary text-sm mb-0.5">{product.name}</div>
@@ -168,7 +169,7 @@ const Navbar = () => {
                                         <div className="text-xs font-mono text-secondary/40 uppercase tracking-widest mb-3 px-2">Available Now</div>
                                         <Link to={product.route} className="flex items-start gap-4 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
                                             <div className="w-12 h-16 rounded-lg overflow-hidden shrink-0 border border-black/5 relative">
-                                                <img src={product.images.spotlight} alt={product.name} className="w-full h-full object-cover" />
+                                                <img src={getProductIcons(product.id)?.spotlight} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 mb-1">
@@ -190,7 +191,7 @@ const Navbar = () => {
                                         {upcomingProducts.map((product) => (
                                             <Link key={product.id} to={product.route} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-black/5 shadow-sm group hover:bg-[#F0ECE2] transition-colors" onClick={toggleMenu}>
                                                 <div className="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity">
-                                                    <img src={product.icons.mark} alt={product.name} className="w-full h-full object-contain transition-all" />
+                                                    <img src={getProductIcons(product.id)?.mark} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-contain transition-all" />
                                                 </div>
                                                 <span className="text-xs font-medium text-primary transition-colors">{product.name}</span>
                                             </Link>

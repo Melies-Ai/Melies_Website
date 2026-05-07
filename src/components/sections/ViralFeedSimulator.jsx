@@ -70,7 +70,7 @@ const ViralFeedSimulator = ({ variant = 'hero', className = '' }) => {
                 >
                     {FEED_IMAGES.map((img, i) => (
                         <div key={i} className={cn('w-full relative border-b border-white/5', v.frame)}>
-                            <img src={img} alt="Feed content" className="w-full h-full object-cover opacity-90" />
+                            <img src={img} alt="Feed content" loading="lazy" decoding="async" className="w-full h-full object-cover opacity-90" />
                             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.5, y: 0 }}

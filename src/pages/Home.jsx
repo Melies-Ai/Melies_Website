@@ -16,6 +16,8 @@ import {
 import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
 import commercialDesk from '../assets/images/home/home-hero-workspace.webp';
 import { upcomingProducts } from '../config/products';
+import { getProductIcons } from '../config/products-icons';
+import { getProductMedia } from '../config/products-media';
 import ViralFeedSimulator from '../components/sections/ViralFeedSimulator';
 
 // Home-specific narrative copy keyed by product id. The product registry
@@ -102,6 +104,8 @@ const Home = () => {
                     <img
                         src={commercialDesk}
                         alt="Fantazia Workspace"
+                        fetchpriority="high"
+                        decoding="async"
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent" />
@@ -134,7 +138,7 @@ const Home = () => {
                             >
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-10 h-10 rounded-lg bg-[#F0ECE2] flex items-center justify-center border border-[#E6E2D8]">
-                                        <img src={iconSpark} alt="Spark" className="w-6 h-6 object-contain" />
+                                        <img src={iconSpark} alt="Spark" loading="lazy" decoding="async" className="w-6 h-6 object-contain" />
                                     </div>
                                     <span className="text-lg font-medium tracking-tight text-primary">Spark Engine</span>
                                 </div>
@@ -211,6 +215,17 @@ const Home = () => {
 
                         {upcomingProducts.map((product) => {
                             const copy = HOME_CARD_COPY[product.id];
+                            // Guard: a new upcoming product without HOME_CARD_COPY entry
+                            // should be skipped from the grid rather than crash the page.
+                            if (!copy) {
+                                if (import.meta.env.DEV) {
+                                    // eslint-disable-next-line no-console
+                                    console.warn(`Home: missing HOME_CARD_COPY entry for product "${product.id}". Skipping card.`);
+                                }
+                                return null;
+                            }
+                            const media = getProductMedia(product.id);
+                            const icons = getProductIcons(product.id);
                             return (
                                 <Link
                                     key={product.id}
@@ -219,7 +234,7 @@ const Home = () => {
                                 >
                                     {/* Background & Overlay */}
                                     <div className="absolute inset-0 z-0">
-                                        <img src={product.images.banner} alt={product.name} className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700" />
+                                        <img src={media?.banner} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover opacity-60 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/90" />
                                         <div className={`absolute inset-0 mix-blend-overlay transition-colors ${copy.tint.imageOverlay}`} />
                                     </div>
@@ -233,7 +248,7 @@ const Home = () => {
                                     <div className="relative z-10 p-8 h-full flex flex-col justify-end">
                                         <div className="mb-auto pt-4 flex justify-between items-start">
                                             <div className={`w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center mb-6 transition-all ${copy.tint.iconHoverBg}`}>
-                                                <img src={product.icons.mark} alt={product.name} className="w-6 h-6 object-contain invert" />
+                                                <img src={icons?.mark} alt={product.name} loading="lazy" decoding="async" className="w-6 h-6 object-contain invert" />
                                             </div>
                                             <span className="text-xs font-mono text-white/40 border border-white/10 px-2 py-1 rounded-full uppercase tracking-widest bg-black/20 backdrop-blur-sm">{product.releaseLabel}</span>
                                         </div>

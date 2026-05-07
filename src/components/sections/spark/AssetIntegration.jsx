@@ -18,7 +18,7 @@ const AssetCard = ({ image, type, icon: Icon, delay }) => (
         transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-40 h-40 rounded-card overflow-hidden shadow-lifted group"
     >
-        <img src={image} alt={type} className="w-full h-full object-cover" />
+        <img src={image} alt={type} loading="lazy" decoding="async" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
 
         <div className="absolute top-2 right-2 w-8 h-8 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/50 transition-colors cursor-pointer">
@@ -139,7 +139,7 @@ const AssetIntegration = () => {
                                     className="absolute z-20"
                                 >
                                     <div className="w-32 h-32 surface-card rounded-card shadow-heavy border-glass-default overflow-hidden p-1">
-                                        <img src={droppingImage} alt="Dropping Asset" className="w-full h-full object-cover rounded-xl" />
+                                        <img src={droppingImage} alt="Dropping Asset" loading="lazy" decoding="async" className="w-full h-full object-cover rounded-xl" />
                                     </div>
                                 </motion.div>
                             )}
@@ -180,7 +180,7 @@ const AssetIntegration = () => {
                                                 Assets Integrated
                                             </div>
                                         </div>
-                                        <img src={consistency1} alt="Final Integrated Scene" className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" />
+                                        <img src={consistency1} alt="Final Integrated Scene" loading="lazy" decoding="async" className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
                                     </div>
                                 </motion.div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Button from './Button';
 import { cn } from '../lib/cn';
@@ -29,23 +28,24 @@ const SURFACES = {
     card: 'surface-card',
 };
 
-const useGoTo = () => {
-    const navigate = useNavigate();
-    return (link) => {
-        if (!link) return;
-        if (link.startsWith('http')) window.location.href = link;
-        else navigate(link);
-    };
-};
-
+// Render the action through Button's polymorphic Link/anchor support so the
+// destination is a real, crawlable href in the rendered DOM (good for SEO,
+// open-in-new-tab, middle-click, link-graph). External URLs go via `href`,
+// internal routes via react-router `to`. Without a destination we fall back
+// to a plain <button onClick> for non-navigation actions.
 const SectionAction = ({ action, withArrow }) => {
-    const goTo = useGoTo();
     if (!action) return null;
+    const isExternal = action.href?.startsWith('http');
+    const linkProps = action.href
+        ? isExternal
+            ? { href: action.href, target: '_blank', rel: 'noopener noreferrer' }
+            : { to: action.href }
+        : { onClick: action.onClick };
     return (
         <Button
             variant={action.variant ?? 'primary'}
-            onClick={() => goTo(action.href)}
             className="px-10 py-5 text-xl"
+            {...linkProps}
         >
             {action.text}
             {withArrow && (
