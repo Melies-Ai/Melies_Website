@@ -38,13 +38,16 @@ const FullExperience = () => {
 
                 {/* Timeline Editor */}
                 <div className="relative w-full max-w-lg flex flex-col gap-4">
-                    {/* Playhead */}
+                    {/* Playhead — confined to the bars region (after the icons +
+                        track-name columns), so the line really starts at the
+                        first bar and stops at the last. Top handle is a soft
+                        accent disc with a white ring and a chromatic glow. */}
                     <motion.div
-                        className="absolute top-0 bottom-0 w-[1px] bg-accent/50 z-20"
-                        animate={animate ? { left: ['15%', '85%'] } : { left: '15%' }}
+                        className="absolute top-0 bottom-0 w-px bg-accent/40 z-20"
+                        animate={animate ? { left: ['42%', '95%'] } : { left: '42%' }}
                         transition={{ duration: 8, ease: 'linear', repeat: Infinity }}
                     >
-                        <div className="absolute -top-1 -left-1.5 w-3 h-3 bg-accent rounded-full shadow-card" />
+                        <div className="absolute -top-2 left-0 -translate-x-1/2 w-4 h-4 rounded-full bg-accent ring-[3px] ring-white shadow-[0_3px_10px_rgba(0,0,0,0.18),0_0_16px_rgba(157,148,128,0.55)] pointer-events-none" />
                     </motion.div>
 
                     {TIMELINE_LAYERS.map((layer, i) => (
