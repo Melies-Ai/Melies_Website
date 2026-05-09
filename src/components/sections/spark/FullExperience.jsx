@@ -3,11 +3,16 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Image as ImageIcon, Music, Mic, Volume2 } from 'lucide-react';
 import { useInView } from '../../../lib/useInView';
 
+// Each layer keeps its chromatic identity (matched to the bar colors
+// below) but the icon container is now a frosted-glass tile in the same
+// formal language as the Home product cards: w-12 rounded-2xl, backdrop
+// blur, soft border. The colour shows through as a subtle wash + ring,
+// the icon stroke takes the saturated tone.
 const TIMELINE_LAYERS = [
-    { label: 'Video Track', icon: <ImageIcon size={18} />, color: 'bg-blue-500', barColor: 'bg-blue-400' },
-    { label: 'Music Score', icon: <Music size={18} />, color: 'bg-purple-500', barColor: 'bg-purple-400' },
-    { label: 'Voiceover', icon: <Mic size={18} />, color: 'bg-rose-500', barColor: 'bg-rose-400' },
-    { label: 'Sound FX', icon: <Volume2 size={18} />, color: 'bg-amber-500', barColor: 'bg-amber-400' },
+    { label: 'Video Track', Icon: ImageIcon, tintBg: 'bg-blue-500/15',   tintBorder: 'border-blue-500/30',   tintIcon: 'text-blue-600',   barColor: 'bg-blue-400' },
+    { label: 'Music Score', Icon: Music,     tintBg: 'bg-purple-500/15', tintBorder: 'border-purple-500/30', tintIcon: 'text-purple-600', barColor: 'bg-purple-400' },
+    { label: 'Voiceover',   Icon: Mic,       tintBg: 'bg-rose-500/15',   tintBorder: 'border-rose-500/30',   tintIcon: 'text-rose-600',   barColor: 'bg-rose-400' },
+    { label: 'Sound FX',    Icon: Volume2,   tintBg: 'bg-amber-500/15',  tintBorder: 'border-amber-500/30',  tintIcon: 'text-amber-700',  barColor: 'bg-amber-400' },
 ];
 
 const FullExperience = () => {
@@ -50,8 +55,8 @@ const FullExperience = () => {
                             transition={{ delay: i * 0.1 }}
                             className="h-20 surface-card rounded-card shadow-card flex items-center px-3 md:px-6 gap-3 md:gap-6 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300"
                         >
-                            <div className={`w-10 h-10 rounded-xl ${layer.color} text-white flex items-center justify-center shrink-0 shadow-card`}>
-                                {layer.icon}
+                            <div className={`w-12 h-12 rounded-2xl backdrop-blur-md border ${layer.tintBg} ${layer.tintBorder} flex items-center justify-center shrink-0 shadow-card`}>
+                                <layer.Icon size={20} className={layer.tintIcon} />
                             </div>
                             <div className="font-medium text-strong text-xs md:text-sm w-16 md:w-24 shrink-0">{layer.label}</div>
 
