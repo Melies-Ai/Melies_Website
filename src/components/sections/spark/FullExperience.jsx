@@ -56,12 +56,12 @@ const WAVEFORM_PATTERNS = {
     },
     'Sound FX': {
         bar: (j) => {
-            if (FX_SPIKE_INDICES.has(j)) return [10, 92];      // sharp transient
-            if (FX_TAIL_INDICES.has(j)) return [8, 38];        // decay tail
-            return [5, 9];                                     // baseline silence
+            if (FX_SPIKE_INDICES.has(j)) return [12, 60];      // softer transient
+            if (FX_TAIL_INDICES.has(j)) return [8, 28];        // gentle decay tail
+            return [5, 10];                                    // baseline silence
         },
-        duration: 0.7,
-        ease: 'easeOut',
+        duration: 1.1,
+        ease: 'easeInOut',
     },
 };
 
