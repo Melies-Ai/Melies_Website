@@ -97,7 +97,7 @@ export const PLANS = [
         tierBackend: 'TIER_3',
         intro: 'For creators producing consistently, week after week.',
         recommended: true,
-        recommendedLabel: 'Recommended for serious projects',
+        recommendedLabel: 'Recommended',
         monthlyPrice: 49.99,
         yearlyPriceMonthly: 39.99,
         bullets: [
