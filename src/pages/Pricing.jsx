@@ -193,11 +193,19 @@ const PlanCard = ({ plan, period, delay }) => {
 
             <PlanCta href={href} label={plan.cta} hint={plan.ctaHint} dark={dark} />
 
-            {!plan.free && (
-                <p className={cn('mt-4 text-[10px] font-mono uppercase tracking-widest text-center', dark ? 'text-white/40' : 'text-faint')}>
-                    {FOUNDING_CREATOR_NOTE}
-                </p>
-            )}
+            {/* Always reserve space for the founding-creator note so all four
+                CTAs land on the same vertical baseline. The free plan keeps
+                the slot but hides the text. */}
+            <p
+                aria-hidden={plan.free ? 'true' : undefined}
+                className={cn(
+                    'mt-4 text-[10px] font-mono uppercase tracking-widest text-center',
+                    plan.free && 'invisible',
+                    dark ? 'text-white/40' : 'text-faint',
+                )}
+            >
+                {FOUNDING_CREATOR_NOTE}
+            </p>
         </motion.article>
     );
 };
