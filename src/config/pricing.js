@@ -72,7 +72,8 @@ export const PLANS = [
             'Personal use only',
             'Watermarked exports',
         ],
-        cta: 'Start for free, no card required',
+        cta: 'Start for free',
+        ctaHint: 'No card required',
     },
     {
         id: 'creator',

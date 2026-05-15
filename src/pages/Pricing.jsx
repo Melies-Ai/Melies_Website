@@ -21,7 +21,7 @@ const BillingToggle = ({ period, onChange }) => {
             <button
                 type="button"
                 onClick={() => onChange('monthly')}
-                className="relative px-5 py-2 rounded-full text-sm font-medium"
+                className="relative isolate px-5 py-2 rounded-full text-sm font-medium"
             >
                 {!isYearly && (
                     <motion.span
@@ -37,7 +37,7 @@ const BillingToggle = ({ period, onChange }) => {
             <button
                 type="button"
                 onClick={() => onChange('yearly')}
-                className="relative px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2"
+                className="relative isolate px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2"
             >
                 {isYearly && (
                     <motion.span
@@ -115,20 +115,27 @@ const PriceBlock = ({ plan, period, dark }) => {
 
 // ─── CTA (plain anchor to Stripe / signup, styled per card variant) ─────────
 
-const PlanCta = ({ href, children, dark }) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(
-            'block w-full py-3 rounded-full text-base font-medium text-center transition-all duration-300',
-            dark
-                ? 'bg-white text-ink hover:bg-white/90 hover:-translate-y-0.5 shadow-card hover:shadow-lifted'
-                : 'border border-ink text-strong hover:bg-ink hover:text-white hover:-translate-y-0.5'
+const PlanCta = ({ href, label, hint, dark }) => (
+    <div className="space-y-2">
+        <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+                'block w-full py-3 px-4 rounded-full text-[15px] font-medium text-center whitespace-nowrap transition-all duration-300',
+                dark
+                    ? 'bg-white text-ink hover:bg-white/90 hover:-translate-y-0.5 shadow-card hover:shadow-lifted'
+                    : 'border border-ink text-strong hover:bg-ink hover:text-white hover:-translate-y-0.5'
+            )}
+        >
+            {label}
+        </a>
+        {hint && (
+            <p className={cn('text-[11px] text-center', dark ? 'text-white/60' : 'text-muted')}>
+                {hint}
+            </p>
         )}
-    >
-        {children}
-    </a>
+    </div>
 );
 
 // ─── Plan card ──────────────────────────────────────────────────────────────
@@ -184,9 +191,7 @@ const PlanCard = ({ plan, period, delay }) => {
                 ))}
             </ul>
 
-            <PlanCta href={href} dark={dark}>
-                {plan.cta}
-            </PlanCta>
+            <PlanCta href={href} label={plan.cta} hint={plan.ctaHint} dark={dark} />
 
             {!plan.free && (
                 <p className={cn('mt-4 text-[10px] font-mono uppercase tracking-widest text-center', dark ? 'text-white/40' : 'text-faint')}>
