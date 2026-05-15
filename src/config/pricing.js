@@ -73,7 +73,6 @@ export const PLANS = [
             'Watermarked exports',
         ],
         cta: 'Start for free',
-        ctaHint: 'No card required',
     },
     {
         id: 'creator',
