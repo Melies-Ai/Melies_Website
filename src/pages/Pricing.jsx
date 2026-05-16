@@ -18,41 +18,39 @@ import {
 const BillingToggle = ({ period, onChange }) => {
     const isYearly = period === 'yearly';
     return (
-        <div className="inline-flex items-center gap-1 surface-card border border-subtle rounded-full p-1 shadow-card">
+        // One animated background pill that slides between two fixed
+        // positions. Both buttons share the exact same width (w-36) and no
+        // gap between them, so the pill is guaranteed identical in size
+        // regardless of which button is active — the prior layoutId-based
+        // approach was inheriting each button's slightly different intrinsic
+        // width despite w-36.
+        <div className="relative inline-flex items-center surface-card border border-subtle rounded-full p-1 shadow-card">
+            <motion.div
+                aria-hidden="true"
+                className="absolute top-1 bottom-1 left-1 w-36 bg-ink rounded-full shadow-card"
+                animate={{ x: isYearly ? '100%' : 0 }}
+                transition={{ type: 'spring', bounce: 0.2, duration: 0.45 }}
+            />
             <button
                 type="button"
                 onClick={() => onChange('monthly')}
-                className="relative isolate w-36 px-5 py-2 rounded-full text-sm font-medium flex items-center justify-center"
+                className="relative z-10 w-36 py-2 rounded-full text-sm font-medium flex items-center justify-center"
             >
-                {!isYearly && (
-                    <motion.span
-                        layoutId="billing-toggle-bg"
-                        className="absolute inset-0 bg-ink rounded-full -z-10 shadow-card"
-                        transition={{ type: 'spring', bounce: 0.2, duration: 0.45 }}
-                    />
-                )}
-                <span className={cn('relative z-10 transition-colors', !isYearly ? 'text-white' : 'text-muted hover:text-strong')}>
+                <span className={cn('transition-colors', !isYearly ? 'text-white' : 'text-muted hover:text-strong')}>
                     Monthly
                 </span>
             </button>
             <button
                 type="button"
                 onClick={() => onChange('yearly')}
-                className="relative isolate w-36 px-5 py-2 rounded-full text-sm font-medium flex items-center justify-center gap-2"
+                className="relative z-10 w-36 py-2 rounded-full text-sm font-medium flex items-center justify-center gap-2"
             >
-                {isYearly && (
-                    <motion.span
-                        layoutId="billing-toggle-bg"
-                        className="absolute inset-0 bg-ink rounded-full -z-10 shadow-card"
-                        transition={{ type: 'spring', bounce: 0.2, duration: 0.45 }}
-                    />
-                )}
-                <span className={cn('relative z-10 transition-colors', isYearly ? 'text-white' : 'text-muted hover:text-strong')}>
+                <span className={cn('transition-colors', isYearly ? 'text-white' : 'text-muted hover:text-strong')}>
                     Yearly
                 </span>
                 <span
                     className={cn(
-                        'relative z-10 text-[10px] font-bold px-1.5 py-0.5 rounded-full transition-colors',
+                        'text-[10px] font-bold px-1.5 py-0.5 rounded-full transition-colors',
                         isYearly ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-100/60 text-emerald-700/70'
                     )}
                 >
