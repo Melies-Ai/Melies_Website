@@ -13,8 +13,30 @@ import {
     CONTENT_TYPES,
 } from '../../../config/pricing';
 
+// Force the en-US locale on number formatting; the recommended card and
+// breakdown can be viewed by browsers in any locale, but the brand copy
+// stays in English so the separators should follow English conventions.
+const formatInt = (n) => (n ?? 0).toLocaleString('en-US');
+
 const formatMoney = (value) =>
-    value % 1 === 0 ? `$${value.toLocaleString()}` : `$${value.toFixed(2)}`;
+    value % 1 === 0 ? `$${formatInt(value)}` : `$${value.toFixed(2)}`;
+
+// ─── Tiny helper: swap a piece of text with a soft slide+fade ───────────────
+
+const AnimatedSwap = ({ swapKey, children, className }) => (
+    <AnimatePresence mode="wait">
+        <motion.span
+            key={swapKey}
+            initial={{ y: 6, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -6, opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className={cn('inline-block', className)}
+        >
+            {children}
+        </motion.span>
+    </AnimatePresence>
+);
 
 // ─── Content-type pills (Step 1) ────────────────────────────────────────────
 
@@ -144,7 +166,7 @@ const MiniBillingToggle = ({ period, onChange }) => (
     </div>
 );
 
-// ─── Recommended card (cinematic, desirable, ElevenLabs-style) ──────────────
+// ─── Recommended card (stays mounted; only the changing texts animate) ──────
 
 const RecommendedCard = ({ plan, period }) => {
     const isFree = plan.free;
@@ -153,28 +175,26 @@ const RecommendedCard = ({ plan, period }) => {
     const cta = isFree ? 'Start for free' : `Get ${plan.tier}`;
     const href = getCheckoutUrl(plan.id, period);
 
-    // 3 reassurance bullets per plan, derived from the plan's data.
     const bullets = isFree
         ? [
-            `${plan.monthlyCredits.toLocaleString()} credits to start`,
+            `${formatInt(plan.monthlyCredits)} credits to start`,
             'Personal use, watermarked',
             'No credit card required',
         ]
         : [
-            `${plan.monthlyCredits.toLocaleString()} credits per month`,
-            `Around ${Math.round(plan.monthlyCredits / 50).toLocaleString()} clips per month`,
+            `${formatInt(plan.monthlyCredits)} credits per month`,
+            `Around ${formatInt(Math.round(plan.monthlyCredits / 50))} clips per month`,
             'Cancel or pause anytime',
         ];
 
+    const billingDetail = isFree
+        ? 'Free forever'
+        : period === 'yearly'
+            ? `$${formatInt(yearlyTotal)} billed yearly, save ${YEARLY_SAVINGS_PERCENT}%`
+            : `or ${formatMoney(plan.yearlyPriceMonthly)} / mo billed yearly`;
+
     return (
-        <motion.div
-            key={plan.id}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative rounded-3xl bg-ink text-white p-8 shadow-heavy overflow-hidden"
-        >
+        <div className="relative rounded-3xl bg-ink text-white p-8 shadow-heavy overflow-hidden" aria-live="polite">
             {/* Decorative warm gradient — slot ready for a future background image */}
             <div
                 aria-hidden="true"
@@ -192,31 +212,46 @@ const RecommendedCard = ({ plan, period }) => {
                 </div>
 
                 <div className="flex flex-wrap items-end justify-between gap-4 mb-2">
-                    <h3 className="text-3xl md:text-4xl font-medium tracking-tight">{plan.tier}</h3>
+                    <h3 className="text-3xl md:text-4xl font-medium tracking-tight">
+                        <AnimatedSwap swapKey={plan.id}>{plan.tier}</AnimatedSwap>
+                    </h3>
                     <div className="text-right">
                         <div className="text-3xl md:text-4xl font-medium tracking-tight">
-                            {formatMoney(price)}
+                            <AnimatedSwap swapKey={`${plan.id}-${period}-price`}>
+                                {formatMoney(price)}
+                            </AnimatedSwap>
                         </div>
-                        <div className="text-xs text-white/55 mt-1">
-                            {isFree
-                                ? 'Free forever'
-                                : period === 'yearly'
-                                    ? `$${yearlyTotal.toLocaleString()} billed yearly, save ${YEARLY_SAVINGS_PERCENT}%`
-                                    : `or ${formatMoney(plan.yearlyPriceMonthly)} / mo billed yearly`}
+                        <div className="text-xs text-white/55 mt-1 min-h-[1.2em]">
+                            <AnimatedSwap swapKey={`${plan.id}-${period}-bd`}>
+                                {billingDetail}
+                            </AnimatedSwap>
                         </div>
                     </div>
                 </div>
 
-                <p className="text-sm text-white/70 mb-6">{plan.calculatorTagline}</p>
+                <p className="text-sm text-white/70 mb-6 min-h-[1.4em]">
+                    <AnimatedSwap swapKey={`${plan.id}-tagline`}>
+                        {plan.calculatorTagline}
+                    </AnimatedSwap>
+                </p>
 
-                <ul className="space-y-2.5 mb-7">
-                    {bullets.map((b, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm text-white/85">
-                            <Check size={16} className="mt-0.5 shrink-0 text-accent" />
-                            <span>{b}</span>
-                        </li>
-                    ))}
-                </ul>
+                <AnimatePresence mode="wait">
+                    <motion.ul
+                        key={`${plan.id}-bullets`}
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.18 }}
+                        className="space-y-2.5 mb-7"
+                    >
+                        {bullets.map((b, i) => (
+                            <li key={i} className="flex items-start gap-3 text-sm text-white/85">
+                                <Check size={16} className="mt-0.5 shrink-0 text-accent" />
+                                <span>{b}</span>
+                            </li>
+                        ))}
+                    </motion.ul>
+                </AnimatePresence>
 
                 <a
                     href={href}
@@ -224,20 +259,20 @@ const RecommendedCard = ({ plan, period }) => {
                     rel="noopener noreferrer"
                     className="block w-full py-3 px-4 bg-white text-ink text-center rounded-full text-base font-medium hover:bg-white/90 hover:-translate-y-0.5 transition-all duration-300 shadow-card hover:shadow-lifted"
                 >
-                    {cta}
+                    <AnimatedSwap swapKey={`${plan.id}-cta`}>{cta}</AnimatedSwap>
                 </a>
             </div>
-        </motion.div>
+        </div>
     );
 };
 
-// ─── Breakdown box ──────────────────────────────────────────────────────────
+// ─── Breakdown box (also stays mounted; row values animate individually) ────
 
-const BreakdownRow = ({ label, value, accent }) => (
+const BreakdownRow = ({ label, value, swapKey, accent }) => (
     <div className="flex items-baseline justify-between py-2 text-sm">
         <span className="text-muted">{label}</span>
-        <span className={cn('font-medium tabular-nums', accent ? 'text-strong' : 'text-default')}>
-            {value}
+        <span className={cn('font-medium tabular-nums text-right', accent ? 'text-strong' : 'text-default')}>
+            <AnimatedSwap swapKey={swapKey}>{value}</AnimatedSwap>
         </span>
     </div>
 );
@@ -245,43 +280,43 @@ const BreakdownRow = ({ label, value, accent }) => (
 const Breakdown = ({ plan, period, breakdown }) => {
     const monthly = plan.monthlyPrice ?? 0;
     const yearlyTotal = formatYearlyTotal(plan.yearlyPriceMonthly ?? 0);
+    const volumeLabel = breakdown.clipsPerMonth >= 500
+        ? '500+ clips / month'
+        : `${formatInt(breakdown.clipsPerMonth)} clips / month`;
 
     return (
-        <motion.div
-            key={plan.id + period}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            aria-live="polite"
-            className="rounded-2xl bg-paper/40 border border-subtle p-6"
-        >
+        <div className="rounded-2xl bg-paper/40 border border-subtle p-6" aria-live="polite">
             <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-faint mb-4">
                 Your estimated usage
             </div>
 
             <BreakdownRow
                 label="Your estimated volume"
-                value={`${breakdown.clipsPerMonth >= 500 ? '500+' : breakdown.clipsPerMonth} clips / month`}
+                value={volumeLabel}
+                swapKey={`vol-${breakdown.clipsPerMonth}`}
             />
             <BreakdownRow
                 label="Estimated credits needed (~50 per clip)"
-                value={`${breakdown.creditsNeeded.toLocaleString()} credits`}
+                value={`${formatInt(breakdown.creditsNeeded)} credits`}
+                swapKey={`needed-${breakdown.creditsNeeded}`}
             />
             <BreakdownRow
                 label={`Included in ${plan.tier} plan`}
-                value={`${breakdown.planCredits.toLocaleString()} credits`}
+                value={`${formatInt(breakdown.planCredits)} credits`}
+                swapKey={`included-${plan.id}`}
             />
             {!breakdown.overflows && breakdown.buffer > 0 && (
                 <BreakdownRow
                     label="Buffer for experimentation"
-                    value={`${breakdown.buffer.toLocaleString()} credits`}
+                    value={`${formatInt(breakdown.buffer)} credits`}
+                    swapKey={`buffer-${breakdown.buffer}`}
                 />
             )}
             {breakdown.showTopUpHint && (
                 <BreakdownRow
                     label="Top-up packs available for higher volumes"
                     value="from $9"
+                    swapKey="topup"
                 />
             )}
 
@@ -289,12 +324,14 @@ const Breakdown = ({ plan, period, breakdown }) => {
                 <BreakdownRow
                     label="Monthly cost"
                     value={plan.free ? 'Free' : formatMoney(monthly)}
+                    swapKey={`monthly-${plan.id}`}
                     accent
                 />
                 {!plan.free && (
                     <BreakdownRow
                         label={`Yearly cost (save ${YEARLY_SAVINGS_PERCENT}%)`}
-                        value={`$${yearlyTotal.toLocaleString()}`}
+                        value={`$${formatInt(yearlyTotal)}`}
+                        swapKey={`yearly-${plan.id}`}
                         accent
                     />
                 )}
@@ -305,7 +342,7 @@ const Breakdown = ({ plan, period, breakdown }) => {
                     Volume slightly exceeds {plan.tier}. Consider the next tier for unlimited monthly use.
                 </p>
             )}
-        </motion.div>
+        </div>
     );
 };
 
@@ -381,18 +418,8 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                             <MiniBillingToggle period={period} onChange={onPeriodChange} />
                         </div>
 
-                        <AnimatePresence mode="wait">
-                            <RecommendedCard key={plan.id} plan={plan} period={period} />
-                        </AnimatePresence>
-
-                        <AnimatePresence mode="wait">
-                            <Breakdown
-                                key={plan.id + period}
-                                plan={plan}
-                                period={period}
-                                breakdown={breakdown}
-                            />
-                        </AnimatePresence>
+                        <RecommendedCard plan={plan} period={period} />
+                        <Breakdown plan={plan} period={period} breakdown={breakdown} />
                     </div>
                 </div>
 
