@@ -64,12 +64,12 @@ const BillingToggle = ({ period, onChange }) => {
 
 // ─── Price block ────────────────────────────────────────────────────────────
 
-const PriceBlock = ({ plan, period, dark }) => {
+const PriceBlock = ({ plan, period }) => {
     if (plan.free) {
         return (
             <div className="flex items-baseline gap-1.5">
-                <span className={cn('text-5xl font-medium tracking-tight', dark ? 'text-white' : 'text-strong')}>$0</span>
-                <span className={cn('text-sm', dark ? 'text-white/60' : 'text-muted')}>forever</span>
+                <span className="text-5xl font-medium tracking-tight text-strong">$0</span>
+                <span className="text-sm text-muted">forever</span>
             </div>
         );
     }
@@ -87,24 +87,24 @@ const PriceBlock = ({ plan, period, dark }) => {
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: -10, opacity: 0 }}
                         transition={{ duration: 0.18 }}
-                        className={cn('text-5xl font-medium tracking-tight', dark ? 'text-white' : 'text-strong')}
+                        className="text-5xl font-medium tracking-tight text-strong"
                     >
                         ${price.toFixed(2)}
                     </motion.span>
                 </AnimatePresence>
-                <span className={cn('text-sm', dark ? 'text-white/60' : 'text-muted')}>/ month</span>
+                <span className="text-sm text-muted">/ month</span>
             </div>
-            <div className={cn('mt-2 min-h-[2.5em] text-xs leading-relaxed', dark ? 'text-white/55' : 'text-muted')}>
+            <div className="mt-2 min-h-[2.5em] text-xs leading-relaxed text-muted">
                 {period === 'yearly' ? (
                     <>
                         billed annually at ${yearlyTotal} / year
                         <br />
-                        <span className={dark ? 'text-emerald-300 font-medium' : 'text-emerald-700 font-medium'}>
+                        <span className="text-emerald-700 font-medium">
                             Save {YEARLY_SAVINGS_PERCENT}%
                         </span>
                     </>
                 ) : (
-                    <span className={dark ? 'text-white/40' : 'text-faint'}>
+                    <span className="text-faint">
                         Switch to yearly to save {YEARLY_SAVINGS_PERCENT}%
                     </span>
                 )}
@@ -115,7 +115,7 @@ const PriceBlock = ({ plan, period, dark }) => {
 
 // ─── CTA (plain anchor to Stripe / signup, styled per card variant) ─────────
 
-const PlanCta = ({ href, label, hint, dark }) => (
+const PlanCta = ({ href, label, hint, featured }) => (
     <div className="space-y-2">
         <a
             href={href}
@@ -123,17 +123,16 @@ const PlanCta = ({ href, label, hint, dark }) => (
             rel="noopener noreferrer"
             className={cn(
                 'block w-full py-3 px-4 rounded-full text-[15px] font-medium text-center whitespace-nowrap transition-all duration-300',
-                dark
-                    ? 'bg-white text-ink hover:bg-white/90 hover:-translate-y-0.5 shadow-card hover:shadow-lifted'
+                featured
+                    // Solid ink button stands out on the beige featured card
+                    ? 'bg-ink text-white hover:bg-ink/90 hover:-translate-y-0.5 shadow-card hover:shadow-lifted'
                     : 'border border-ink text-strong hover:bg-ink hover:text-white hover:-translate-y-0.5'
             )}
         >
             {label}
         </a>
         {hint && (
-            <p className={cn('text-[11px] text-center', dark ? 'text-white/60' : 'text-muted')}>
-                {hint}
-            </p>
+            <p className="text-[11px] text-center text-muted">{hint}</p>
         )}
     </div>
 );
@@ -142,7 +141,7 @@ const PlanCta = ({ href, label, hint, dark }) => (
 
 const PlanCard = ({ plan, period, delay }) => {
     const href = getCheckoutUrl(plan.id, period);
-    const dark = !!plan.recommended;
+    const featured = !!plan.recommended;
 
     return (
         <motion.article
@@ -151,25 +150,27 @@ const PlanCard = ({ plan, period, delay }) => {
             transition={{ delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
                 'relative flex flex-col h-full rounded-3xl p-7 lg:p-8 transition-all duration-300',
-                dark
-                    ? 'bg-ink text-white border border-ink shadow-heavy lg:scale-[1.02]'
+                featured
+                    // Warm beige fill with accent ring + heavier shadow to lift
+                    // the recommended plan above the white outline cards next to it.
+                    ? 'bg-[#E8DDC8] text-strong border border-accent/30 shadow-heavy lg:scale-[1.02]'
                     : 'surface-card border border-subtle shadow-card hover:shadow-lifted hover:-translate-y-1'
             )}
         >
-            {dark && plan.recommendedLabel && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-accent text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-card whitespace-nowrap">
+            {featured && plan.recommendedLabel && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-ink text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-card whitespace-nowrap">
                     {plan.recommendedLabel}
                 </div>
             )}
 
             <div className="mb-6">
-                <h3 className={cn('text-lg font-medium mb-4', dark ? 'text-white/70' : 'text-muted')}>
+                <h3 className="text-lg font-medium mb-4 text-muted">
                     {plan.tier}
                 </h3>
-                <PriceBlock plan={plan} period={period} dark={dark} />
+                <PriceBlock plan={plan} period={period} />
             </div>
 
-            <p className={cn('text-sm leading-relaxed mb-6', dark ? 'text-white/75' : 'text-default')}>
+            <p className="text-sm leading-relaxed mb-6 text-default">
                 {plan.intro}
             </p>
 
@@ -177,21 +178,15 @@ const PlanCard = ({ plan, period, delay }) => {
                 {plan.bullets.map((bullet, i) => (
                     <li
                         key={i}
-                        className={cn(
-                            'flex items-start gap-3 text-sm leading-relaxed',
-                            dark ? 'text-white/85' : 'text-default'
-                        )}
+                        className="flex items-start gap-3 text-sm leading-relaxed text-default"
                     >
-                        <Check
-                            size={16}
-                            className={cn('mt-0.5 shrink-0', dark ? 'text-accent' : 'text-strong')}
-                        />
+                        <Check size={16} className="mt-0.5 shrink-0 text-strong" />
                         <span>{bullet}</span>
                     </li>
                 ))}
             </ul>
 
-            <PlanCta href={href} label={plan.cta} hint={plan.ctaHint} dark={dark} />
+            <PlanCta href={href} label={plan.cta} hint={plan.ctaHint} featured={featured} />
 
             {/* Always reserve space for the founding-creator note so all four
                 CTAs land on the same vertical baseline. The free plan keeps
@@ -199,9 +194,8 @@ const PlanCard = ({ plan, period, delay }) => {
             <p
                 aria-hidden={plan.free ? 'true' : undefined}
                 className={cn(
-                    'mt-4 text-[10px] font-mono uppercase tracking-widest text-center',
+                    'mt-4 text-[10px] font-mono uppercase tracking-widest text-center text-faint',
                     plan.free && 'invisible',
-                    dark ? 'text-white/40' : 'text-faint',
                 )}
             >
                 {FOUNDING_CREATOR_NOTE}
