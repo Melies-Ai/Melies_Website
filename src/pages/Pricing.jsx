@@ -290,27 +290,31 @@ const Pricing = () => {
             />
 
             <div className="max-w-7xl 2xl:max-w-[88rem] mx-auto">
-                {/* Hero — compact so the toggle and the top of the cards stay
-                    visible in the first viewport on a 1440p screen. */}
-                <header className="text-center mb-10 lg:mb-12">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-4xl md:text-5xl lg:text-[3.25rem] font-medium tracking-tight text-strong mb-4 max-w-3xl mx-auto leading-[1.1]"
-                    >
-                        Pricing built for cinematic creation.
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-lg md:text-xl text-muted max-w-xl mx-auto font-light mb-8"
-                    >
-                        Start free. Scale as your worlds grow.
-                    </motion.p>
+                {/* Hero — single-row layout: title block on the left, billing
+                    toggle on the right. Falls back to stacked on small viewports. */}
+                <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10 lg:mb-12">
+                    <div className="max-w-2xl">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                            className="text-4xl md:text-5xl lg:text-[3.25rem] font-medium tracking-tight text-strong mb-3 leading-[1.1]"
+                        >
+                            Pricing built for cinematic creation.
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                            className="text-lg md:text-xl text-muted font-light"
+                        >
+                            Start free. Scale as your worlds grow.
+                        </motion.p>
+                    </div>
 
-                    <BillingToggle period={period} onChange={setPeriod} />
+                    <div className="shrink-0">
+                        <BillingToggle period={period} onChange={setPeriod} />
+                    </div>
                 </header>
 
                 {/* Plans grid: 1 / 2 / 3 / 4-then-2-centered */}
