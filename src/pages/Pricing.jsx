@@ -21,7 +21,7 @@ const BillingToggle = ({ period, onChange }) => {
             <button
                 type="button"
                 onClick={() => onChange('monthly')}
-                className="relative isolate min-w-[7.5rem] px-5 py-2 rounded-full text-sm font-medium flex items-center justify-center"
+                className="relative isolate w-36 px-5 py-2 rounded-full text-sm font-medium flex items-center justify-center"
             >
                 {!isYearly && (
                     <motion.span
@@ -37,7 +37,7 @@ const BillingToggle = ({ period, onChange }) => {
             <button
                 type="button"
                 onClick={() => onChange('yearly')}
-                className="relative isolate min-w-[7.5rem] px-5 py-2 rounded-full text-sm font-medium flex items-center justify-center gap-2"
+                className="relative isolate w-36 px-5 py-2 rounded-full text-sm font-medium flex items-center justify-center gap-2"
             >
                 {isYearly && (
                     <motion.span
