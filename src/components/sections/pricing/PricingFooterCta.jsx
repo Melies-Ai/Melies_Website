@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { track } from '../../../lib/analytics';
 
 const PricingFooterCta = () => (
     <section className="mt-24 mb-8">
@@ -34,12 +35,14 @@ const PricingFooterCta = () => (
                         href="https://app.fantazia.ai"
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => track('footer_cta_click', { cta_type: 'start_for_free' })}
                         className="block w-full sm:w-auto px-8 py-3 bg-white text-ink rounded-full text-base font-medium hover:bg-white/90 hover:-translate-y-0.5 transition-all duration-300 shadow-card hover:shadow-lifted"
                     >
                         Start for free
                     </a>
                     <a
                         href="#pricing-grid"
+                        onClick={() => track('footer_cta_click', { cta_type: 'see_plans' })}
                         className="block w-full sm:w-auto px-8 py-3 border border-white/30 text-white rounded-full text-base font-medium hover:bg-white/10 hover:border-white/60 transition-all duration-300"
                     >
                         See plans

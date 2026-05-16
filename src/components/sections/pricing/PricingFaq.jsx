@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '../../../lib/cn';
+import { track } from '../../../lib/analytics';
 import { FAQ_ITEMS } from '../../../config/pricing-comparison';
 
 const FaqItem = ({ item, isOpen, onToggle }) => (
@@ -62,7 +63,14 @@ const PricingFaq = () => {
                             key={item.id}
                             item={item}
                             isOpen={openId === item.id}
-                            onToggle={() => setOpenId((cur) => (cur === item.id ? null : item.id))}
+                            onToggle={() => {
+                                setOpenId((cur) => {
+                                    const next = cur === item.id ? null : item.id;
+                                    // Fire only on open, not on close.
+                                    if (next === item.id) track('faq_open', { question_id: item.id });
+                                    return next;
+                                });
+                            }}
                         />
                     ))}
                 </div>

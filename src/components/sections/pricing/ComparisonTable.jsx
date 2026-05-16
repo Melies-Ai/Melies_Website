@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Minus, ChevronDown } from 'lucide-react';
 import { cn } from '../../../lib/cn';
+import { track } from '../../../lib/analytics';
 import { COMPARISON_COLUMNS, COMPARISON_TABS } from '../../../config/pricing-comparison';
 
 // Render a single cell value (boolean → icon, string → text).
@@ -154,6 +155,12 @@ const ComparisonTable = () => {
 
     const activeTab = COMPARISON_TABS.find((t) => t.id === activeTabId) ?? COMPARISON_TABS[0];
 
+    const handleTabChange = (nextId) => {
+        if (nextId === activeTabId) return;
+        track('comparison_tab_switch', { tab_name: nextId });
+        setActiveTabId(nextId);
+    };
+
     return (
         <section className="mt-24 mb-16">
             <header className="mb-8 max-w-2xl">
@@ -168,7 +175,7 @@ const ComparisonTable = () => {
             {/* Desktop view: tabs + table */}
             <div className="hidden md:block">
                 <div className="mb-6">
-                    <TabStrip activeTabId={activeTabId} onChange={setActiveTabId} />
+                    <TabStrip activeTabId={activeTabId} onChange={handleTabChange} />
                 </div>
                 <TableForTab tab={activeTab} />
             </div>

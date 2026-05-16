@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import SEO from '../components/SEO';
 import { cn } from '../lib/cn';
+import { track } from '../lib/analytics';
 import CostCalculator from '../components/sections/pricing/CostCalculator';
 import ComparisonTable from '../components/sections/pricing/ComparisonTable';
 import PricingFaq from '../components/sections/pricing/PricingFaq';
 import PricingFooterCta from '../components/sections/pricing/PricingFooterCta';
+import TrustSignals from '../components/sections/pricing/TrustSignals';
 import { faqJsonLd } from '../config/pricing-comparison';
 import {
     PLANS,
@@ -123,12 +125,13 @@ const PriceBlock = ({ plan, period }) => {
 
 // ─── CTA (plain anchor to Stripe / signup, styled per card variant) ─────────
 
-const PlanCta = ({ href, label, hint, featured }) => (
+const PlanCta = ({ href, label, hint, featured, onClick }) => (
     <div className="space-y-2">
         <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={onClick}
             className={cn(
                 'block w-full py-3 px-4 rounded-full text-[15px] font-medium text-center whitespace-nowrap transition-all duration-300',
                 featured
@@ -151,11 +154,27 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
     const featured = !!plan.recommended;
     const premium = !!plan.premium;
 
+    const hoverReportedRef = React.useRef(false);
+    const handleMouseEnter = () => {
+        // Throttle: only the first hover per card per session-snapshot.
+        if (hoverReportedRef.current) return;
+        hoverReportedRef.current = true;
+        track('plan_card_hover', { plan_name: plan.id });
+    };
+
+    const handleCtaClick = () => {
+        track('plan_cta_click', { plan_name: plan.id, billing_period: period });
+        if (!plan.free) {
+            track('stripe_checkout_started', { plan_name: plan.id, billing_period: period });
+        }
+    };
+
     return (
         <motion.article
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            onMouseEnter={handleMouseEnter}
             className={cn(
                 'relative isolate flex flex-col h-full rounded-3xl p-7 lg:p-8 transition-all duration-300',
                 featured
@@ -211,7 +230,13 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
             </div>
 
             {/* CTA before the description / features list per brief */}
-            <PlanCta href={href} label={plan.cta} hint={plan.ctaHint} featured={featured} />
+            <PlanCta
+                href={href}
+                label={plan.cta}
+                hint={plan.ctaHint}
+                featured={featured}
+                onClick={handleCtaClick}
+            />
 
             {/* Founding Creator note — slot reserved on Explore too to keep CTAs aligned */}
             <p
@@ -308,6 +333,18 @@ const Pricing = () => {
     // mirror that as a subtle highlight on the matching grid card.
     const [recommendedPlanId, setRecommendedPlanId] = useState(null);
 
+    // Page-view event fires once per mount.
+    useEffect(() => {
+        track('pricing_page_view');
+    }, []);
+
+    // Wrap setPeriod so analytics see the toggle change exactly once.
+    const handlePeriodChange = (next) => {
+        if (next === period) return;
+        track('billing_toggle_switch', { from: period, to: next });
+        setPeriod(next);
+    };
+
     return (
         <div className="min-h-screen pt-24 pb-24 px-6 surface-page">
             <SEO
@@ -341,7 +378,7 @@ const Pricing = () => {
                     </div>
 
                     <div className="shrink-0">
-                        <BillingToggle period={period} onChange={setPeriod} />
+                        <BillingToggle period={period} onChange={handlePeriodChange} />
                     </div>
                 </header>
 
@@ -368,9 +405,11 @@ const Pricing = () => {
 
                 <CostCalculator
                     period={period}
-                    onPeriodChange={setPeriod}
+                    onPeriodChange={handlePeriodChange}
                     onRecommendedChange={setRecommendedPlanId}
                 />
+
+                <TrustSignals />
 
                 <ComparisonTable />
 

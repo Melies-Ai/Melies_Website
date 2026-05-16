@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/cn';
+import { track } from '../../../lib/analytics';
 import {
     PLANS,
     getCheckoutUrl,
@@ -240,6 +241,20 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+                        track('plan_cta_click', {
+                            plan_name: plan.id,
+                            billing_period: period,
+                            source: 'calculator',
+                        });
+                        if (!isFree) {
+                            track('stripe_checkout_started', {
+                                plan_name: plan.id,
+                                billing_period: period,
+                                source: 'calculator',
+                            });
+                        }
+                    }}
                     className="block w-full py-3 px-4 bg-ink text-white text-center rounded-full text-base font-medium hover:bg-ink/90 hover:-translate-y-0.5 transition-all duration-300 shadow-card hover:shadow-lifted"
                 >
                     <AnimatedSwap swapKey={`${plan.id}-cta`}>
@@ -275,8 +290,42 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
         }
     }, [recommendedPlanId, onRecommendedChange]);
 
+    // Fire calculator_visible once on first scroll into view.
+    const sectionRef = useRef(null);
+    useEffect(() => {
+        const node = sectionRef.current;
+        if (!node) return;
+        const obs = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    track('calculator_visible');
+                    obs.disconnect();
+                }
+            },
+            { threshold: 0.3 },
+        );
+        obs.observe(node);
+        return () => obs.disconnect();
+    }, []);
+
+    const handleSliderChange = (value) => {
+        setClips(value);
+        // Slider events are noisy; batched via animation frame so we don't
+        // hammer dataLayer on every micro-pixel move.
+        track('calculator_slider_change', {
+            clip_value: value,
+            current_recommendation: recommendPlanFromVolume(value),
+        });
+    };
+
+    const handleBillingToggle = (next) => {
+        if (next === period) return;
+        track('calculator_billing_toggle', { from: period, to: next });
+        onPeriodChange?.(next);
+    };
+
     return (
-        <section className="relative mt-24 mb-16 -mx-6 px-6 py-16 lg:py-20 surface-section">
+        <section ref={sectionRef} className="relative mt-24 mb-16 -mx-6 px-6 py-16 lg:py-20 surface-section">
             <div className="max-w-7xl 2xl:max-w-[88rem] mx-auto">
                 <header className="mb-10 lg:mb-12 max-w-2xl">
                     <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-strong mb-3">
@@ -296,7 +345,7 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                                     <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">1</span>
                                     <h3 className="text-lg font-medium text-strong">Billing period</h3>
                                 </div>
-                                <MiniBillingToggle period={period} onChange={onPeriodChange} />
+                                <MiniBillingToggle period={period} onChange={handleBillingToggle} />
                             </div>
                         </div>
 
@@ -305,7 +354,7 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">2</span>
                                 <h3 className="text-lg font-medium text-strong">Estimated clips per month</h3>
                             </div>
-                            <VolumeSlider value={clips} onChange={setClips} />
+                            <VolumeSlider value={clips} onChange={handleSliderChange} />
                         </div>
 
                         <p className="text-[11px] text-faint leading-relaxed">
