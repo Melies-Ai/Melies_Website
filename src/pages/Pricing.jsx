@@ -4,6 +4,10 @@ import { Check } from 'lucide-react';
 import SEO from '../components/SEO';
 import { cn } from '../lib/cn';
 import CostCalculator from '../components/sections/pricing/CostCalculator';
+import ComparisonTable from '../components/sections/pricing/ComparisonTable';
+import PricingFaq from '../components/sections/pricing/PricingFaq';
+import PricingFooterCta from '../components/sections/pricing/PricingFooterCta';
+import { faqJsonLd } from '../config/pricing-comparison';
 import {
     PLANS,
     getCheckoutUrl,
@@ -310,6 +314,7 @@ const Pricing = () => {
                 title="Pricing built for cinematic creation"
                 description="Generative filmmaking pricing. Start free, scale to Director, run sustained production with Studio, or build series and franchises with Atelier. Credits, premium models, commercial license, no watermark. Secure checkout via Stripe."
                 canonical="/pricing"
+                structuredData={faqJsonLd()}
             />
 
             <div className="max-w-7xl 2xl:max-w-[88rem] mx-auto">
@@ -366,6 +371,12 @@ const Pricing = () => {
                     onPeriodChange={setPeriod}
                     onRecommendedChange={setRecommendedPlanId}
                 />
+
+                <ComparisonTable />
+
+                <PricingFaq />
+
+                <PricingFooterCta />
             </div>
         </div>
     );
