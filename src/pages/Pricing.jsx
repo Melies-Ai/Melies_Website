@@ -154,7 +154,7 @@ const PlanCard = ({ plan, period, delay, className }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-                'relative isolate flex flex-col h-full rounded-3xl p-7 lg:p-8 transition-all duration-300 overflow-hidden',
+                'relative isolate flex flex-col h-full rounded-3xl p-7 lg:p-8 transition-all duration-300',
                 featured
                     // Director — warm sand-beige + accent ring + heavier shadow
                     ? 'bg-[#E8DDC8] text-strong border border-accent/30 shadow-heavy lg:scale-[1.02]'
@@ -194,8 +194,9 @@ const PlanCard = ({ plan, period, delay, className }) => {
                 </div>
             )}
 
-            {/* Header — plan name first, then price */}
-            <h3 className="text-[28px] lg:text-[30px] font-semibold tracking-tight text-strong mb-4 leading-none">
+            {/* Header — plan name first, then price. Same font-medium /
+                tracking-tight as the page h1, so titles read as one family. */}
+            <h3 className="text-[28px] lg:text-[30px] font-medium tracking-tight text-strong mb-4 leading-none">
                 {plan.tier}
             </h3>
 
