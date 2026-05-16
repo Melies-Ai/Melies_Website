@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import SEO from '../components/SEO';
 import { cn } from '../lib/cn';
+import CostCalculator from '../components/sections/pricing/CostCalculator';
 import {
     PLANS,
     getCheckoutUrl,
@@ -143,7 +144,7 @@ const PlanCta = ({ href, label, hint, featured }) => (
 
 // ─── Plan card ──────────────────────────────────────────────────────────────
 
-const PlanCard = ({ plan, period, delay, className }) => {
+const PlanCard = ({ plan, period, delay, className, highlighted }) => {
     const href = getCheckoutUrl(plan.id, period);
     const featured = !!plan.recommended;
     const premium = !!plan.premium;
@@ -163,6 +164,9 @@ const PlanCard = ({ plan, period, delay, className }) => {
                         ? 'surface-card border border-accent/40 ring-1 ring-accent/15 shadow-card hover:shadow-lifted hover:-translate-y-1'
                         // Default outline cards
                         : 'surface-card border border-subtle shadow-card hover:shadow-lifted hover:-translate-y-1',
+                // Calculator-driven highlight: subtle accent ring + lift to draw
+                // the eye to the matching grid card when the user moves the slider.
+                highlighted && 'ring-2 ring-accent/60 ring-offset-2 ring-offset-paper -translate-y-1 shadow-lifted',
                 className,
             )}
         >
@@ -298,6 +302,9 @@ const ProTierDivider = () => (
 
 const Pricing = () => {
     const [period, setPeriod] = useState('yearly');
+    // The calculator reports the plan it's currently recommending; we
+    // mirror that as a subtle highlight on the matching grid card.
+    const [recommendedPlanId, setRecommendedPlanId] = useState(null);
 
     return (
         <div className="min-h-screen pt-24 pb-24 px-6 surface-page">
@@ -348,12 +355,19 @@ const Pricing = () => {
                                 period={period}
                                 delay={0.04 * i}
                                 className={GRID_PLACEMENT[i]}
+                                highlighted={recommendedPlanId === plan.id}
                             />
                         </React.Fragment>
                     ))}
                 </div>
 
                 <ReassuranceBand />
+
+                <CostCalculator
+                    period={period}
+                    onPeriodChange={setPeriod}
+                    onRecommendedChange={setRecommendedPlanId}
+                />
             </div>
         </div>
     );

@@ -90,6 +90,8 @@ export const PLANS = [
         tier: 'Explore',
         tierBackend: 'TIER_0',
         intro: 'Try the engine and generate your first cinematic concept.',
+        calculatorTagline: 'Try the engine for free',
+        monthlyCredits: 80,
         free: true,
         monthlyPrice: 0,
         yearlyPriceMonthly: 0,
@@ -106,6 +108,8 @@ export const PLANS = [
         tier: 'Creator',
         tierBackend: 'TIER_2',
         intro: 'For solo creators building cinematic concepts and story worlds.',
+        calculatorTagline: 'For solo creators, around one short film a month',
+        monthlyCredits: 1000,
         monthlyPrice: 19.99,
         yearlyPriceMonthly: 15.99,
         bullets: [
@@ -123,6 +127,8 @@ export const PLANS = [
         tier: 'Director',
         tierBackend: 'TIER_3',
         intro: 'For creators producing consistently, week after week.',
+        calculatorTagline: 'For consistent weekly production',
+        monthlyCredits: 3000,
         recommended: true,
         recommendedLabel: 'Recommended',
         monthlyPrice: 49.99,
@@ -143,6 +149,8 @@ export const PLANS = [
         tier: 'Studio',
         tierBackend: 'TIER_4',
         intro: 'For agencies, brands, and creators running sustained production.',
+        calculatorTagline: 'For sustained production, 4K masters and fastest queue',
+        monthlyCredits: 6000,
         monthlyPrice: 99.99,
         yearlyPriceMonthly: 79.99,
         inheritsFrom: 'Director',
@@ -162,6 +170,8 @@ export const PLANS = [
         tier: 'Production',
         tierBackend: 'TIER_5',
         intro: 'For production houses, agencies, and IP holders running multiple projects.',
+        calculatorTagline: 'For teams running multiple projects in parallel',
+        monthlyCredits: 18000,
         monthlyPrice: 248.99,
         yearlyPriceMonthly: 199,
         inheritsFrom: 'Studio',
@@ -182,6 +192,8 @@ export const PLANS = [
         tier: 'Atelier',
         tierBackend: 'TIER_6',
         intro: 'For studios producing series, franchises, and IP at scale.',
+        calculatorTagline: 'For studios producing series and IP at scale',
+        monthlyCredits: 50000,
         premium: true,
         premiumLabel: 'Premium',
         monthlyPrice: 623.99,
@@ -211,6 +223,79 @@ export const formatYearlyTotal = (yearlyPriceMonthly) =>
 export const YEARLY_SAVINGS_PERCENT = 20;
 
 export const FOUNDING_CREATOR_NOTE = "Founding Creator pricing. Lock in today's rates for life.";
+
+// ─── Cost calculator helpers ────────────────────────────────────────────────
+
+/**
+ * Average credit cost per cinematic clip. Tweak with product before launch;
+ * the disclaimer at the bottom of the calculator already says this is an
+ * estimate.
+ */
+export const CREDITS_PER_CLIP = 50;
+
+/**
+ * Volume thresholds (clips per month) → recommended plan id. Tuned to ~80%
+ * of each plan's credit allocation so there's headroom for experimentation.
+ */
+const RECOMMENDATION_THRESHOLDS = [
+    { upTo: 5, planId: 'explore' },
+    { upTo: 25, planId: 'creator' },
+    { upTo: 80, planId: 'director' },
+    { upTo: 150, planId: 'studio' },
+    { upTo: 400, planId: 'production' },
+    { upTo: Infinity, planId: 'atelier' },
+];
+
+export const recommendPlanFromVolume = (clipsPerMonth) => {
+    const found = RECOMMENDATION_THRESHOLDS.find((t) => clipsPerMonth <= t.upTo);
+    return found?.planId ?? 'atelier';
+};
+
+/**
+ * Build the breakdown rows shown under the recommended card.
+ * Always returns a stable shape so the renderer is simple.
+ */
+export const buildBreakdown = ({ clipsPerMonth, plan }) => {
+    const creditsNeeded = clipsPerMonth * CREDITS_PER_CLIP;
+    const buffer = Math.max(0, (plan.monthlyCredits ?? 0) - creditsNeeded);
+    const overflows = creditsNeeded > (plan.monthlyCredits ?? 0);
+
+    return {
+        clipsPerMonth,
+        creditsNeeded,
+        planCredits: plan.monthlyCredits ?? 0,
+        buffer,
+        overflows,
+        // Atelier (the top plan) triggers the top-up mention because the user
+        // is at the ceiling and any growth means top-ups.
+        showTopUpHint: plan.id === 'atelier' || overflows,
+    };
+};
+
+/**
+ * Slider ticks shown along the bar (visual + click targets).
+ */
+export const VOLUME_SLIDER = {
+    min: 0,
+    max: 500,
+    step: 5,
+    default: 30,
+    ticks: [0, 25, 75, 150, 300, 500],
+    formatValue: (v) => (v >= 500 ? '500+ clips' : `${v} clips`),
+};
+
+/**
+ * Content-type pills (multi-select). Currently informational only; selections
+ * don't drive the recommendation logic (per brief).
+ */
+export const CONTENT_TYPES = [
+    { id: 'images', label: 'Images' },
+    { id: 'video', label: 'Video clips' },
+    { id: 'cinematic', label: 'Cinematic sequences' },
+    { id: 'characters', label: 'Characters' },
+    { id: 'worlds', label: 'World building' },
+    { id: 'audio', label: 'Music and sound' },
+];
 
 export const REASSURANCE_BAND_TEXT = {
     intro: 'Cancel, downgrade or pause anytime from your account. 7-day refund window on your first paid month. Your projects stay yours.',
