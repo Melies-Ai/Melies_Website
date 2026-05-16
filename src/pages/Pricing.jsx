@@ -266,16 +266,33 @@ const ReassuranceBand = () => (
 //
 // 6 cards across viewports:
 //   mobile  (1 col): stack 1×6
-//   md      (2 col): 3 rows of 2
-//   lg      (3 col): 2 rows of 3
-//   2xl     (4 col): row 1 of 4 + row 2 of 2 centered (cols 2 and 3)
+//   md/lg   (2 col): 3 rows of 2 — Explore+Creator, Director+Studio, then
+//                    the production-grade heading takes its own full-width
+//                    row before Production+Atelier on the last row.
+//   xl+     (4 col): row 1 of 4 (Explore→Studio), then the heading on a
+//                    full-width row, then Production+Atelier centered on
+//                    cols 2-3 of the next row.
 //
-// On 2xl the last two cards (Production, Atelier) need explicit col-start
-// values to land in the middle, otherwise they default to the left edge.
+// On xl, the last two cards need explicit col-start values to land in the
+// middle, otherwise they default to the left edge.
 const GRID_PLACEMENT = {
-    4: '2xl:col-start-2',  // Production (5th card, index 4)
-    5: '2xl:col-start-3',  // Atelier   (6th card, index 5)
+    4: 'xl:col-start-2',  // Production (5th card, index 4)
+    5: 'xl:col-start-3',  // Atelier   (6th card, index 5)
 };
+
+// Full-width section heading shown before Production on every viewport.
+const ProTierDivider = () => (
+    <div className="col-span-full mt-6 md:mt-8">
+        <div className="max-w-2xl">
+            <h2 className="text-2xl md:text-3xl font-medium tracking-tight text-strong mb-2">
+                For production teams and studios.
+            </h2>
+            <p className="text-muted text-base">
+                Higher capacity, dedicated lanes, and team seats for sustained output.
+            </p>
+        </div>
+    </div>
+);
 
 // ─── Page ───────────────────────────────────────────────────────────────────
 
@@ -321,16 +338,18 @@ const Pricing = () => {
                 {/* Plans grid: 1 / 2 / 3 / 4-then-2-centered */}
                 <div
                     id="pricing-grid"
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 items-stretch pt-6"
+                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch pt-6"
                 >
                     {PLANS.map((plan, i) => (
-                        <PlanCard
-                            key={plan.id}
-                            plan={plan}
-                            period={period}
-                            delay={0.04 * i}
-                            className={GRID_PLACEMENT[i]}
-                        />
+                        <React.Fragment key={plan.id}>
+                            {plan.id === 'production' && <ProTierDivider />}
+                            <PlanCard
+                                plan={plan}
+                                period={period}
+                                delay={0.04 * i}
+                                className={GRID_PLACEMENT[i]}
+                            />
+                        </React.Fragment>
                     ))}
                 </div>
 
