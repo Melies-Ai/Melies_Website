@@ -12,6 +12,10 @@
 //     VITE_STRIPE_DIRECTOR_YEARLY=https://buy.stripe.com/...
 //     VITE_STRIPE_STUDIO_MONTHLY=https://buy.stripe.com/...
 //     VITE_STRIPE_STUDIO_YEARLY=https://buy.stripe.com/...
+//     VITE_STRIPE_PRODUCTION_MONTHLY=https://buy.stripe.com/...
+//     VITE_STRIPE_PRODUCTION_YEARLY=https://buy.stripe.com/...
+//     VITE_STRIPE_ATELIER_MONTHLY=https://buy.stripe.com/...
+//     VITE_STRIPE_ATELIER_YEARLY=https://buy.stripe.com/...
 //
 // Success URL config in Stripe Dashboard:
 //   https://app.fantazia.ai/welcome?session_id={CHECKOUT_SESSION_ID}
@@ -33,6 +37,14 @@ const STRIPE_LINKS = {
         monthly: import.meta.env.VITE_STRIPE_STUDIO_MONTHLY ?? '',
         yearly: import.meta.env.VITE_STRIPE_STUDIO_YEARLY ?? '',
     },
+    production: {
+        monthly: import.meta.env.VITE_STRIPE_PRODUCTION_MONTHLY ?? '',
+        yearly: import.meta.env.VITE_STRIPE_PRODUCTION_YEARLY ?? '',
+    },
+    atelier: {
+        monthly: import.meta.env.VITE_STRIPE_ATELIER_MONTHLY ?? '',
+        yearly: import.meta.env.VITE_STRIPE_ATELIER_YEARLY ?? '',
+    },
 };
 
 /**
@@ -50,12 +62,27 @@ export const getCheckoutUrl = (planId, period) => {
 };
 
 /**
- * The 4 plans, in display order. `monthlyPrice` and `yearlyPriceMonthly`
- * are the visible "$X / month" figures; the yearly total + savings line
- * is derived. Keep `tierBackend` for handoff to the app (TIER_3 etc).
+ * The 6 plans, in display order.
  *
- * `bullets` mirror the brief copy 1:1 (Credits / Speed / Quality /
- * Rights / Support order).
+ * Price fields
+ *   monthlyPrice           — the price shown when the toggle is on Monthly.
+ *   yearlyPriceMonthly     — the price shown when the toggle is on Yearly
+ *                            (i.e., effective per-month rate billed yearly).
+ *
+ * Inheritance line ("Everything in X, plus:")
+ *   inheritsFrom           — the previous tier's name; shown above the
+ *                            bullets on Director and up.
+ *
+ * Visual flags
+ *   recommended            — Director only. Warm beige fill + "Recommended"
+ *                            badge + filled-ink CTA.
+ *   premium                — Atelier only. Small "Premium" badge top-right,
+ *                            warm accent ring.
+ *
+ * Background image slot (optional, reserved for future visuals)
+ *   bgImage                — image URL to render behind the card content.
+ *   bgOpacity              — number 0..1 (default ~0.15).
+ *   bgBlend                — "multiply" | "soft-light" | etc.
  */
 export const PLANS = [
     {
@@ -100,12 +127,12 @@ export const PLANS = [
         recommendedLabel: 'Recommended',
         monthlyPrice: 49.99,
         yearlyPriceMonthly: 39.99,
+        inheritsFrom: 'Creator',
         bullets: [
             '3,000 credits per month, around 60 clips or three short films',
             '5 generations in parallel',
-            'Priority queue, faster processing',
             'All premium and cinematic models',
-            'HD exports, commercial usage included, no watermark',
+            'HD exports',
             'Early access to Fable, Citizen and Oasis as they ship in 2026',
             'Email support',
         ],
@@ -118,16 +145,59 @@ export const PLANS = [
         intro: 'For agencies, brands, and creators running sustained production.',
         monthlyPrice: 99.99,
         yearlyPriceMonthly: 79.99,
+        inheritsFrom: 'Director',
         bullets: [
             '6,000 credits per month, around 120 clips or six short films',
             '10 generations in parallel',
             'Fastest processing queue',
-            'All premium and cinematic models, with early access to new models',
-            '4K exports, commercial usage included, no watermark',
-            'Priority access to Fable, Citizen and Oasis as they ship in 2026',
+            'Early access to new models',
+            '4K exports',
+            'Priority access to Fable, Citizen and Oasis',
             'Priority email support',
         ],
         cta: 'Get Studio',
+    },
+    {
+        id: 'production',
+        tier: 'Production',
+        tierBackend: 'TIER_5',
+        intro: 'For production houses, agencies, and IP holders running multiple projects.',
+        monthlyPrice: 248.99,
+        yearlyPriceMonthly: 199,
+        inheritsFrom: 'Studio',
+        bullets: [
+            '18,000 credits per month, around 360 clips or 18 short films',
+            '20 generations in parallel',
+            'Dedicated processing lane',
+            'Early access to upcoming Cinematic v2 models',
+            '4K and ProRes-quality exports',
+            '3 team seats included',
+            'Project sharing and collaboration',
+            'Priority chat and email support',
+        ],
+        cta: 'Get Production',
+    },
+    {
+        id: 'atelier',
+        tier: 'Atelier',
+        tierBackend: 'TIER_6',
+        intro: 'For studios producing series, franchises, and IP at scale.',
+        premium: true,
+        premiumLabel: 'Premium',
+        monthlyPrice: 623.99,
+        yearlyPriceMonthly: 499,
+        inheritsFrom: 'Production',
+        bullets: [
+            '50,000 credits per month, around 1,000 clips or 50 short films',
+            '30 generations in parallel',
+            'Highest priority dedicated lane',
+            'Early access to all beta models and tools',
+            '4K, ProRes, and master-quality exports',
+            '10 team seats included',
+            'Brand-locked LoRAs and custom style training',
+            'Dedicated success manager via email',
+        ],
+        cta: 'Get Atelier',
     },
 ];
 
