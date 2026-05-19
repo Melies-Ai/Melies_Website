@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { PLANS } from '../config/pricing';
+import { PLAN_MEDIA } from '../config/pricing-media';
 import { cn } from '../lib/cn';
 import MiniBillingToggle from '../components/sections/pricing/MiniBillingToggle';
 import PlanCardBaseline from '../components/sections/pricing/variants/PlanCardBaseline';
 import PlanCardBanner from '../components/sections/pricing/variants/PlanCardBanner';
 import PlanCardBannerFrost from '../components/sections/pricing/variants/PlanCardBannerFrost';
 
-// The 4 plans that have images in PLAN_MEDIA. Production and Atelier are
-// excluded because they're text-only — the lab is specifically about
-// image position, so a no-image plan adds noise to the comparison.
-const IMAGED_PLAN_IDS = ['explore', 'creator', 'director', 'studio'];
+// Plans that have an entry in PLAN_MEDIA. Derived from the single
+// source of truth so adding/removing an image in pricing-media.js
+// automatically updates the lab's plan selector. Production and Atelier
+// are excluded by virtue of not being in PLAN_MEDIA (they're text-only).
+const IMAGED_PLAN_IDS = Object.keys(PLAN_MEDIA);
 
 /**
  * Plan selector — pill-strip mirroring MiniBillingToggle's visual pattern.
@@ -54,7 +56,7 @@ const PricingLab = () => {
     const [planId, setPlanId] = useState('director');
     const [period, setPeriod] = useState('yearly');
 
-    const plan = PLANS.find((p) => p.id === planId);
+    const plan = PLANS.find((p) => p.id === planId) ?? PLANS[0];
 
     return (
         <div className="min-h-screen pt-24 pb-24 px-6 surface-page">
