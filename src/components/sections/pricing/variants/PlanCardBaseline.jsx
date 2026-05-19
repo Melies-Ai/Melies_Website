@@ -10,7 +10,14 @@ import PriceBlock from '../PriceBlock';
 /**
  * V1 — Baseline. Image sits between title and price, inside the padded
  * zone (`aspect-[16/9]`, `rounded-2xl`). Acts as the control for the
- * design lab. Mirrors the production PlanCard one-to-one as of this commit.
+ * design lab — mirrors the production PlanCard's behavior with three
+ * intentional divergences:
+ *
+ *   1. No `highlighted` / `delay` / `className` props (the lab doesn't
+ *      use calculator-driven highlights or stagger delays).
+ *   2. `animate` uses a fixed `y: 0` (production uses `y: highlighted ? -6 : 0`).
+ *   3. All `track()` calls carry a `source: 'lab_v1_baseline'` field so
+ *      lab interactions are distinguishable from prod in analytics.
  */
 const PlanCardBaseline = ({ plan, period }) => {
     const href = getCheckoutUrl(plan.id, period);
@@ -61,7 +68,7 @@ const PlanCardBaseline = ({ plan, period }) => {
             </a>
 
             {premium && plan.premiumLabel && (
-                <div className="absolute top-4 right-4 z-20 px-2.5 py-0.5 bg-accent/15 text-accent text-[9px] font-bold uppercase tracking-widest rounded-full border border-accent/30">
+                <div className="absolute top-4 right-4 z-20 pointer-events-none px-2.5 py-0.5 bg-accent/15 text-accent text-[9px] font-bold uppercase tracking-widest rounded-full border border-accent/30">
                     {plan.premiumLabel}
                 </div>
             )}
