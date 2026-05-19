@@ -8,18 +8,29 @@ import { PLAN_MEDIA, PLAN_MEDIA_SIZES } from '../../../../config/pricing-media';
 import PriceBlock from '../PriceBlock';
 
 /**
- * V1 — Baseline. Image sits between title and price, inside the padded
- * zone (`aspect-[16/9]`, `rounded-2xl`). Acts as the control for the
- * design lab — mirrors the production PlanCard's behavior with three
- * intentional divergences:
+ * V5 — Banner + frost title (TOP) + fade gradient. Same as V4 with two
+ * key differences that change how the image dialogues with the card:
  *
- *   1. No `highlighted` / `delay` / `className` props (the lab doesn't
- *      use calculator-driven highlights or stagger delays).
- *   2. `animate` uses a fixed `y: 0` (production uses `y: highlighted ? -6 : 0`).
- *   3. All `track()` calls carry a `source: 'lab_v1_baseline'` field so
- *      lab interactions are distinguishable from prod in analytics.
+ *   1. Image is shown WHOLE — `aspect-[16/9]` matches the source aspect
+ *      ratio (1672×941 ≈ 16:9), so `object-cover` doesn't crop. The full
+ *      composition is visible at full card width.
+ *   2. A transparent → white gradient overlays the bottom third of the
+ *      image, fading into the card's `surface-card` (`#FFFFFF`). The
+ *      image dissolves into the text zone instead of meeting it with a
+ *      hard edge — a poster-like vignette transition.
+ *
+ * Intentional divergences from production PlanCard (same as V2-V4):
+ *   - No `highlighted` / `delay` / `className` props.
+ *   - `animate` uses a fixed `y: 0`.
+ *   - All `track()` calls carry `source: 'lab_v5_banner_frost_top_fade'`.
+ *
+ * Layout deltas vs V4:
+ *   - `aspect-[16/9]` instead of `aspect-[4/3]` (full image, no crop).
+ *   - Gradient overlay at the bottom of the image wrapper:
+ *     `absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white`.
+ *   - Image `<img>` `height` attribute back to `"360"` (matches 16:9 at width 640).
  */
-const PlanCardBaseline = ({ plan, period }) => {
+const PlanCardBannerFrostTopFade = ({ plan, period }) => {
     const href = getCheckoutUrl(plan.id, period);
     const premium = !!plan.premium;
     const media = PLAN_MEDIA[plan.id];
@@ -28,13 +39,13 @@ const PlanCardBaseline = ({ plan, period }) => {
     const handleMouseEnter = () => {
         if (hoverReportedRef.current) return;
         hoverReportedRef.current = true;
-        track('plan_card_hover', { plan_name: plan.id, source: 'lab_v1_baseline' });
+        track('plan_card_hover', { plan_name: plan.id, source: 'lab_v5_banner_frost_top_fade' });
     };
 
     const handleCtaClick = () => {
-        track('plan_cta_click', { plan_name: plan.id, billing_period: period, source: 'lab_v1_baseline' });
+        track('plan_cta_click', { plan_name: plan.id, billing_period: period, source: 'lab_v5_banner_frost_top_fade' });
         if (!plan.free) {
-            track('stripe_checkout_started', { plan_name: plan.id, billing_period: period, source: 'lab_v1_baseline' });
+            track('stripe_checkout_started', { plan_name: plan.id, billing_period: period, source: 'lab_v5_banner_frost_top_fade' });
         }
     };
 
@@ -49,7 +60,7 @@ const PlanCardBaseline = ({ plan, period }) => {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             onMouseEnter={handleMouseEnter}
             className={cn(
-                'group relative isolate flex flex-col h-full rounded-3xl p-7 lg:p-8',
+                'group relative isolate flex flex-col h-full rounded-3xl p-7 lg:p-8 overflow-hidden',
                 'surface-card border border-subtle shadow-card cursor-pointer',
                 'transition-[box-shadow,border-color] duration-300',
                 'hover:shadow-lifted hover:border-ink/30',
@@ -62,7 +73,7 @@ const PlanCardBaseline = ({ plan, period }) => {
                 rel="noopener noreferrer"
                 onClick={handleCtaClick}
                 aria-label={`${plan.tier} — ${plan.cta}`}
-                className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
             >
                 <span className="sr-only">{plan.cta}</span>
             </a>
@@ -73,12 +84,8 @@ const PlanCardBaseline = ({ plan, period }) => {
                 </div>
             )}
 
-            <h3 className="text-[28px] lg:text-[30px] font-medium tracking-tight text-strong mb-4 leading-none">
-                {plan.tier}
-            </h3>
-
-            {media && (
-                <div className="relative mb-5 overflow-hidden rounded-2xl aspect-[16/9] bg-paper">
+            {media ? (
+                <div className="relative -mx-7 lg:-mx-8 -mt-7 lg:-mt-8 mb-6 lg:mb-7 overflow-hidden rounded-t-3xl aspect-[16/9] bg-paper">
                     {media.sketchSrc && (
                         <img
                             src={media.sketchSrc}
@@ -107,7 +114,26 @@ const PlanCardBaseline = ({ plan, period }) => {
                             media.sketchSrc && 'opacity-0 group-hover:opacity-100',
                         )}
                     />
+
+                    {/* Fade gradient: image dissolves into the card's white
+                        surface at the bottom. Sits BELOW the frost pill in
+                        DOM order so the pill stays fully opaque on top. */}
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white pointer-events-none"
+                    />
+
+                    <h3 className="absolute top-4 left-4 inline-block px-4 py-2 rounded-2xl bg-white/30 backdrop-blur-md backdrop-saturate-150 border border-white/20 shadow-lg text-strong text-[24px] lg:text-[26px] font-medium tracking-tight transition-transform duration-300 group-hover:-translate-y-0.5">
+                        {plan.tier}
+                    </h3>
                 </div>
+            ) : (
+                // No media for this plan — fall back to a normal title to
+                // preserve hierarchy. Production and Atelier (which don't
+                // have images) take this path.
+                <h3 className="text-[28px] lg:text-[30px] font-medium tracking-tight text-strong mb-4 leading-none">
+                    {plan.tier}
+                </h3>
             )}
 
             <div className="mb-6">
@@ -165,4 +191,4 @@ const PlanCardBaseline = ({ plan, period }) => {
     );
 };
 
-export default PlanCardBaseline;
+export default PlanCardBannerFrostTopFade;

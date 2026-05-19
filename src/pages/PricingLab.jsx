@@ -3,10 +3,10 @@ import { PLANS } from '../config/pricing';
 import { PLAN_MEDIA } from '../config/pricing-media';
 import { cn } from '../lib/cn';
 import MiniBillingToggle from '../components/sections/pricing/MiniBillingToggle';
-import PlanCardBaseline from '../components/sections/pricing/variants/PlanCardBaseline';
 import PlanCardBanner from '../components/sections/pricing/variants/PlanCardBanner';
 import PlanCardBannerFrost from '../components/sections/pricing/variants/PlanCardBannerFrost';
 import PlanCardBannerFrostTop from '../components/sections/pricing/variants/PlanCardBannerFrostTop';
+import PlanCardBannerFrostTopFade from '../components/sections/pricing/variants/PlanCardBannerFrostTopFade';
 
 // Plans that have an entry in PLAN_MEDIA. Derived from the single
 // source of truth so adding/removing an image in pricing-media.js
@@ -81,14 +81,6 @@ const PricingLab = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 items-start">
                     <div>
                         <div className="mb-4">
-                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V1 — Baseline</div>
-                            <div className="text-sm text-muted">Image entre titre et prix</div>
-                        </div>
-                        <PlanCardBaseline plan={plan} period={period} />
-                    </div>
-
-                    <div>
-                        <div className="mb-4">
                             <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V2 — Banner</div>
                             <div className="text-sm text-muted">Image full-bleed en haut, titre dessous</div>
                         </div>
@@ -109,6 +101,14 @@ const PricingLab = () => {
                             <div className="text-sm text-muted">Image full-bleed, titre frost en haut</div>
                         </div>
                         <PlanCardBannerFrostTop plan={plan} period={period} />
+                    </div>
+
+                    <div>
+                        <div className="mb-4">
+                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V5 — Frost (haut) + Fade</div>
+                            <div className="text-sm text-muted">Image entière 16:9, titre frost en haut, fade vers la carte en bas</div>
+                        </div>
+                        <PlanCardBannerFrostTopFade plan={plan} period={period} />
                     </div>
                 </div>
 
