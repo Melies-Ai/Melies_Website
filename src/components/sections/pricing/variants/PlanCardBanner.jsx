@@ -24,8 +24,9 @@ import PriceBlock from '../PriceBlock';
  *   - Image wrapper uses negative margins `-mx-7 lg:-mx-8 -mt-7 lg:-mt-8`
  *     to escape the card's padding, plus `rounded-t-3xl` to follow
  *     the card's outer corner curve.
- *   - Image moves BEFORE the `<h3>`. The title gains `mt-6 lg:mt-7`
- *     to breathe from the banner edge.
+ *   - Image moves BEFORE the `<h3>`. Breathing room comes from the
+ *     image wrapper's `mb-6 lg:mb-7` (not from a `mt-*` on the title)
+ *     so the spacing stays semantically coupled to the image block.
  */
 const PlanCardBanner = ({ plan, period }) => {
     const href = getCheckoutUrl(plan.id, period);
@@ -70,7 +71,7 @@ const PlanCardBanner = ({ plan, period }) => {
                 rel="noopener noreferrer"
                 onClick={handleCtaClick}
                 aria-label={`${plan.tier} — ${plan.cta}`}
-                className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
             >
                 <span className="sr-only">{plan.cta}</span>
             </a>
