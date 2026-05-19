@@ -15,6 +15,8 @@ import exploreSrc from '../assets/images/fantazia_free.webp?w=640&format=webp';
 import exploreSrcSet from '../assets/images/fantazia_free.webp?w=320;480;640;800&format=webp&as=srcset';
 import creatorSrc from '../assets/images/fantazia_creator.webp?w=640&format=webp';
 import creatorSrcSet from '../assets/images/fantazia_creator.webp?w=320;480;640;800&format=webp&as=srcset';
+import creatorSketchSrc from '../assets/images/fantazia_storyboard_creator.webp?w=640&format=webp';
+import creatorSketchSrcSet from '../assets/images/fantazia_storyboard_creator.webp?w=320;480;640;800&format=webp&as=srcset';
 import directorSrc from '../assets/images/fantazia_director.webp?w=640&format=webp';
 import directorSrcSet from '../assets/images/fantazia_director.webp?w=320;480;640;800&format=webp&as=srcset';
 import studioSrc from '../assets/images/fantazia_studio.webp?w=640&format=webp';
@@ -40,6 +42,8 @@ export const PLAN_MEDIA = {
     creator: {
         src: creatorSrc,
         srcSet: creatorSrcSet,
+        sketchSrc: creatorSketchSrc,
+        sketchSrcSet: creatorSketchSrcSet,
         alt: 'A quiet morning by the lake — solo creators producing at their own rhythm.',
     },
     director: {
