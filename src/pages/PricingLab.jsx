@@ -1,8 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PLANS } from '../config/pricing';
+import { cn } from '../lib/cn';
+import MiniBillingToggle from '../components/sections/pricing/MiniBillingToggle';
 import PlanCardBaseline from '../components/sections/pricing/variants/PlanCardBaseline';
 import PlanCardBanner from '../components/sections/pricing/variants/PlanCardBanner';
 import PlanCardBannerFrost from '../components/sections/pricing/variants/PlanCardBannerFrost';
+
+// The 4 plans that have images in PLAN_MEDIA. Production and Atelier are
+// excluded because they're text-only — the lab is specifically about
+// image position, so a no-image plan adds noise to the comparison.
+const IMAGED_PLAN_IDS = ['explore', 'creator', 'director', 'studio'];
+
+/**
+ * Plan selector — pill-strip mirroring MiniBillingToggle's visual pattern.
+ * Lab-local (not extracted) because nothing else needs it.
+ */
+const PlanSelector = ({ planId, onChange }) => (
+    <div className="inline-flex items-center gap-1 surface-card border border-subtle rounded-full p-0.5 shadow-card text-xs">
+        {IMAGED_PLAN_IDS.map((id) => {
+            const plan = PLANS.find((p) => p.id === id);
+            const isActive = planId === id;
+            return (
+                <button
+                    key={id}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => {
+                        if (planId !== id) onChange(id);
+                    }}
+                    className={cn(
+                        'relative isolate px-3 py-1 rounded-full font-medium transition-colors',
+                        isActive ? 'bg-ink text-white' : 'text-muted hover:text-strong',
+                    )}
+                >
+                    {plan.tier}
+                </button>
+            );
+        })}
+    </div>
+);
 
 /**
  * Pricing Card — Design Lab
@@ -15,19 +51,28 @@ import PlanCardBannerFrost from '../components/sections/pricing/variants/PlanCar
  * indexed by search engines.
  */
 const PricingLab = () => {
-    const plan = PLANS.find((p) => p.id === 'director');
-    const period = 'yearly';
+    const [planId, setPlanId] = useState('director');
+    const [period, setPeriod] = useState('yearly');
+
+    const plan = PLANS.find((p) => p.id === planId);
 
     return (
         <div className="min-h-screen pt-24 pb-24 px-6 surface-page">
             <div className="max-w-7xl mx-auto">
-                <header className="mb-12">
-                    <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-strong mb-3 leading-[1.1]">
-                        Pricing Card — Design Lab
-                    </h1>
-                    <p className="text-muted text-lg font-light">
-                        Comparing 3 image-position variants. Hypothesis: positionnement de l'image.
-                    </p>
+                <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+                    <div className="max-w-2xl">
+                        <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-strong mb-3 leading-[1.1]">
+                            Pricing Card — Design Lab
+                        </h1>
+                        <p className="text-muted text-lg font-light">
+                            Comparing 3 image-position variants. Hypothesis: positionnement de l'image.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                        <PlanSelector planId={planId} onChange={setPlanId} />
+                        <MiniBillingToggle period={period} onChange={setPeriod} />
+                    </div>
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
