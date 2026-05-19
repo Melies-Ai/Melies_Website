@@ -147,7 +147,7 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
 
             {/* Premium badge — Atelier only */}
             {premium && plan.premiumLabel && (
-                <div className="absolute top-4 right-4 z-20 px-2.5 py-0.5 bg-accent/15 text-accent text-[9px] font-bold uppercase tracking-widest rounded-full border border-accent/30">
+                <div className="absolute top-4 right-4 z-20 pointer-events-none px-2.5 py-0.5 bg-accent/15 text-accent text-[9px] font-bold uppercase tracking-widest rounded-full border border-accent/30">
                     {plan.premiumLabel}
                 </div>
             )}
