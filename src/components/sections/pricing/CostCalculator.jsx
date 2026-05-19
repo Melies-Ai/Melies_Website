@@ -41,18 +41,7 @@ const VolumeSlider = ({ value, onChange }) => {
     const percent = ((value - min) / (max - min)) * 100;
 
     return (
-        <div className="relative pt-12 pb-2">
-            {/* Floating label following the handle */}
-            <div
-                className="absolute -translate-x-1/2 top-0 transition-[left] duration-100"
-                style={{ left: `${percent}%` }}
-            >
-                <div className="bg-ink text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-card whitespace-nowrap">
-                    {formatValue(value)}
-                </div>
-                <div className="w-2 h-2 bg-ink rotate-45 mx-auto -mt-1" />
-            </div>
-
+        <div className="relative pb-12">
             {/* Track + tick marks */}
             <div className="relative h-2">
                 <div className="absolute inset-0 bg-ink/8 rounded-full" />
@@ -87,6 +76,17 @@ const VolumeSlider = ({ value, onChange }) => {
                     style={{ left: `${percent}%` }}
                 >
                     <div className="w-5 h-5 bg-white rounded-full ring-[3px] ring-ink shadow-card" />
+                </div>
+            </div>
+
+            {/* Floating label BELOW the handle, with a small caret pointing up */}
+            <div
+                className="absolute -translate-x-1/2 transition-[left] duration-100 pointer-events-none"
+                style={{ left: `${percent}%`, top: '1.25rem' }}
+            >
+                <div className="w-2 h-2 bg-ink rotate-45 mx-auto -mb-1" />
+                <div className="bg-ink text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-card whitespace-nowrap">
+                    {formatValue(value)}
                 </div>
             </div>
 
@@ -162,79 +162,68 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
             ? `$${formatInt(yearlyTotal)} billed yearly, save ${YEARLY_SAVINGS_PERCENT}%`
             : `or ${formatMoney(plan.yearlyPriceMonthly)} / mo billed yearly`;
 
+    const totalLabel = isFree
+        ? 'Total cost (estimated)'
+        : period === 'yearly'
+            ? 'Yearly cost (estimated)'
+            : 'Monthly cost (estimated)';
+
     return (
         <div className="rounded-3xl surface-card border border-subtle shadow-card p-6 lg:p-8" aria-live="polite">
-            {/* Recommended plan header */}
-            <div className="flex items-baseline justify-between gap-4 pb-5 mb-2 border-b border-subtle">
-                <div>
-                    <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-faint mb-1">
-                        Recommended plan
-                    </div>
-                    <div className="text-2xl md:text-[26px] font-medium tracking-tight text-strong">
-                        <AnimatedSwap swapKey={plan.id}>{plan.tier}</AnimatedSwap>
-                    </div>
-                </div>
-                <div className="text-sm text-muted text-right max-w-[55%]">
-                    <AnimatedSwap swapKey={`${plan.id}-tagline`}>
-                        {plan.calculatorTagline}
-                    </AnimatedSwap>
-                </div>
+            {/* Line items — invoice-style, all rows share the same alignment */}
+            <div className="divide-y divide-subtle">
+                <BreakdownRow
+                    label="Recommended plan"
+                    value={plan.tier}
+                    swapKey={`plan-${plan.id}`}
+                />
+                <BreakdownRow
+                    label="Your estimated volume"
+                    value={volumeLabel}
+                    swapKey={`vol-${breakdown.clipsPerMonth}`}
+                />
+                <BreakdownRow
+                    label="Estimated credits needed (~50 per clip)"
+                    value={`${formatInt(breakdown.creditsNeeded)} credits`}
+                    swapKey={`needed-${breakdown.creditsNeeded}`}
+                />
+                <BreakdownRow
+                    label={`Included in ${plan.tier}`}
+                    value={`${formatInt(breakdown.planCredits)} credits`}
+                    swapKey={`included-${plan.id}`}
+                />
+                {!breakdown.overflows && breakdown.buffer > 0 && (
+                    <BreakdownRow
+                        label="Buffer for experimentation"
+                        value={`${formatInt(breakdown.buffer)} credits`}
+                        swapKey={`buffer-${breakdown.buffer}`}
+                        muted
+                    />
+                )}
+                {breakdown.showTopUpHint && (
+                    <BreakdownRow
+                        label="Top-up packs available"
+                        value="from $9"
+                        swapKey="topup"
+                        muted
+                    />
+                )}
             </div>
 
-            {/* Line items */}
-            <BreakdownRow
-                label="Your estimated volume"
-                value={volumeLabel}
-                swapKey={`vol-${breakdown.clipsPerMonth}`}
-            />
-            <BreakdownRow
-                label="Estimated credits needed (~50 per clip)"
-                value={`${formatInt(breakdown.creditsNeeded)} credits`}
-                swapKey={`needed-${breakdown.creditsNeeded}`}
-            />
-            <BreakdownRow
-                label={`Included in ${plan.tier}`}
-                value={`${formatInt(breakdown.planCredits)} credits`}
-                swapKey={`included-${plan.id}`}
-            />
-            {!breakdown.overflows && breakdown.buffer > 0 && (
-                <BreakdownRow
-                    label="Buffer for experimentation"
-                    value={`${formatInt(breakdown.buffer)} credits`}
-                    swapKey={`buffer-${breakdown.buffer}`}
-                    muted
-                />
-            )}
-            {breakdown.showTopUpHint && (
-                <BreakdownRow
-                    label="Top-up packs available"
-                    value="from $9"
-                    swapKey="topup"
-                    muted
-                />
-            )}
-
             {/* Total + CTA */}
-            <div className="border-t border-subtle mt-3 pt-5">
-                <div className="flex items-end justify-between gap-4 mb-5">
-                    <div>
-                        <div className="text-sm text-muted">
-                            {isFree ? 'Total cost' : `${period === 'yearly' ? 'Yearly' : 'Monthly'} cost`}
-                        </div>
-                        <div className="text-[11px] text-faint">(estimated)</div>
-                    </div>
-                    <div className="text-right">
-                        <div className="text-4xl md:text-5xl font-medium tracking-tight text-strong">
-                            <AnimatedSwap swapKey={`${plan.id}-${period}-price`}>
-                                {totalDisplay}
-                            </AnimatedSwap>
-                        </div>
-                        <div className="text-xs text-muted mt-1 min-h-[1.2em]">
-                            <AnimatedSwap swapKey={`${plan.id}-${period}-suffix`}>
-                                {totalSuffix}
-                            </AnimatedSwap>
-                        </div>
-                    </div>
+            <div className="border-t-2 border-ink/15 mt-4 pt-5">
+                <div className="flex items-baseline justify-between gap-4 mb-2">
+                    <span className="text-base font-medium text-strong">{totalLabel}</span>
+                    <span className="text-3xl md:text-4xl font-medium tracking-tight text-strong tabular-nums">
+                        <AnimatedSwap swapKey={`${plan.id}-${period}-price`}>
+                            {totalDisplay}
+                        </AnimatedSwap>
+                    </span>
+                </div>
+                <div className="text-xs text-muted text-right mb-6 min-h-[1.2em]">
+                    <AnimatedSwap swapKey={`${plan.id}-${period}-suffix`}>
+                        {totalSuffix}
+                    </AnimatedSwap>
                 </div>
 
                 <a
@@ -261,6 +250,13 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                         {isFree ? 'Start for free' : `Get ${plan.tier}`}
                     </AnimatedSwap>
                 </a>
+
+                {/* Tagline parked below the CTA as soft footnote, not a competing headline */}
+                <p className="text-[11px] text-faint text-center mt-4 leading-relaxed">
+                    <AnimatedSwap swapKey={`${plan.id}-tagline`}>
+                        {plan.calculatorTagline}
+                    </AnimatedSwap>
+                </p>
             </div>
         </div>
     );
@@ -327,24 +323,26 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
     return (
         <section ref={sectionRef} className="relative mt-24 mb-16 -mx-6 px-6 py-16 lg:py-20 surface-section">
             <div className="max-w-7xl 2xl:max-w-[88rem] mx-auto">
-                <header className="mb-10 lg:mb-12 max-w-2xl">
-                    <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-strong mb-3">
-                        Estimate your monthly cost.
-                    </h2>
-                    <p className="text-muted text-lg font-light">
-                        Move the slider to see how pricing scales with your production volume.
-                    </p>
-                </header>
-
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-                    {/* LEFT: slider + period toggle */}
-                    <div className="space-y-10 lg:pt-6">
+                    {/* LEFT: header + slider + period toggle.
+                        The header sits inside the left column so its top edge
+                        aligns with the top edge of the right breakdown card. */}
+                    <div className="space-y-10">
+                        <header>
+                            <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-strong mb-3">
+                                Estimate your monthly cost.
+                            </h2>
+                            <p className="text-muted text-lg font-light">
+                                Move the slider to see how pricing scales with your production volume.
+                            </p>
+                        </header>
+
                         <div>
-                            <div className="flex items-center justify-between gap-3 mb-2">
-                                <div className="flex items-center gap-3">
-                                    <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">1</span>
-                                    <h3 className="text-lg font-medium text-strong">Billing period</h3>
-                                </div>
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">1</span>
+                                <h3 className="text-lg font-medium text-strong">Billing period</h3>
+                            </div>
+                            <div className="pl-10">
                                 <MiniBillingToggle period={period} onChange={handleBillingToggle} />
                             </div>
                         </div>
@@ -354,10 +352,12 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">2</span>
                                 <h3 className="text-lg font-medium text-strong">Estimated clips per month</h3>
                             </div>
-                            <VolumeSlider value={clips} onChange={handleSliderChange} />
+                            <div className="pl-10">
+                                <VolumeSlider value={clips} onChange={handleSliderChange} />
+                            </div>
                         </div>
 
-                        <p className="text-[11px] text-faint leading-relaxed">
+                        <p className="text-[11px] text-faint leading-relaxed pl-10">
                             Estimates based on average cinematic clip generation (around 50 credits per clip). Your actual usage may vary depending on models, resolution, and clip length.
                         </p>
                     </div>
