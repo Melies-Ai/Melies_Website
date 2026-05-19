@@ -23,6 +23,7 @@ import Citizen from './pages/Citizen.jsx';
 import Oasis from './pages/Oasis.jsx';
 import Spark from './pages/Spark.jsx';
 import Pricing from './pages/Pricing.jsx';
+import PricingLab from './pages/PricingLab.jsx';
 import Terms from './pages/Terms.jsx';
 import Privacy from './pages/Privacy.jsx';
 
@@ -37,6 +38,7 @@ const ServerRoutes = () => (
         <Route path="/oasis" element={<Oasis />} />
         <Route path="/spark" element={<Spark />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/pricing/lab" element={<PricingLab />} />
         <Route path="/button-lab" element={<Navigate to="/" replace />} />
         <Route path="/archives" element={<Navigate to="/" replace />} />
         <Route path="/terms" element={<Terms />} />
