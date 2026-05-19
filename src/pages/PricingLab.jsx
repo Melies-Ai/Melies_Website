@@ -102,6 +102,31 @@ const PricingLab = () => {
                         <PlanCardBannerFrost plan={plan} period={period} />
                     </div>
                 </div>
+
+                <section className="mt-16 max-w-3xl">
+                    <h2 className="text-xs font-mono uppercase tracking-widest text-faint mb-3">
+                        Notes
+                    </h2>
+                    {/* TODO: add observations here as you compare the variants.
+                        Things to look for:
+                          - Premium feel: which variant matches Fantazia's
+                            cinematic positioning best?
+                          - Hierarchy: does the title still feel anchored
+                            when the image leads (V2/V3)?
+                          - Frost readability (V3): light vs dark image areas
+                            behind the pill — does it always read?
+                          - Content density: scroll through Explore (4 bullets)
+                            and Studio (7 bullets) — which variant scales best? */}
+                    <p className="text-sm text-default leading-relaxed">
+                        Hypothesis: positionnement de l'image. Tes 4 images
+                        sont aspirationnelles (lifestyle) — V2 et V3 leur
+                        donnent plus de présence que V1, mais coûtent de la
+                        hiérarchie textuelle. V3 ajoute un pari typographique
+                        (titre en glassmorphism). Compare avec Explore et
+                        Studio pour voir comment chaque traitement encaisse
+                        la densité de contenu.
+                    </p>
+                </section>
             </div>
         </div>
     );
