@@ -13,7 +13,6 @@ import { faqJsonLd } from '../config/pricing-comparison';
 import {
     PLANS,
     getCheckoutUrl,
-    formatYearlyTotal,
     YEARLY_SAVINGS_PERCENT,
     FOUNDING_CREATOR_NOTE,
     REASSURANCE_BAND_TEXT,
