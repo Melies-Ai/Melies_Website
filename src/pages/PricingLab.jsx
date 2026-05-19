@@ -6,6 +6,7 @@ import MiniBillingToggle from '../components/sections/pricing/MiniBillingToggle'
 import PlanCardBaseline from '../components/sections/pricing/variants/PlanCardBaseline';
 import PlanCardBanner from '../components/sections/pricing/variants/PlanCardBanner';
 import PlanCardBannerFrost from '../components/sections/pricing/variants/PlanCardBannerFrost';
+import PlanCardBannerFrostTop from '../components/sections/pricing/variants/PlanCardBannerFrostTop';
 
 // Plans that have an entry in PLAN_MEDIA. Derived from the single
 // source of truth so adding/removing an image in pricing-media.js
@@ -77,7 +78,7 @@ const PricingLab = () => {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 items-start">
                     <div>
                         <div className="mb-4">
                             <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V1 — Baseline</div>
@@ -96,10 +97,18 @@ const PricingLab = () => {
 
                     <div>
                         <div className="mb-4">
-                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V3 — Banner + Frost</div>
-                            <div className="text-sm text-muted">Image full-bleed, titre flottant frost</div>
+                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V3 — Banner + Frost (bas)</div>
+                            <div className="text-sm text-muted">Image full-bleed, titre frost en bas</div>
                         </div>
                         <PlanCardBannerFrost plan={plan} period={period} />
+                    </div>
+
+                    <div>
+                        <div className="mb-4">
+                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V4 — Banner + Frost (haut)</div>
+                            <div className="text-sm text-muted">Image full-bleed, titre frost en haut</div>
+                        </div>
+                        <PlanCardBannerFrostTop plan={plan} period={period} />
                     </div>
                 </div>
 
