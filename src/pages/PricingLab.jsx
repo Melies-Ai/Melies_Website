@@ -1,6 +1,7 @@
 import React from 'react';
 import { PLANS } from '../config/pricing';
 import PlanCardBaseline from '../components/sections/pricing/variants/PlanCardBaseline';
+import PlanCardBanner from '../components/sections/pricing/variants/PlanCardBanner';
 
 /**
  * Pricing Card — Design Lab
@@ -35,6 +36,14 @@ const PricingLab = () => {
                             <div className="text-sm text-muted">Image entre titre et prix</div>
                         </div>
                         <PlanCardBaseline plan={plan} period={period} />
+                    </div>
+
+                    <div>
+                        <div className="mb-4">
+                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V2 — Banner</div>
+                            <div className="text-sm text-muted">Image full-bleed en haut, titre dessous</div>
+                        </div>
+                        <PlanCardBanner plan={plan} period={period} />
                     </div>
                 </div>
             </div>
