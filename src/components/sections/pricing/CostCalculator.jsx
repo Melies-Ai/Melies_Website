@@ -11,6 +11,7 @@ import {
     buildBreakdown,
     VOLUME_SLIDER,
 } from '../../../config/pricing';
+import MiniBillingToggle from './MiniBillingToggle';
 
 // en-US locale on every number so French browsers don't add NBSP separators.
 const formatInt = (n) => (n ?? 0).toLocaleString('en-US');
@@ -98,41 +99,6 @@ const VolumeSlider = ({ value, onChange }) => {
         </div>
     );
 };
-
-// ─── Mini billing toggle (synced with main page toggle) ─────────────────────
-
-const MiniBillingToggle = ({ period, onChange }) => (
-    <div className="inline-flex items-center gap-1 surface-card border border-subtle rounded-full p-0.5 shadow-card text-xs">
-        <button
-            type="button"
-            onClick={() => onChange('monthly')}
-            className={cn(
-                'relative isolate px-3 py-1 rounded-full font-medium transition-colors',
-                period === 'monthly' ? 'bg-ink text-white' : 'text-muted hover:text-strong',
-            )}
-        >
-            Monthly
-        </button>
-        <button
-            type="button"
-            onClick={() => onChange('yearly')}
-            className={cn(
-                'relative isolate px-3 py-1 rounded-full font-medium transition-colors flex items-center gap-1.5',
-                period === 'yearly' ? 'bg-ink text-white' : 'text-muted hover:text-strong',
-            )}
-        >
-            Yearly
-            <span
-                className={cn(
-                    'text-[9px] font-bold px-1 rounded-full',
-                    period === 'yearly' ? 'bg-emerald-300/90 text-emerald-900' : 'bg-emerald-100 text-emerald-700',
-                )}
-            >
-                -{YEARLY_SAVINGS_PERCENT}%
-            </span>
-        </button>
-    </div>
-);
 
 // ─── Breakdown panel (invoice-style, all-in-one right column) ───────────────
 
