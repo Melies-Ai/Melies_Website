@@ -19,6 +19,7 @@ import {
     REASSURANCE_BAND_TEXT,
 } from '../config/pricing';
 import { PLAN_MEDIA, PLAN_MEDIA_SIZES } from '../config/pricing-media';
+import PriceBlock from '../components/sections/pricing/PriceBlock';
 
 // ─── Billing toggle ─────────────────────────────────────────────────────────
 
@@ -64,62 +65,6 @@ const BillingToggle = ({ period, onChange }) => {
                     -{YEARLY_SAVINGS_PERCENT}%
                 </span>
             </button>
-        </div>
-    );
-};
-
-// ─── Price block (price + period + billing line, 2 lines max per brief) ─────
-
-const formatMoney = (value) => {
-    // Whole numbers display without decimals ($199), .99 prices keep them ($15.99).
-    return value % 1 === 0 ? `$${value.toLocaleString()}` : `$${value.toFixed(2)}`;
-};
-
-const PriceBlock = ({ plan, period }) => {
-    if (plan.free) {
-        return (
-            <div>
-                <div className="flex items-baseline gap-1.5">
-                    <span className="text-5xl font-medium tracking-tight text-strong">$0</span>
-                    <span className="text-sm text-muted">/ month</span>
-                </div>
-                <div className="mt-1 text-sm text-muted">Free forever</div>
-            </div>
-        );
-    }
-
-    const price = period === 'yearly' ? plan.yearlyPriceMonthly : plan.monthlyPrice;
-    const yearlyTotal = formatYearlyTotal(plan.yearlyPriceMonthly);
-
-    return (
-        <div>
-            <div className="flex items-baseline gap-1.5">
-                <AnimatePresence mode="wait">
-                    <motion.span
-                        key={`${plan.id}-${period}`}
-                        initial={{ y: 10, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: -10, opacity: 0 }}
-                        transition={{ duration: 0.18 }}
-                        className="text-5xl font-medium tracking-tight text-strong"
-                    >
-                        {formatMoney(price)}
-                    </motion.span>
-                </AnimatePresence>
-                <span className="text-sm text-muted">/ month</span>
-            </div>
-            <div className="mt-1 text-sm text-muted min-h-[1.4em]">
-                {period === 'yearly' ? (
-                    <>
-                        ${yearlyTotal.toLocaleString()} billed yearly,{' '}
-                        <span className="text-emerald-700 font-medium">save {YEARLY_SAVINGS_PERCENT}%</span>
-                    </>
-                ) : (
-                    <span className="text-faint">
-                        Switch to yearly to save {YEARLY_SAVINGS_PERCENT}%
-                    </span>
-                )}
-            </div>
         </div>
     );
 };
