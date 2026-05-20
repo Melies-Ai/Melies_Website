@@ -7,6 +7,33 @@ import { getCheckoutUrl, FOUNDING_CREATOR_NOTE } from '../../../../config/pricin
 import { PLAN_MEDIA, PLAN_MEDIA_SIZES } from '../../../../config/pricing-media';
 import PriceBlock from '../PriceBlock';
 
+// Title-size variants for the frost pill. Each entry bundles text size,
+// pill padding and corner radius so the pill stays proportioned at each
+// size point. Defaults to 'md' which matches what's currently shipped in
+// production (`src/pages/Pricing.jsx`'s PlanCard).
+const TITLE_SIZES = {
+    sm: {
+        text: 'text-[18px] lg:text-[20px]',
+        padding: 'px-3 py-1.5',
+        rounded: 'rounded-xl',
+    },
+    md: {
+        text: 'text-[24px] lg:text-[26px]',
+        padding: 'px-4 py-2',
+        rounded: 'rounded-2xl',
+    },
+    lg: {
+        text: 'text-[32px] lg:text-[34px]',
+        padding: 'px-5 py-2.5',
+        rounded: 'rounded-2xl',
+    },
+    xl: {
+        text: 'text-[40px] lg:text-[44px]',
+        padding: 'px-6 py-3',
+        rounded: 'rounded-3xl',
+    },
+};
+
 /**
  * V5 — Banner + frost title (TOP) + fade gradient. Same as V4 with two
  * key differences that change how the image dialogues with the card:
@@ -30,22 +57,24 @@ import PriceBlock from '../PriceBlock';
  *     `absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white`.
  *   - Image `<img>` `height` attribute back to `"360"` (matches 16:9 at width 640).
  */
-const PlanCardBannerFrostTopFade = ({ plan, period }) => {
+const PlanCardBannerFrostTopFade = ({ plan, period, titleSize = 'md' }) => {
     const href = getCheckoutUrl(plan.id, period);
     const premium = !!plan.premium;
     const media = PLAN_MEDIA[plan.id];
+    const titleStyle = TITLE_SIZES[titleSize] ?? TITLE_SIZES.md;
+    const source = `lab_v5_banner_frost_top_fade_${titleSize}`;
 
     const hoverReportedRef = React.useRef(false);
     const handleMouseEnter = () => {
         if (hoverReportedRef.current) return;
         hoverReportedRef.current = true;
-        track('plan_card_hover', { plan_name: plan.id, source: 'lab_v5_banner_frost_top_fade' });
+        track('plan_card_hover', { plan_name: plan.id, source });
     };
 
     const handleCtaClick = () => {
-        track('plan_cta_click', { plan_name: plan.id, billing_period: period, source: 'lab_v5_banner_frost_top_fade' });
+        track('plan_cta_click', { plan_name: plan.id, billing_period: period, source });
         if (!plan.free) {
-            track('stripe_checkout_started', { plan_name: plan.id, billing_period: period, source: 'lab_v5_banner_frost_top_fade' });
+            track('stripe_checkout_started', { plan_name: plan.id, billing_period: period, source });
         }
     };
 
@@ -123,7 +152,15 @@ const PlanCardBannerFrostTopFade = ({ plan, period }) => {
                         className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white pointer-events-none"
                     />
 
-                    <h3 className="absolute top-4 left-4 inline-block px-4 py-2 rounded-2xl bg-white/30 backdrop-blur-md backdrop-saturate-150 border border-white/20 shadow-lg text-strong text-[24px] lg:text-[26px] font-medium tracking-tight transition-transform duration-300 group-hover:-translate-y-0.5">
+                    <h3 className={cn(
+                        'absolute top-4 left-4 inline-block',
+                        'bg-white/30 backdrop-blur-md backdrop-saturate-150 border border-white/20 shadow-lg',
+                        'text-strong font-medium tracking-tight',
+                        'transition-transform duration-300 group-hover:-translate-y-0.5',
+                        titleStyle.text,
+                        titleStyle.padding,
+                        titleStyle.rounded,
+                    )}>
                         {plan.tier}
                     </h3>
                 </div>

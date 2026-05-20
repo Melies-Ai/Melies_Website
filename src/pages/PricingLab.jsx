@@ -3,10 +3,19 @@ import { PLANS } from '../config/pricing';
 import { PLAN_MEDIA } from '../config/pricing-media';
 import { cn } from '../lib/cn';
 import MiniBillingToggle from '../components/sections/pricing/MiniBillingToggle';
-import PlanCardBanner from '../components/sections/pricing/variants/PlanCardBanner';
-import PlanCardBannerFrost from '../components/sections/pricing/variants/PlanCardBannerFrost';
-import PlanCardBannerFrostTop from '../components/sections/pricing/variants/PlanCardBannerFrostTop';
 import PlanCardBannerFrostTopFade from '../components/sections/pricing/variants/PlanCardBannerFrostTopFade';
+
+// Title-size variants to test in the lab. The V5 layout (full-bleed
+// banner + frost title at top + fade-to-white) won the image-position
+// comparison and shipped to production. Now we iterate on title size.
+// 'md' is what's live in production today — keep it visible as the
+// baseline reference.
+const V5_TITLE_SIZES = [
+    { size: 'sm', label: 'V5 — Small',  spec: 'Title 18-20px, pill px-3 py-1.5' },
+    { size: 'md', label: 'V5 — Medium', spec: 'Title 24-26px, pill px-4 py-2 (prod actuel)' },
+    { size: 'lg', label: 'V5 — Large',  spec: 'Title 32-34px, pill px-5 py-2.5' },
+    { size: 'xl', label: 'V5 — XLarge', spec: 'Title 40-44px, pill px-6 py-3' },
+];
 
 // Plans that have an entry in PLAN_MEDIA. Derived from the single
 // source of truth so adding/removing an image in pricing-media.js
@@ -79,37 +88,15 @@ const PricingLab = () => {
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 items-start">
-                    <div>
-                        <div className="mb-4">
-                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V2 — Banner</div>
-                            <div className="text-sm text-muted">Image full-bleed en haut, titre dessous</div>
+                    {V5_TITLE_SIZES.map(({ size, label, spec }) => (
+                        <div key={size}>
+                            <div className="mb-4">
+                                <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">{label}</div>
+                                <div className="text-sm text-muted">{spec}</div>
+                            </div>
+                            <PlanCardBannerFrostTopFade plan={plan} period={period} titleSize={size} />
                         </div>
-                        <PlanCardBanner plan={plan} period={period} />
-                    </div>
-
-                    <div>
-                        <div className="mb-4">
-                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V3 — Banner + Frost (bas)</div>
-                            <div className="text-sm text-muted">Image full-bleed, titre frost en bas</div>
-                        </div>
-                        <PlanCardBannerFrost plan={plan} period={period} />
-                    </div>
-
-                    <div>
-                        <div className="mb-4">
-                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V4 — Banner + Frost (haut)</div>
-                            <div className="text-sm text-muted">Image full-bleed, titre frost en haut</div>
-                        </div>
-                        <PlanCardBannerFrostTop plan={plan} period={period} />
-                    </div>
-
-                    <div>
-                        <div className="mb-4">
-                            <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">V5 — Frost (haut) + Fade</div>
-                            <div className="text-sm text-muted">Image entière 16:9, titre frost en haut, fade vers la carte en bas</div>
-                        </div>
-                        <PlanCardBannerFrostTopFade plan={plan} period={period} />
-                    </div>
+                    ))}
                 </div>
 
                 <section className="mt-16 max-w-3xl">
