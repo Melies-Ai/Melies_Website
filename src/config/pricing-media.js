@@ -11,32 +11,41 @@
 //   2. Import it here with the same `?w=...&format=webp` query.
 //   3. Add an entry to PLAN_MEDIA keyed by the plan id.
 
+// Colored masters (fade-in on hover)
 import exploreSrc from '../assets/images/fantazia_free.webp?w=640&format=webp';
 import exploreSrcSet from '../assets/images/fantazia_free.webp?w=320;480;640;800&format=webp&as=srcset';
 import creatorSrc from '../assets/images/fantazia_creator.webp?w=640&format=webp';
 import creatorSrcSet from '../assets/images/fantazia_creator.webp?w=320;480;640;800&format=webp&as=srcset';
-import creatorSketchSrc from '../assets/images/fantazia_storyboard_creator.webp?w=640&format=webp';
-import creatorSketchSrcSet from '../assets/images/fantazia_storyboard_creator.webp?w=320;480;640;800&format=webp&as=srcset';
 import directorSrc from '../assets/images/fantazia_director.webp?w=640&format=webp';
 import directorSrcSet from '../assets/images/fantazia_director.webp?w=320;480;640;800&format=webp&as=srcset';
 import studioSrc from '../assets/images/fantazia_studio.webp?w=640&format=webp';
 import studioSrcSet from '../assets/images/fantazia_studio.webp?w=320;480;640;800&format=webp&as=srcset';
 
+// Black-and-white storyboards (default state — fade out on hover)
+import exploreSketchSrc from '../assets/images/fantazia_free_SB.webp?w=640&format=webp';
+import exploreSketchSrcSet from '../assets/images/fantazia_free_SB.webp?w=320;480;640;800&format=webp&as=srcset';
+import creatorSketchSrc from '../assets/images/fantazia_creator_SB.webp?w=640&format=webp';
+import creatorSketchSrcSet from '../assets/images/fantazia_creator_SB.webp?w=320;480;640;800&format=webp&as=srcset';
+import directorSketchSrc from '../assets/images/fantazia_director_SB.webp?w=640&format=webp';
+import directorSketchSrcSet from '../assets/images/fantazia_director_SB.webp?w=320;480;640;800&format=webp&as=srcset';
+import studioSketchSrc from '../assets/images/fantazia_studio_SB.webp?w=640&format=webp';
+import studioSketchSrcSet from '../assets/images/fantazia_studio_SB.webp?w=320;480;640;800&format=webp&as=srcset';
+
 // Map plan id → media descriptor. Plans without an entry render without
 // the visual slot (no empty placeholder), so adding/removing visuals is
 // a one-line edit here.
 //
-// Optional hover-swap fields:
-//   sketchSrc / sketchSrcSet — pencil or sketch version of the visual,
-//   shown by default. When the user hovers the card, the colored `src`
-//   fades in over it. Drop the sketch in /src/assets/images/, import it
-//   with the same `?w=320;480;640;800&format=webp&as=srcset` pattern,
-//   and add the two fields next to `src` / `srcSet` below. If absent,
-//   the colored image renders normally without any swap.
+// Hover-swap fields (active on all four imaged plans):
+//   sketchSrc / sketchSrcSet — pencil/storyboard B&W version of the
+//   visual, shown by default. When the user hovers the card, the
+//   colored `src` fades in over it (300ms opacity transition built
+//   into every variant card in src/components/sections/pricing/variants/).
 export const PLAN_MEDIA = {
     explore: {
         src: exploreSrc,
         srcSet: exploreSrcSet,
+        sketchSrc: exploreSketchSrc,
+        sketchSrcSet: exploreSketchSrcSet,
         alt: 'A sunlit park picnic with a laptop, notebook and coffee — start your first cinematic concept anywhere.',
     },
     creator: {
@@ -49,11 +58,15 @@ export const PLAN_MEDIA = {
     director: {
         src: directorSrc,
         srcSet: directorSrcSet,
+        sketchSrc: directorSketchSrc,
+        sketchSrcSet: directorSketchSrcSet,
         alt: 'A creative workspace with a monitor running a Fantazia storyboard — directing weekly production.',
     },
     studio: {
         src: studioSrc,
         srcSet: studioSrcSet,
+        sketchSrc: studioSketchSrc,
+        sketchSrcSet: studioSketchSrcSet,
         alt: 'A film studio with camera, lights and clapperboard — sustained cinematic output.',
     },
 };
