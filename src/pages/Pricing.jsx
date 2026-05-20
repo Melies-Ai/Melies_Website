@@ -213,7 +213,7 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
                         className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white pointer-events-none"
                     />
 
-                    <h3 className="absolute top-4 left-4 inline-block px-4 py-2 rounded-2xl bg-white/30 backdrop-blur-md backdrop-saturate-150 border border-white/20 shadow-lg text-strong text-[24px] lg:text-[26px] font-medium tracking-tight transition-transform duration-300 group-hover:-translate-y-0.5">
+                    <h3 className="absolute top-4 left-4 inline-block px-3 py-1 rounded-lg bg-white/30 backdrop-blur-md backdrop-saturate-150 border border-white/20 shadow-lg text-strong text-[18px] lg:text-[20px] font-medium tracking-tight transition-transform duration-300 group-hover:-translate-y-0.5">
                         {plan.tier}
                     </h3>
                 </div>
