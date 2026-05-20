@@ -11,26 +11,31 @@ import PriceBlock from '../PriceBlock';
 // pill padding and corner radius so the pill stays proportioned at each
 // size point. Defaults to 'md' which matches what's currently shipped in
 // production (`src/pages/Pricing.jsx`'s PlanCard).
+//
+// The three `sm-*` variants share the same text size (18-20px) but
+// progressively reduce the pill's vertical padding to test how flat
+// the pill can become before it loses presence. Corner radius drops
+// in step so the pill stays visually balanced at each height.
 const TITLE_SIZES = {
     sm: {
         text: 'text-[18px] lg:text-[20px]',
         padding: 'px-3 py-1.5',
         rounded: 'rounded-xl',
     },
+    'sm-slim': {
+        text: 'text-[18px] lg:text-[20px]',
+        padding: 'px-3 py-1',
+        rounded: 'rounded-lg',
+    },
+    'sm-flat': {
+        text: 'text-[18px] lg:text-[20px]',
+        padding: 'px-3 py-0.5',
+        rounded: 'rounded-full',
+    },
     md: {
         text: 'text-[24px] lg:text-[26px]',
         padding: 'px-4 py-2',
         rounded: 'rounded-2xl',
-    },
-    lg: {
-        text: 'text-[32px] lg:text-[34px]',
-        padding: 'px-5 py-2.5',
-        rounded: 'rounded-2xl',
-    },
-    xl: {
-        text: 'text-[40px] lg:text-[44px]',
-        padding: 'px-6 py-3',
-        rounded: 'rounded-3xl',
     },
 };
 

@@ -11,10 +11,10 @@ import PlanCardBannerFrostTopFade from '../components/sections/pricing/variants/
 // 'md' is what's live in production today — keep it visible as the
 // baseline reference.
 const V5_TITLE_SIZES = [
-    { size: 'sm', label: 'V5 — Small',  spec: 'Title 18-20px, pill px-3 py-1.5' },
-    { size: 'md', label: 'V5 — Medium', spec: 'Title 24-26px, pill px-4 py-2 (prod actuel)' },
-    { size: 'lg', label: 'V5 — Large',  spec: 'Title 32-34px, pill px-5 py-2.5' },
-    { size: 'xl', label: 'V5 — XLarge', spec: 'Title 40-44px, pill px-6 py-3' },
+    { size: 'md',      label: 'V5 — Medium (prod)', spec: 'Title 24-26px, pill px-4 py-2 — baseline en production' },
+    { size: 'sm',      label: 'V5 — Small',         spec: 'Title 18-20px, pill px-3 py-1.5' },
+    { size: 'sm-slim', label: 'V5 — Small slim',    spec: 'Title 18-20px, pill px-3 py-1 (hauteur réduite)' },
+    { size: 'sm-flat', label: 'V5 — Small flat',    spec: 'Title 18-20px, pill px-3 py-0.5 (hauteur minimale)' },
 ];
 
 // Plans that have an entry in PLAN_MEDIA. Derived from the single
