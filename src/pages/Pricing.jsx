@@ -117,7 +117,11 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
             transition={{ delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             onMouseEnter={handleMouseEnter}
             className={cn(
-                'group relative isolate flex flex-col h-full rounded-3xl p-7 lg:p-8',
+                // overflow-hidden clips the full-bleed banner image on the
+                // card's rounded-3xl outer corners. Note: ring-* on the
+                // article itself still paints outside the clip (rings are
+                // drawn as box-shadow on the host, not on descendants).
+                'group relative isolate flex flex-col h-full rounded-3xl p-7 lg:p-8 overflow-hidden',
                 'surface-card border border-subtle shadow-card cursor-pointer',
                 // Only animate non-transform props via Tailwind so we don't
                 // clash with motion's inline transform.
@@ -133,14 +137,17 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
         >
             {/* Stretched link — the entire card is one click target.
                 Everything else inside the card is non-interactive text /
-                images, so we don't need extra z-index management. */}
+                images, so we don't need extra z-index management.
+
+                Uses focus-visible:outline-* (not ring-*) because the
+                article's overflow-hidden would clip a box-shadow ring. */}
             <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleCtaClick}
                 aria-label={`${plan.tier} — ${plan.cta}`}
-                className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
             >
                 <span className="sr-only">{plan.cta}</span>
             </a>
@@ -152,19 +159,22 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
                 </div>
             )}
 
-            {/* Header — plan name first, then price. Same font-medium /
-                tracking-tight as the page h1, so titles read as one family. */}
-            <h3 className="text-[28px] lg:text-[30px] font-medium tracking-tight text-strong mb-4 leading-none">
-                {plan.tier}
-            </h3>
+            {/* Image + title block. When the plan has media (Explore /
+                Creator / Director / Studio): a full-bleed 16:9 banner sits
+                at the top of the card, with the plan name floating as a
+                glassmorphism pill at the top-left of the image, and a
+                transparent → white gradient at the bottom of the image
+                dissolving it into the card surface (#FFFFFF).
 
-            {/* Plan illustration — slotted between title and price.
-                Optional sketch layer: when `media.sketchSrc` is provided,
-                the colored image fades in on card hover, swapping from the
-                pencil/sketch default. Without a sketch, the colored image
-                simply renders normally. */}
-            {media && (
-                <div className="relative mb-5 overflow-hidden rounded-2xl aspect-[16/9] bg-paper">
+                Hover swap: when `media.sketchSrc` is provided, the B&W
+                storyboard is the default visual and the colored master
+                fades in on card hover.
+
+                When the plan has no media (Production / Atelier): falls
+                back to a normal `<h3>` in the padded zone, preserving
+                hierarchy. */}
+            {media ? (
+                <div className="relative -mx-7 lg:-mx-8 -mt-7 lg:-mt-8 mb-6 lg:mb-7 overflow-hidden rounded-t-3xl aspect-[16/9] bg-paper">
                     {media.sketchSrc && (
                         <img
                             src={media.sketchSrc}
@@ -194,7 +204,23 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
                             media.sketchSrc && 'opacity-0 group-hover:opacity-100',
                         )}
                     />
+
+                    {/* Fade gradient: image dissolves into the card's
+                        white surface at the bottom. Sits BELOW the frost
+                        pill in DOM order so the pill stays fully opaque. */}
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white pointer-events-none"
+                    />
+
+                    <h3 className="absolute top-4 left-4 inline-block px-4 py-2 rounded-2xl bg-white/30 backdrop-blur-md backdrop-saturate-150 border border-white/20 shadow-lg text-strong text-[24px] lg:text-[26px] font-medium tracking-tight transition-transform duration-300 group-hover:-translate-y-0.5">
+                        {plan.tier}
+                    </h3>
                 </div>
+            ) : (
+                <h3 className="text-[28px] lg:text-[30px] font-medium tracking-tight text-strong mb-4 leading-none">
+                    {plan.tier}
+                </h3>
             )}
 
             <div className="mb-6">
