@@ -129,7 +129,7 @@ export const PLANS = [
             'Commercial usage included, no watermark',
             'Community support',
         ],
-        cta: 'Start creating',
+        cta: 'Get Creator',
     },
     {
         id: 'director',
@@ -152,7 +152,7 @@ export const PLANS = [
             'Early access to Fable, Citizen and Oasis as they ship in 2026',
             'Email support',
         ],
-        cta: 'Become a Director',
+        cta: 'Get Director',
     },
     {
         id: 'studio',

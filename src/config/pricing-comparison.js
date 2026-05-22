@@ -145,11 +145,6 @@ export const FAQ_ITEMS = [
         a: 'Choose Explore to try the engine. Choose Creator if you produce a short project once a month. Choose Director if you produce consistently every week. Choose Studio if you produce at scale or need 4K masters. Choose Production for production houses with team needs. Choose Atelier if you produce series, franchises, or IP at scale with custom style training.',
     },
     {
-        id: 'price-increase',
-        q: 'Will prices increase later?',
-        a: 'Yes. As we add Fable, Citizen, and Oasis to the platform in 2026, our pricing will evolve. If you subscribe today, you lock in Founding Creator pricing for life on your current plan.',
-    },
-    {
         id: 'payment-methods',
         q: 'What payment methods do you accept?',
         a: 'We accept all major credit and debit cards, Apple Pay and Google Pay through secure Stripe checkout. Subscriptions are billed monthly or yearly from the day you subscribe, and you can update your payment method anytime from your dashboard.',
