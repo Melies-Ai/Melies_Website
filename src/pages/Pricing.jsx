@@ -357,7 +357,7 @@ const Pricing = () => {
     };
 
     return (
-        <div className="min-h-screen pt-24 pb-24 px-6 surface-page">
+        <div className="min-h-screen pt-32 lg:pt-40 pb-24 px-6 surface-page">
             <SEO
                 title="Pricing built for cinematic creation"
                 description="Generative filmmaking pricing. Start free, scale to Director, run sustained production with Studio, or build series and franchises with Atelier. Credits, premium models, commercial license, no watermark. Secure checkout via Stripe."
