@@ -304,12 +304,22 @@ const ReassuranceBand = () => (
 // ─── Responsive grid placement helper ───────────────────────────────────────
 //
 // Keyed by PLAN ID (not by index) so disabling any plan via `enabled:false`
-// in pricing.js doesn't shift other plans' grid placement. On xl, the two
-// pro-tier cards need explicit col-start values to land centered in the
-// 4-col grid, otherwise they default to the left edge.
+// in pricing.js doesn't shift other plans' grid placement.
+//
+// The xl grid is a 6-col base. Mid-tier cards (Creator/Director/Studio)
+// each span 2 cols → 3 cards × 2 = 6 cols, fills the row. Pro-tier cards
+// (Production/Atelier) each span 3 cols → 2 cards × 3 = 6 cols, also
+// fills the row but with slightly wider cards — a subtle hierarchy bump
+// that flags these as the production-grade tier.
+//
+// On mobile (1 col) and md/lg (2 cols), the xl:col-span-* utilities don't
+// apply and cards fall back to their default 1-col-per-card layout.
 const GRID_PLACEMENT_BY_ID = {
-    production: 'xl:col-start-2',
-    atelier:    'xl:col-start-3',
+    creator:    'xl:col-span-2',
+    director:   'xl:col-span-2',
+    studio:     'xl:col-span-2',
+    production: 'xl:col-span-3',
+    atelier:    'xl:col-span-3',
 };
 
 // Full-width section heading shown before Production on every viewport.
@@ -386,7 +396,7 @@ const Pricing = () => {
                 {/* Plans grid: 1 / 2 / 3 / 4-then-2-centered */}
                 <div
                     id="pricing-grid"
-                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch pt-6"
+                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-6 items-stretch pt-6"
                 >
                     {ACTIVE_PLANS.map((plan, i) => (
                         <React.Fragment key={plan.id}>
