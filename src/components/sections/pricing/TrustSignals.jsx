@@ -4,6 +4,19 @@ import { Lock } from 'lucide-react';
 import { USAGE_FIGURE, TRUST_LOGOS, TESTIMONIALS } from '../../../config/pricing-trust';
 import { track } from '../../../lib/analytics';
 
+// ── Stripe payment badge ────────────────────────────────────────────────────
+// Exported so it can sit near the pricing grid (under the reassurance band)
+// instead of floating in this trust-signals section when there's no other
+// trust content. Stripe reassurance reads better right at the conversion
+// point than as a standalone block lower on the page.
+export const StripeBadge = () => (
+    <div className="flex items-center justify-center gap-2 text-xs text-faint">
+        <Lock size={14} className="shrink-0" />
+        <span>Secure payments by</span>
+        <span className="font-medium text-muted tracking-tight">Stripe</span>
+    </div>
+);
+
 // ── Usage figure ────────────────────────────────────────────────────────────
 
 const UsageFigure = () => {
@@ -114,34 +127,22 @@ const TestimonialsGrid = () => {
     );
 };
 
-// ── Stripe payment badge (always visible) ───────────────────────────────────
-
-const StripeBadge = () => (
-    <div className="flex items-center justify-center gap-2 text-xs text-faint">
-        <Lock size={14} className="shrink-0" />
-        <span>Secure payments by</span>
-        <span className="font-medium text-muted tracking-tight">Stripe</span>
-    </div>
-);
-
 // ── Main ────────────────────────────────────────────────────────────────────
 
 const TrustSignals = () => {
     const hasAnyContent =
         USAGE_FIGURE != null || TRUST_LOGOS.length > 0 || TESTIMONIALS.length > 0;
 
-    // Even if everything else is empty, we always render the Stripe badge —
-    // it's the minimum reassurance signal we want under the calculator.
+    // Nothing to show? Don't render the section at all (no empty spacing
+    // floating between the Calculator and the ComparisonTable). The Stripe
+    // badge moved to the reassurance band — see Pricing.jsx.
+    if (!hasAnyContent) return null;
+
     return (
         <section className="mt-24 mb-16 space-y-12">
-            {hasAnyContent && (
-                <>
-                    <UsageFigure />
-                    <LogosRow />
-                    <TestimonialsGrid />
-                </>
-            )}
-            <StripeBadge />
+            <UsageFigure />
+            <LogosRow />
+            <TestimonialsGrid />
         </section>
     );
 };

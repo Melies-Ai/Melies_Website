@@ -8,7 +8,7 @@ import CostCalculator from '../components/sections/pricing/CostCalculator';
 import ComparisonTable from '../components/sections/pricing/ComparisonTable';
 import PricingFaq from '../components/sections/pricing/PricingFaq';
 import PricingFooterCta from '../components/sections/pricing/PricingFooterCta';
-import TrustSignals from '../components/sections/pricing/TrustSignals';
+import TrustSignals, { StripeBadge } from '../components/sections/pricing/TrustSignals';
 import { faqJsonLd } from '../config/pricing-comparison';
 import {
     ACTIVE_PLANS,
@@ -276,16 +276,22 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
 // ─── Reassurance band ───────────────────────────────────────────────────────
 
 const ReassuranceBand = () => (
-    <div className="max-w-3xl mx-auto text-center mt-14 text-sm text-muted leading-relaxed px-4">
-        {REASSURANCE_BAND_TEXT.intro}{' '}
-        <a
-            href={REASSURANCE_BAND_TEXT.accountUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-strong underline underline-offset-4 decoration-faint hover:decoration-strong"
-        >
-            Need more credits? Top up anytime from your dashboard.
-        </a>
+    <div className="max-w-3xl mx-auto text-center mt-14 px-4 space-y-4">
+        <p className="text-sm text-muted leading-relaxed">
+            {REASSURANCE_BAND_TEXT.intro}{' '}
+            <a
+                href={REASSURANCE_BAND_TEXT.accountUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-strong underline underline-offset-4 decoration-faint hover:decoration-strong"
+            >
+                Need more credits? Top up anytime from your dashboard.
+            </a>
+        </p>
+        {/* Stripe payment reassurance — paired with the cancel/refund/top-up
+            band so all the conversion-point reassurance signals sit together
+            right under the pricing grid. */}
+        <StripeBadge />
     </div>
 );
 
