@@ -378,14 +378,6 @@ const Pricing = () => {
                         >
                             Pricing built for cinematic creation.
                         </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0, y: 16 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                            className="text-lg md:text-xl text-muted font-light"
-                        >
-                            Start free. Scale as your worlds grow.
-                        </motion.p>
                     </div>
 
                     <div className="shrink-0">
