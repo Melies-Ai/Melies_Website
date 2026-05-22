@@ -117,6 +117,10 @@ export const PLANS = [
         monthlyCredits: 1000,
         monthlyPrice: 19.99,
         yearlyPriceMonthly: 15.99,
+        // First-month promo: 50% off the monthly price for new subscribers.
+        // Drives conversion on the entry/mid tier. Read by PriceBlock to
+        // render the strikethrough + promo tag in monthly mode.
+        monthlyIntroDiscount: 0.5,
         bullets: [
             '1,000 credits per month, around 20 short clips or one short film',
             '3 generations in parallel',
@@ -138,6 +142,7 @@ export const PLANS = [
         recommendedLabel: 'Recommended',
         monthlyPrice: 49.99,
         yearlyPriceMonthly: 39.99,
+        monthlyIntroDiscount: 0.5,
         inheritsFrom: 'Creator',
         bullets: [
             '3,000 credits per month, around 60 clips or three short films',
@@ -158,6 +163,7 @@ export const PLANS = [
         monthlyCredits: 6000,
         monthlyPrice: 99.99,
         yearlyPriceMonthly: 79.99,
+        monthlyIntroDiscount: 0.5,
         inheritsFrom: 'Director',
         bullets: [
             '6,000 credits per month, around 120 clips or six short films',

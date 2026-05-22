@@ -8,9 +8,17 @@ const formatMoney = (value) =>
 
 /**
  * PriceBlock — renders the price + period + billing detail line for a plan.
- * Free tier shows "$0 / month — Free forever". Paid tiers animate the price
- * on period change (monthly ↔ yearly) and show the yearly total + savings
- * line, or a "switch to yearly to save" hint on the monthly side.
+ *
+ * Three render modes:
+ *   1. Free tier             → "$0 / month — Free forever"
+ *   2. Monthly + intro promo → strikethrough monthly + "First month -X%" tag,
+ *                               big number = discounted first-month price,
+ *                               "Then $X / month" below. Activated when the
+ *                               plan has `monthlyIntroDiscount` set in
+ *                               pricing.js.
+ *   3. Yearly OR monthly-no-intro → original behaviour: big monthly-equivalent
+ *                                    number, "billed yearly $X save Y%" (yearly)
+ *                                    or "Switch to yearly to save Y%" (monthly).
  *
  * Shared across the production PlanCard (Pricing.jsx) and the lab variants.
  */
@@ -23,6 +31,45 @@ const PriceBlock = ({ plan, period }) => {
                     <span className="text-sm text-muted">/ month</span>
                 </div>
                 <div className="mt-1 text-sm text-muted">Free forever</div>
+            </div>
+        );
+    }
+
+    // Monthly mode with a first-month intro promo (e.g., 50% off).
+    if (period === 'monthly' && plan.monthlyIntroDiscount) {
+        const monthly = plan.monthlyPrice;
+        const introPrice = monthly * (1 - plan.monthlyIntroDiscount);
+        const introPercent = Math.round(plan.monthlyIntroDiscount * 100);
+
+        return (
+            <div>
+                {/* Eyebrow: struck monthly price + promo tag */}
+                <div className="flex items-baseline gap-2 mb-1.5">
+                    <span className="text-sm text-muted line-through">{formatMoney(monthly)}</span>
+                    <span className="text-xs font-medium text-emerald-700">
+                        First month -{introPercent}%
+                    </span>
+                </div>
+                {/* Big number: discounted first-month price */}
+                <div className="flex items-baseline gap-1.5">
+                    <AnimatePresence mode="wait">
+                        <motion.span
+                            key={`${plan.id}-monthly-intro`}
+                            initial={{ y: 10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="text-5xl font-medium tracking-tight text-strong"
+                        >
+                            {formatMoney(introPrice)}
+                        </motion.span>
+                    </AnimatePresence>
+                    <span className="text-sm text-muted">/ month</span>
+                </div>
+                {/* Transparency line: what the price becomes after month 1 */}
+                <div className="mt-1 text-sm text-muted min-h-[1.4em]">
+                    Then {formatMoney(monthly)} / month
+                </div>
             </div>
         );
     }
