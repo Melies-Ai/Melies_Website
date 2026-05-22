@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { cn } from '../../../../lib/cn';
 import { track } from '../../../../lib/analytics';
-import { getCheckoutUrl, FOUNDING_CREATOR_NOTE } from '../../../../config/pricing';
+import { getCheckoutUrl } from '../../../../config/pricing';
 import { PLAN_MEDIA, PLAN_MEDIA_SIZES } from '../../../../config/pricing-media';
 import PriceBlock from '../PriceBlock';
 
@@ -151,17 +151,7 @@ const PlanCardBannerFrost = ({ plan, period }) => {
                 )}
             </div>
 
-            <p
-                aria-hidden={plan.free ? 'true' : undefined}
-                className={cn(
-                    'mt-3 mb-6 text-[10px] font-mono uppercase tracking-widest text-center text-faint',
-                    plan.free && 'invisible',
-                )}
-            >
-                {FOUNDING_CREATOR_NOTE}
-            </p>
-
-            <p className="text-sm leading-relaxed text-default mb-5">
+            <p className="text-sm leading-relaxed text-default mt-6 mb-5">
                 {plan.intro}
             </p>
 

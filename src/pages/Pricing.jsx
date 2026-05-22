@@ -14,7 +14,6 @@ import {
     ACTIVE_PLANS,
     getCheckoutUrl,
     YEARLY_SAVINGS_PERCENT,
-    FOUNDING_CREATOR_NOTE,
     REASSURANCE_BAND_TEXT,
 } from '../config/pricing';
 import { PLAN_MEDIA, PLAN_MEDIA_SIZES } from '../config/pricing-media';
@@ -246,19 +245,8 @@ const PlanCard = ({ plan, period, delay, className, highlighted }) => {
                 )}
             </div>
 
-            {/* Founding Creator note — slot reserved on Explore too to keep CTAs aligned */}
-            <p
-                aria-hidden={plan.free ? 'true' : undefined}
-                className={cn(
-                    'mt-3 mb-6 text-[10px] font-mono uppercase tracking-widest text-center text-faint',
-                    plan.free && 'invisible',
-                )}
-            >
-                {FOUNDING_CREATOR_NOTE}
-            </p>
-
             {/* Description */}
-            <p className="text-sm leading-relaxed text-default mb-5">
+            <p className="text-sm leading-relaxed text-default mt-6 mb-5">
                 {plan.intro}
             </p>
 
