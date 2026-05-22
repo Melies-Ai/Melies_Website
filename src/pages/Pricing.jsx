@@ -356,7 +356,7 @@ const Pricing = () => {
             <div className="max-w-7xl 2xl:max-w-[88rem] mx-auto">
                 {/* Hero — single-row layout: title block on the left, billing
                     toggle on the right. Falls back to stacked on small viewports. */}
-                <header className="flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-6 mb-10 lg:mb-12">
+                <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10 lg:mb-12">
                     <motion.h1
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
