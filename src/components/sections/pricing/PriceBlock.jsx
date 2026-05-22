@@ -9,16 +9,21 @@ const formatMoney = (value) =>
 /**
  * PriceBlock — renders the price + period + billing detail line for a plan.
  *
- * Three render modes:
+ * Four render modes:
  *   1. Free tier             → "$0 / month — Free forever"
  *   2. Monthly + intro promo → strikethrough monthly + "First month -X%" tag,
  *                               big number = discounted first-month price,
  *                               "Then $X / month" below. Activated when the
  *                               plan has `monthlyIntroDiscount` set in
  *                               pricing.js.
- *   3. Yearly OR monthly-no-intro → original behaviour: big monthly-equivalent
- *                                    number, "billed yearly $X save Y%" (yearly)
- *                                    or "Switch to yearly to save Y%" (monthly).
+ *   3. Yearly                → strikethrough monthly + "Save Y%" tag,
+ *                               big number = yearly-effective monthly price,
+ *                               "$X billed yearly" below. Mirrors the
+ *                               monthly-intro pattern so both tabs read the
+ *                               same way (eyebrow = the deal, big number =
+ *                               what you pay).
+ *   4. Monthly, no intro     → big number = monthly price, "Switch to yearly
+ *                               to save Y%" hint below.
  *
  * Shared across the production PlanCard (Pricing.jsx) and the lab variants.
  */
@@ -74,37 +79,69 @@ const PriceBlock = ({ plan, period }) => {
         );
     }
 
-    const price = period === 'yearly' ? plan.yearlyPriceMonthly : plan.monthlyPrice;
-    const yearlyTotal = formatYearlyTotal(plan.yearlyPriceMonthly);
+    // Yearly mode: eyebrow with strikethrough monthly + 'Save X%' tag,
+    // big number = yearly-effective monthly price, sub-line = annual total.
+    // Mirrors the monthly-intro pattern above.
+    if (period === 'yearly') {
+        const monthly = plan.monthlyPrice;
+        const yearlyMonthly = plan.yearlyPriceMonthly;
+        const yearlyTotal = formatYearlyTotal(yearlyMonthly);
 
+        return (
+            <div>
+                {/* Eyebrow: struck monthly price + savings tag */}
+                <div className="flex items-baseline gap-2 mb-1.5">
+                    <span className="text-sm text-muted line-through">{formatMoney(monthly)}</span>
+                    <span className="text-xs font-medium text-emerald-700">
+                        Save {YEARLY_SAVINGS_PERCENT}%
+                    </span>
+                </div>
+                {/* Big number: yearly-effective monthly price */}
+                <div className="flex items-baseline gap-1.5">
+                    <AnimatePresence mode="wait">
+                        <motion.span
+                            key={`${plan.id}-yearly`}
+                            initial={{ y: 10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="text-5xl font-medium tracking-tight text-strong"
+                        >
+                            {formatMoney(yearlyMonthly)}
+                        </motion.span>
+                    </AnimatePresence>
+                    <span className="text-sm text-muted">/ month</span>
+                </div>
+                {/* Sub-line: annual total */}
+                <div className="mt-1 text-sm text-muted min-h-[1.4em]">
+                    ${yearlyTotal.toLocaleString()} billed yearly
+                </div>
+            </div>
+        );
+    }
+
+    // Monthly mode, no intro promo (Production / Atelier).
     return (
         <div>
             <div className="flex items-baseline gap-1.5">
                 <AnimatePresence mode="wait">
                     <motion.span
-                        key={`${plan.id}-${period}`}
+                        key={`${plan.id}-monthly`}
                         initial={{ y: 10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: -10, opacity: 0 }}
                         transition={{ duration: 0.18 }}
                         className="text-5xl font-medium tracking-tight text-strong"
                     >
-                        {formatMoney(price)}
+                        {formatMoney(plan.monthlyPrice)}
                     </motion.span>
                 </AnimatePresence>
                 <span className="text-sm text-muted">/ month</span>
             </div>
             <div className="mt-1 text-sm text-muted min-h-[1.4em]">
-                {period === 'yearly' ? (
-                    <>
-                        ${yearlyTotal.toLocaleString()} billed yearly,{' '}
-                        <span className="text-emerald-700 font-medium">save {YEARLY_SAVINGS_PERCENT}%</span>
-                    </>
-                ) : (
-                    <span className="text-faint">
-                        Switch to yearly to save {YEARLY_SAVINGS_PERCENT}%
-                    </span>
-                )}
+                <span className="text-faint">
+                    Switch to yearly to save {YEARLY_SAVINGS_PERCENT}%
+                </span>
             </div>
         </div>
     );
