@@ -290,9 +290,8 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
         <section ref={sectionRef} className="relative mt-24 mb-16 -mx-6 px-6 py-16 lg:py-20 surface-section">
             <div className="max-w-7xl 2xl:max-w-[88rem] mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-                    {/* LEFT: header + slider + period toggle.
-                        The header sits inside the left column so its top edge
-                        aligns with the top edge of the right breakdown card. */}
+                    {/* LEFT: header + slider only (the billing toggle moved
+                        to the right column, above the breakdown card). */}
                     <div className="space-y-10">
                         <header>
                             <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-strong mb-3">
@@ -306,16 +305,6 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                         <div>
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">1</span>
-                                <h3 className="text-lg font-medium text-strong">Billing period</h3>
-                            </div>
-                            <div className="pl-10">
-                                <MiniBillingToggle period={period} onChange={handleBillingToggle} />
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">2</span>
                                 <h3 className="text-lg font-medium text-strong">Estimated clips per month</h3>
                             </div>
                             <div className="pl-10">
@@ -328,8 +317,15 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                         </p>
                     </div>
 
-                    {/* RIGHT: single breakdown panel */}
-                    <BreakdownPanel plan={plan} period={period} breakdown={breakdown} />
+                    {/* RIGHT: billing toggle + breakdown panel.
+                        Toggle sits above the card, right-aligned so it visually
+                        anchors to the panel's top edge. */}
+                    <div className="space-y-4">
+                        <div className="flex justify-end">
+                            <MiniBillingToggle period={period} onChange={handleBillingToggle} />
+                        </div>
+                        <BreakdownPanel plan={plan} period={period} breakdown={breakdown} />
+                    </div>
                 </div>
             </div>
         </section>
