@@ -369,12 +369,12 @@ const Pricing = () => {
                 {/* Hero — single-row layout: title block on the left, billing
                     toggle on the right. Falls back to stacked on small viewports. */}
                 <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10 lg:mb-12">
-                    <div className="max-w-2xl">
+                    <div>
                         <motion.h1
                             initial={{ opacity: 0, y: 16 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                            className="text-4xl md:text-5xl lg:text-[3.25rem] font-medium tracking-tight text-strong mb-3 leading-[1.1]"
+                            className="text-4xl md:text-5xl lg:text-[3.25rem] font-medium tracking-tight text-strong mb-3 leading-[1.1] lg:whitespace-nowrap"
                         >
                             Pricing built for cinematic creation.
                         </motion.h1>
