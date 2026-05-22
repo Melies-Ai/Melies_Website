@@ -11,7 +11,7 @@ import PricingFooterCta from '../components/sections/pricing/PricingFooterCta';
 import TrustSignals from '../components/sections/pricing/TrustSignals';
 import { faqJsonLd } from '../config/pricing-comparison';
 import {
-    PLANS,
+    ACTIVE_PLANS,
     getCheckoutUrl,
     YEARLY_SAVINGS_PERCENT,
     FOUNDING_CREATOR_NOTE,
@@ -303,20 +303,13 @@ const ReassuranceBand = () => (
 
 // ─── Responsive grid placement helper ───────────────────────────────────────
 //
-// 6 cards across viewports:
-//   mobile  (1 col): stack 1×6
-//   md/lg   (2 col): 3 rows of 2 — Explore+Creator, Director+Studio, then
-//                    the production-grade heading takes its own full-width
-//                    row before Production+Atelier on the last row.
-//   xl+     (4 col): row 1 of 4 (Explore→Studio), then the heading on a
-//                    full-width row, then Production+Atelier centered on
-//                    cols 2-3 of the next row.
-//
-// On xl, the last two cards need explicit col-start values to land in the
-// middle, otherwise they default to the left edge.
-const GRID_PLACEMENT = {
-    4: 'xl:col-start-2',  // Production (5th card, index 4)
-    5: 'xl:col-start-3',  // Atelier   (6th card, index 5)
+// Keyed by PLAN ID (not by index) so disabling any plan via `enabled:false`
+// in pricing.js doesn't shift other plans' grid placement. On xl, the two
+// pro-tier cards need explicit col-start values to land centered in the
+// 4-col grid, otherwise they default to the left edge.
+const GRID_PLACEMENT_BY_ID = {
+    production: 'xl:col-start-2',
+    atelier:    'xl:col-start-3',
 };
 
 // Full-width section heading shown before Production on every viewport.
@@ -395,14 +388,14 @@ const Pricing = () => {
                     id="pricing-grid"
                     className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch pt-6"
                 >
-                    {PLANS.map((plan, i) => (
+                    {ACTIVE_PLANS.map((plan, i) => (
                         <React.Fragment key={plan.id}>
                             {plan.id === 'production' && <ProTierDivider />}
                             <PlanCard
                                 plan={plan}
                                 period={period}
                                 delay={0.04 * i}
-                                className={GRID_PLACEMENT[i]}
+                                className={GRID_PLACEMENT_BY_ID[plan.id]}
                                 highlighted={recommendedPlanId === plan.id}
                             />
                         </React.Fragment>

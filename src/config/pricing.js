@@ -89,6 +89,11 @@ export const PLANS = [
         id: 'explore',
         tier: 'Explore',
         tierBackend: 'TIER_0',
+        // Hidden from the public pricing page + calculator while we don't
+        // operate the free tier. Plan data stays in PLANS so direct id
+        // lookups (e.g. getCheckoutUrl, comparison-table values) still
+        // resolve. Flip to `enabled: true` (or delete the line) to re-show.
+        enabled: false,
         intro: 'Try the engine and generate your first cinematic concept.',
         calculatorTagline: 'Try the engine for free',
         monthlyCredits: 80,
@@ -246,8 +251,25 @@ const RECOMMENDATION_THRESHOLDS = [
     { upTo: Infinity, planId: 'atelier' },
 ];
 
+/**
+ * Plans that are currently visible to users.
+ * Hide a plan by setting `enabled: false` on it (see PLANS above). Plans
+ * absent from this list (because they're disabled) still exist in PLANS
+ * and can be looked up by id — they just don't render in the public grid,
+ * comparison table, or calculator recommendation.
+ */
+export const ACTIVE_PLANS = PLANS.filter((p) => p.enabled !== false);
+
+const ACTIVE_PLAN_IDS = new Set(ACTIVE_PLANS.map((p) => p.id));
+export const isPlanActive = (planId) => ACTIVE_PLAN_IDS.has(planId);
+
 export const recommendPlanFromVolume = (clipsPerMonth) => {
-    const found = RECOMMENDATION_THRESHOLDS.find((t) => clipsPerMonth <= t.upTo);
+    // Skip thresholds whose target plan is currently disabled — a small
+    // volume that used to recommend Explore now collapses to Creator (the
+    // next active tier above the threshold).
+    const found = RECOMMENDATION_THRESHOLDS.find(
+        (t) => clipsPerMonth <= t.upTo && isPlanActive(t.planId),
+    );
     return found?.planId ?? 'atelier';
 };
 

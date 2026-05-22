@@ -4,6 +4,15 @@ import { Check, Minus, ChevronDown } from 'lucide-react';
 import { cn } from '../../../lib/cn';
 import { track } from '../../../lib/analytics';
 import { COMPARISON_COLUMNS, COMPARISON_TABS } from '../../../config/pricing-comparison';
+import { isPlanActive } from '../../../config/pricing';
+
+// COMPARISON_COLUMNS lists ALL 6 plans in a fixed order. We hide columns
+// for plans flagged `enabled: false` in PLANS, but keep each column's
+// ORIGINAL index so we can pull the matching value out of every row's
+// `values` array (rows still carry 6 values, one per original plan).
+const visibleColumns = COMPARISON_COLUMNS
+    .map((col, idx) => ({ ...col, originalIndex: idx }))
+    .filter((col) => isPlanActive(col.id));
 
 // Render a single cell value (boolean → icon, string → text).
 const Cell = ({ value }) => {
@@ -62,7 +71,7 @@ const TableForTab = ({ tab }) => (
                         <th className="text-left text-[11px] font-mono uppercase tracking-widest text-faint font-medium py-4 pr-4">
                             {tab.label}
                         </th>
-                        {COMPARISON_COLUMNS.map((col) => (
+                        {visibleColumns.map((col) => (
                             <th
                                 key={col.id}
                                 className="text-left text-sm font-medium text-strong py-4 px-3 min-w-[8.5rem]"
@@ -81,9 +90,9 @@ const TableForTab = ({ tab }) => (
                             >
                                 {row.label}
                             </th>
-                            {row.values.map((v, j) => (
-                                <td key={j} className="py-4 px-3 align-middle">
-                                    <Cell value={v} />
+                            {visibleColumns.map((col) => (
+                                <td key={col.id} className="py-4 px-3 align-middle">
+                                    <Cell value={row.values[col.originalIndex]} />
                                 </td>
                             ))}
                         </tr>
@@ -127,13 +136,13 @@ const MobileCategory = ({ tab, isOpen, onToggle }) => (
                             <div key={i}>
                                 <div className="text-xs font-medium text-muted mb-2">{row.label}</div>
                                 <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-                                    {COMPARISON_COLUMNS.map((col, j) => (
+                                    {visibleColumns.map((col) => (
                                         <div key={col.id} className="flex items-baseline gap-2">
                                             <span className="text-[10px] font-mono uppercase tracking-widest text-faint w-16 shrink-0">
                                                 {col.label}
                                             </span>
                                             <span>
-                                                <Cell value={row.values[j]} />
+                                                <Cell value={row.values[col.originalIndex]} />
                                             </span>
                                         </div>
                                     ))}
