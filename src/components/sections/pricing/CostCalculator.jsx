@@ -138,11 +138,12 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
     const media = PLAN_MEDIA[plan.id];
 
     return (
-        <div className="relative rounded-3xl border border-subtle shadow-card overflow-hidden" aria-live="polite">
-            {/* Full-card background: the recommended plan's image fills the
-                entire card. Fades cross-plan when the slider changes the
-                recommendation. Falls back to a soft paper color when no
-                media is mapped (Production / Atelier). */}
+        // Scene card pattern — image backdrop + frost content panel.
+        // See DESIGN_SYSTEM.md §06 for the recipe.
+        <div className="scene-card" aria-live="polite">
+            {/* Image backdrop. Fades cross-plan when the slider changes
+                the recommendation. Falls back to a soft paper color
+                when no media is mapped (Production / Atelier). */}
             {media ? (
                 <AnimatePresence mode="wait">
                     <motion.img
@@ -164,12 +165,8 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                 <div className="absolute inset-0 bg-paper" />
             )}
 
-            {/* Frost content panel: glassmorphism over the bg image, holds
-                the breakdown rows + total + CTA. m-3 / lg:m-4 leaves a
-                small image border around the panel. Background blur +
-                white/70 keeps text fully readable regardless of which
-                plan image sits underneath. */}
-            <div className="relative m-3 lg:m-4 p-6 lg:p-7 rounded-2xl bg-white/70 backdrop-blur-xl backdrop-saturate-150 border border-white/40 shadow-lg">
+            {/* Frost content panel — holds the breakdown rows + total + CTA. */}
+            <div className="scene-frost">
                 {/* Plan name header */}
                 <div className="mb-5">
                     <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">

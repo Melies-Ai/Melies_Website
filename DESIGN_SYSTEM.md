@@ -191,6 +191,56 @@ Light inset surface for workspaces (Spark consistency engine, asset integration,
 
 > Inside a sunken-canvas: **always use `text-strong` / `text-muted`**, never `text-white`.
 
+### `.scene-card` + `.scene-frost`
+
+**Composed pattern** — an image backdrop (full-cover) with a frosted glass panel on top containing the content. Inspired by film mise-en-scène: the image sets the atmosphere, the frost panel holds the substance.
+
+First use: the pricing calculator's recommended-plan card (`CostCalculator.jsx → BreakdownPanel`). The image swaps in/out as the user moves the volume slider and the recommended tier changes.
+
+```css
+.scene-card {
+  position: relative;
+  border-radius: 24px;       /* matches rounded-3xl */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* = border-subtle */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* = shadow-card */
+  overflow: hidden;
+}
+
+.scene-frost {
+  position: relative;
+  margin: 0.75rem;           /* m-3 — leaves a thin image border around the panel */
+  padding: 1.5rem;           /* p-6 */
+  border-radius: 16px;       /* rounded-2xl */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* = shadow-lg */
+}
+
+@media (min-width: 1024px) {
+  .scene-frost { margin: 1rem; padding: 1.75rem; } /* lg:m-4 lg:p-7 */
+}
+```
+
+**Composition recipe:**
+
+```jsx
+<div className="scene-card">
+  {/* Image backdrop — absolute, fills the card */}
+  <img src={…} alt="…" className="absolute inset-0 w-full h-full object-cover" />
+
+  {/* Frost panel — sits on top, holds the content */}
+  <div className="scene-frost">
+    {/* …rows, price, CTA, etc.… */}
+  </div>
+</div>
+```
+
+> **Readability rules** inside a `.scene-frost`:
+> - Use `text-strong` / `text-muted` (the frost is bright, white text would disappear).
+> - Dividers: `divide-ink/10` (subtle on the frost background, vs `divide-subtle` which gets lost).
+> - Avoid placing critical text outside the frost — the image varies per use, contrast isn't guaranteed.
+
 ### Recurring patterns to extract (planned utilities)
 
 These appear 3+ times inline and should become utilities once we touch their callers:
@@ -234,9 +284,12 @@ These appear 3+ times inline and should become utilities once we touch their cal
 | Pattern | Surface | Border | Shadow |
 | :--- | :--- | :--- | :--- |
 | Floating card | `surface-card` (white) | `border-subtle` | `shadow-card` |
-| Glass card | `surface-glass` | `border-glass-subtle` | (built-in) |
-| Sunken workspace | `surface-sunken` | (built-in) | `shadow-inset` |
+| Glass card | `.glass-panel` | (built-in) | (built-in) |
+| Sunken workspace | `.sunken-canvas` | (built-in) | `shadow-inset` |
+| **Scene card** | `.scene-card` + `.scene-frost` over an `<img>` backdrop | (built-in) | (built-in) |
 | Product card | `ink` background + image overlay | `border-glass-subtle` | `shadow-heavy` |
+
+> **Scene card** is the most expressive of the lot — use it sparingly for moments where the image *is* part of the message (recommended-plan card driven by the calculator, "your project on Fantazia" testimonial card, etc.). Don't reach for it when a plain Floating card would do.
 
 ### Badge / pill
 

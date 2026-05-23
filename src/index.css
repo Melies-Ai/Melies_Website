@@ -81,6 +81,42 @@ body {
   border-radius: 24px;
 }
 
+/* Scene card — image backdrop + frost content panel (composed pattern).
+   The outer .scene-card holds an absolutely-positioned image filling
+   the container; a .scene-frost panel sits on top, containing the
+   actual content. The image is visible as a thin border around the
+   frost and shows through (heavily blurred) behind the panel.
+   First use: the pricing calculator's recommended-plan card.
+   See DESIGN_SYSTEM.md §06 + §08 for the recipe. */
+.scene-card {
+  position: relative;
+  border-radius: 24px;
+  /* matches border-subtle (rgb 0 0 0 / 0.05) */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  /* matches shadow-card */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.scene-frost {
+  position: relative;
+  margin: 0.75rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 1024px) {
+  .scene-frost {
+    margin: 1rem;
+    padding: 1.75rem;
+  }
+}
+
 /* Ambilight Glow - Removed as per "remove weird gradient" request, or kept very subtle? 
    User said "remove weird gradient background", likely referring to the body background.
    I'll keep this utility but ensure it's not used globally on the body. */
