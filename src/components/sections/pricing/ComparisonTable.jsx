@@ -68,9 +68,11 @@ const TableForTab = ({ tab }) => (
             <table className="w-full text-sm border-collapse">
                 <thead className="sticky top-0 z-10 surface-page">
                     <tr>
-                        <th className="text-left text-[11px] font-mono uppercase tracking-widest text-faint font-medium py-4 pr-4">
-                            {tab.label}
-                        </th>
+                        {/* Empty header cell — the tab name is already shown
+                            on the active TabStrip button above, no need to
+                            repeat it inside the table. */}
+                        <th aria-hidden="true" className="py-4 pr-4" />
+
                         {visibleColumns.map((col) => (
                             <th
                                 key={col.id}
