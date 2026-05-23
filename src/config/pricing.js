@@ -238,22 +238,25 @@ export const FOUNDING_CREATOR_NOTE = "Founding Creator pricing. Lock in today's 
 // ─── Cost calculator helpers ────────────────────────────────────────────────
 
 /**
- * Average credit cost per cinematic clip. Tweak with product before launch;
- * the disclaimer at the bottom of the calculator already says this is an
- * estimate.
+ * Average credit cost per minute of cinematic video output. A typical clip
+ * is ~30s ≈ 50 credits, so 1 minute = 2 clips = 100 credits. Tweak with
+ * product before launch; the disclaimer under the calculator already says
+ * this is an estimate.
  */
-export const CREDITS_PER_CLIP = 50;
+export const CREDITS_PER_MINUTE = 100;
 
 /**
- * Volume thresholds (clips per month) → recommended plan id. Tuned to ~80%
- * of each plan's credit allocation so there's headroom for experimentation.
+ * Volume thresholds (minutes of video / month) → recommended plan id.
+ * Tuned to ~80% of each plan's credit allocation so there's headroom for
+ * experimentation. Each tier's threshold corresponds to the prior tier's
+ * clip-based limit divided by 2 (1 min = 2 clips).
  */
 const RECOMMENDATION_THRESHOLDS = [
-    { upTo: 5, planId: 'explore' },
-    { upTo: 25, planId: 'creator' },
-    { upTo: 80, planId: 'director' },
-    { upTo: 150, planId: 'studio' },
-    { upTo: 400, planId: 'production' },
+    { upTo: 2.5, planId: 'explore' },
+    { upTo: 12.5, planId: 'creator' },
+    { upTo: 40, planId: 'director' },
+    { upTo: 75, planId: 'studio' },
+    { upTo: 200, planId: 'production' },
     { upTo: Infinity, planId: 'atelier' },
 ];
 
@@ -269,12 +272,12 @@ export const ACTIVE_PLANS = PLANS.filter((p) => p.enabled !== false);
 const ACTIVE_PLAN_IDS = new Set(ACTIVE_PLANS.map((p) => p.id));
 export const isPlanActive = (planId) => ACTIVE_PLAN_IDS.has(planId);
 
-export const recommendPlanFromVolume = (clipsPerMonth) => {
+export const recommendPlanFromVolume = (minutesPerMonth) => {
     // Skip thresholds whose target plan is currently disabled — a small
     // volume that used to recommend Explore now collapses to Creator (the
     // next active tier above the threshold).
     const found = RECOMMENDATION_THRESHOLDS.find(
-        (t) => clipsPerMonth <= t.upTo && isPlanActive(t.planId),
+        (t) => minutesPerMonth <= t.upTo && isPlanActive(t.planId),
     );
     return found?.planId ?? 'atelier';
 };
@@ -283,13 +286,13 @@ export const recommendPlanFromVolume = (clipsPerMonth) => {
  * Build the breakdown rows shown under the recommended card.
  * Always returns a stable shape so the renderer is simple.
  */
-export const buildBreakdown = ({ clipsPerMonth, plan }) => {
-    const creditsNeeded = clipsPerMonth * CREDITS_PER_CLIP;
+export const buildBreakdown = ({ minutesPerMonth, plan }) => {
+    const creditsNeeded = Math.round(minutesPerMonth * CREDITS_PER_MINUTE);
     const buffer = Math.max(0, (plan.monthlyCredits ?? 0) - creditsNeeded);
     const overflows = creditsNeeded > (plan.monthlyCredits ?? 0);
 
     return {
-        clipsPerMonth,
+        minutesPerMonth,
         creditsNeeded,
         planCredits: plan.monthlyCredits ?? 0,
         buffer,
@@ -301,15 +304,30 @@ export const buildBreakdown = ({ clipsPerMonth, plan }) => {
 };
 
 /**
- * Slider ticks shown along the bar (visual + click targets).
+ * Format a slider value (in minutes, may be fractional in 0.5 steps) into
+ * a readable label. Returns "30 sec" for 0.5, "1 min 30 sec" for 1.5,
+ * "X min" for integer values, "250+ min" past the cap.
+ */
+const formatMinutes = (m) => {
+    if (m >= 250) return '250+ min';
+    if (m === 0) return '0 min';
+    if (m === 0.5) return '30 sec';
+    const whole = Math.floor(m);
+    const hasHalf = m - whole === 0.5;
+    if (hasHalf) return `${whole} min 30 sec`;
+    return `${whole} min`;
+};
+
+/**
+ * Slider config — minutes of video / month, in 30-second increments.
  */
 export const VOLUME_SLIDER = {
     min: 0,
-    max: 500,
-    step: 5,
-    default: 30,
-    ticks: [0, 25, 75, 150, 300, 500],
-    formatValue: (v) => (v >= 500 ? '500+ clips' : `${v} clips`),
+    max: 250,
+    step: 0.5,
+    default: 15,
+    ticks: [0, 15, 30, 75, 150, 250],
+    formatValue: formatMinutes,
 };
 
 /**

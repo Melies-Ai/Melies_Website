@@ -69,7 +69,7 @@ const VolumeSlider = ({ value, onChange }) => {
                     step={step}
                     value={value}
                     onChange={(e) => onChange(Number(e.target.value))}
-                    aria-label="Estimated clips per month"
+                    aria-label="Estimated minutes of video per month"
                     className="absolute inset-0 w-full opacity-0 cursor-pointer h-8 -top-3"
                 />
                 <div
@@ -117,9 +117,18 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
     const price = period === 'yearly' ? plan.yearlyPriceMonthly : plan.monthlyPrice;
     const yearlyTotal = formatYearlyTotal(plan.yearlyPriceMonthly ?? 0);
 
-    const volumeLabel = breakdown.clipsPerMonth >= 500
-        ? '500+ clips / month'
-        : `${formatInt(breakdown.clipsPerMonth)} clips / month`;
+    // Render the user's slider value in minutes. Whole numbers display as
+    // "X min", half-minute steps as "X min 30 sec" (or "30 sec" for 0.5).
+    const formatVolumeMinutes = (m) => {
+        if (m >= 250) return '250+ min / month';
+        if (m === 0) return '0 min / month';
+        if (m === 0.5) return '30 sec / month';
+        const whole = Math.floor(m);
+        const hasHalf = m - whole === 0.5;
+        if (hasHalf) return `${whole} min 30 sec / month`;
+        return `${whole} min / month`;
+    };
+    const volumeLabel = formatVolumeMinutes(breakdown.minutesPerMonth);
 
     const totalDisplay = isFree ? 'Free' : formatMoney(price);
     const totalSuffix = isFree
@@ -146,10 +155,10 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                 <BreakdownRow
                     label="Your estimated volume"
                     value={volumeLabel}
-                    swapKey={`vol-${breakdown.clipsPerMonth}`}
+                    swapKey={`vol-${breakdown.minutesPerMonth}`}
                 />
                 <BreakdownRow
-                    label="Estimated credits needed (~50 per clip)"
+                    label="Estimated credits needed (~100 per minute)"
                     value={`${formatInt(breakdown.creditsNeeded)} credits`}
                     swapKey={`needed-${breakdown.creditsNeeded}`}
                 />
@@ -231,16 +240,16 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
 // ─── Main component ─────────────────────────────────────────────────────────
 
 const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
-    const [clips, setClips] = useState(VOLUME_SLIDER.default);
+    const [minutes, setMinutes] = useState(VOLUME_SLIDER.default);
 
-    const recommendedPlanId = useMemo(() => recommendPlanFromVolume(clips), [clips]);
+    const recommendedPlanId = useMemo(() => recommendPlanFromVolume(minutes), [minutes]);
     const plan = useMemo(
         () => PLANS.find((p) => p.id === recommendedPlanId) ?? PLANS[2],
         [recommendedPlanId],
     );
     const breakdown = useMemo(
-        () => buildBreakdown({ clipsPerMonth: clips, plan }),
-        [clips, plan],
+        () => buildBreakdown({ minutesPerMonth: minutes, plan }),
+        [minutes, plan],
     );
 
     // Notify parent so the main grid can highlight the matching card.
@@ -271,11 +280,11 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
     }, []);
 
     const handleSliderChange = (value) => {
-        setClips(value);
+        setMinutes(value);
         // Slider events are noisy; batched via animation frame so we don't
         // hammer dataLayer on every micro-pixel move.
         track('calculator_slider_change', {
-            clip_value: value,
+            minutes_value: value,
             current_recommendation: recommendPlanFromVolume(value),
         });
     };
@@ -305,15 +314,15 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                         <div>
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center">1</span>
-                                <h3 className="text-lg font-medium text-strong">Estimated clips per month</h3>
+                                <h3 className="text-lg font-medium text-strong">Estimated video minutes per month</h3>
                             </div>
                             <div className="pl-10">
-                                <VolumeSlider value={clips} onChange={handleSliderChange} />
+                                <VolumeSlider value={minutes} onChange={handleSliderChange} />
                             </div>
                         </div>
 
                         <p className="text-[11px] text-faint leading-relaxed pl-10">
-                            Estimates based on average cinematic clip generation (around 50 credits per clip). Your actual usage may vary depending on models, resolution, and clip length.
+                            Estimates based on average cinematic generation (around 100 credits per minute, or ~50 credits per 30s clip). Your actual usage may vary depending on models, resolution, and clip length.
                         </p>
                     </div>
 
