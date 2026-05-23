@@ -117,18 +117,9 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
     const price = period === 'yearly' ? plan.yearlyPriceMonthly : plan.monthlyPrice;
     const yearlyTotal = formatYearlyTotal(plan.yearlyPriceMonthly ?? 0);
 
-    // Render the user's slider value in minutes. Whole numbers display as
-    // "X min", half-minute steps as "X min 30 sec" (or "30 sec" for 0.5).
-    const formatVolumeMinutes = (m) => {
-        if (m >= 250) return '250+ min / month';
-        if (m === 0) return '0 min / month';
-        if (m === 0.5) return '30 sec / month';
-        const whole = Math.floor(m);
-        const hasHalf = m - whole === 0.5;
-        if (hasHalf) return `${whole} min 30 sec / month`;
-        return `${whole} min / month`;
-    };
-    const volumeLabel = formatVolumeMinutes(breakdown.minutesPerMonth);
+    const volumeLabel = breakdown.minutesPerMonth >= 250
+        ? '250+ min / month'
+        : `${breakdown.minutesPerMonth} min / month`;
 
     const totalDisplay = isFree ? 'Free' : formatMoney(price);
     const totalSuffix = isFree
@@ -322,7 +313,7 @@ const CostCalculator = ({ period, onPeriodChange, onRecommendedChange }) => {
                         </div>
 
                         <p className="text-[11px] text-faint leading-relaxed pl-10">
-                            Estimates based on average cinematic generation (around 100 credits per minute, or ~50 credits per 30s clip). Your actual usage may vary depending on models, resolution, and clip length.
+                            Estimates based on average cinematic generation (around 100 credits per minute of video). Your actual usage may vary depending on models, resolution, and complexity.
                         </p>
                     </div>
 
