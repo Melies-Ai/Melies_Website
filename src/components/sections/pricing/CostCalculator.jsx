@@ -138,64 +138,52 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
     const media = PLAN_MEDIA[plan.id];
 
     return (
-        <div className="rounded-3xl surface-card border border-subtle shadow-card overflow-hidden" aria-live="polite">
-            {/* Banner header — V5 pattern from the production PlanCard:
-                full-bleed image, frost pill with plan name at top-left,
-                fade-to-white gradient at the bottom of the image.
-                When the recommended plan has no media (Production /
-                Atelier), the banner is skipped and the panel falls back
-                to a clean text-only header inside the padded zone. */}
+        <div className="relative rounded-3xl border border-subtle shadow-card overflow-hidden" aria-live="polite">
+            {/* Full-card background: the recommended plan's image fills the
+                entire card. Fades cross-plan when the slider changes the
+                recommendation. Falls back to a soft paper color when no
+                media is mapped (Production / Atelier). */}
             {media ? (
-                <div className="relative aspect-[16/9] bg-paper overflow-hidden">
-                    <AnimatePresence mode="wait">
-                        <motion.img
-                            key={`media-${plan.id}`}
-                            src={media.src}
-                            srcSet={media.srcSet}
-                            sizes={PLAN_MEDIA_SIZES}
-                            alt={media.alt}
-                            loading="lazy"
-                            decoding="async"
-                            width="640"
-                            height="360"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="absolute inset-0 w-full h-full object-cover"
-                        />
-                    </AnimatePresence>
-
-                    {/* Fade gradient: image dissolves into the card's white
-                        surface at the bottom. */}
-                    <div
-                        aria-hidden="true"
-                        className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white pointer-events-none"
+                <AnimatePresence mode="wait">
+                    <motion.img
+                        key={`media-${plan.id}`}
+                        src={media.src}
+                        srcSet={media.srcSet}
+                        sizes={PLAN_MEDIA_SIZES}
+                        alt={media.alt}
+                        loading="lazy"
+                        decoding="async"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="absolute inset-0 w-full h-full object-cover"
                     />
-
-                    {/* Frost pill with plan name — same style as the
-                        production PlanCard's title pill. */}
-                    <h3 className="absolute top-4 left-4 inline-block px-3 py-1 rounded-lg bg-white/30 backdrop-blur-md backdrop-saturate-150 border border-white/20 shadow-lg text-strong text-[18px] lg:text-[20px] font-medium tracking-tight">
-                        <AnimatedSwap swapKey={`tier-${plan.id}`}>{plan.tier}</AnimatedSwap>
-                    </h3>
-                </div>
+                </AnimatePresence>
             ) : (
-                <div className="px-6 lg:px-8 pt-6 lg:pt-8">
+                <div className="absolute inset-0 bg-paper" />
+            )}
+
+            {/* Frost content panel: glassmorphism over the bg image, holds
+                the breakdown rows + total + CTA. m-3 / lg:m-4 leaves a
+                small image border around the panel. Background blur +
+                white/70 keeps text fully readable regardless of which
+                plan image sits underneath. */}
+            <div className="relative m-3 lg:m-4 p-6 lg:p-7 rounded-2xl bg-white/70 backdrop-blur-xl backdrop-saturate-150 border border-white/40 shadow-lg">
+                {/* Plan name header */}
+                <div className="mb-5">
                     <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">
                         Recommended plan
                     </div>
-                    <h3 className="text-[24px] lg:text-[26px] font-medium tracking-tight text-strong">
+                    <h3 className="text-[24px] lg:text-[28px] font-medium tracking-tight text-strong leading-none">
                         <AnimatedSwap swapKey={`tier-${plan.id}`}>{plan.tier}</AnimatedSwap>
                     </h3>
                 </div>
-            )}
 
-            {/* Content section (padded) */}
-            <div className="p-6 lg:p-8 pt-5 lg:pt-6">
                 {/* Line items — invoice-style, all rows share the same alignment.
-                    'Recommended plan' row is dropped because the plan name now
-                    lives in the banner header above. */}
-                <div className="divide-y divide-subtle">
+                    Dividers use ink/10 instead of border-subtle so they read
+                    well against the frost panel background. */}
+                <div className="divide-y divide-ink/10">
                     <BreakdownRow
                         label="Your estimated volume"
                         value={volumeLabel}
