@@ -5,13 +5,16 @@ import Button from '../components/Button';
 import SystemText from '../components/SystemText';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
+import { useWaitlist } from '../lib/useWaitlist';
 
 import {
     Volume2,
     User,
     Package,
     Palette,
-    ArrowRight
+    ArrowRight,
+    Check,
+    Loader2
 } from 'lucide-react';
 import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
 import commercialDesk from '../assets/images/home/home-hero-workspace.webp';
@@ -54,6 +57,7 @@ const HOME_CARD_COPY = {
 };
 
 const Home = () => {
+    const homeWaitlist = useWaitlist();
     return (
         <div className="bg-background min-h-screen pt-40">
             <SEO
@@ -277,21 +281,57 @@ const Home = () => {
                         })}
                     </div>
 
-                    <div className="flex flex-col md:flex-row justify-between items-end mt-20 gap-6 text-left">
+                    <div className="flex flex-col md:flex-row justify-between items-start mt-20 gap-6 text-left">
                         <div>
                             <h2 className="text-3xl font-medium text-primary mb-2">Coming 2026</h2>
                             <p className="text-secondary">The future of cinema is being built. Join the waitlist.</p>
                         </div>
-                        {/* Integrated Waitlist Form */}
-                        <div className="flex w-full md:w-auto bg-white p-1 rounded-full border border-black/5 shadow-sm">
-                            <input
-                                type="email"
-                                placeholder="email@address.com"
-                                className="bg-transparent px-4 py-2 outline-none text-sm w-full md:w-64 placeholder:text-black/20 text-black"
-                            />
-                            <Button variant="dark" className="px-6 py-2 text-sm whitespace-nowrap">
-                                Notify Me
-                            </Button>
+                        {/* Integrated Waitlist Form — wired to Brevo via useWaitlist */}
+                        <div className="w-full md:w-auto flex flex-col gap-2 md:items-end">
+                            {homeWaitlist.status === 'success' ? (
+                                <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-4 py-2 text-sm text-green-700">
+                                    <Check size={16} />
+                                    You're on the list!
+                                </div>
+                            ) : (
+                                <form
+                                    onSubmit={homeWaitlist.handleSubmit}
+                                    className="flex flex-col gap-2 w-full md:w-auto md:items-end"
+                                >
+                                    <div className="flex w-full md:w-auto bg-white p-1 rounded-full border border-black/5 shadow-sm">
+                                        <input
+                                            type="email"
+                                            value={homeWaitlist.email}
+                                            onChange={(e) => homeWaitlist.setEmail(e.target.value)}
+                                            placeholder="email@address.com"
+                                            disabled={homeWaitlist.status === 'loading'}
+                                            className="bg-transparent px-4 py-2 outline-none text-sm w-full md:w-64 placeholder:text-black/20 text-black disabled:opacity-50"
+                                            required
+                                        />
+                                        <Button
+                                            type="submit"
+                                            variant="dark"
+                                            disabled={homeWaitlist.status === 'loading'}
+                                            className="px-6 py-2 text-sm whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
+                                        >
+                                            {homeWaitlist.status === 'loading' ? (
+                                                <Loader2 size={14} className="animate-spin" />
+                                            ) : (
+                                                'Notify Me'
+                                            )}
+                                        </Button>
+                                    </div>
+                                    <p className="text-secondary/60 text-[10px] leading-relaxed md:text-right md:max-w-xs">
+                                        By joining, you agree to receive updates from Fantazia.{' '}
+                                        <Link to="/privacy" className="underline hover:text-primary">Privacy</Link>.
+                                    </p>
+                                    {homeWaitlist.status === 'error' && (
+                                        <p className="text-red-600 text-xs">
+                                            {homeWaitlist.errorMessage}
+                                        </p>
+                                    )}
+                                </form>
+                            )}
                         </div>
                     </div>
                 </div>

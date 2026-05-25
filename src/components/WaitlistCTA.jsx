@@ -1,23 +1,12 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Check, Loader2 } from 'lucide-react';
 import Button from './Button';
+import { useWaitlist } from '../lib/useWaitlist';
 
 const WaitlistCTA = ({ title, description }) => {
-    const [email, setEmail] = useState('');
-    const [status, setStatus] = useState('idle'); // idle, loading, success
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!email) return;
-
-        setStatus('loading');
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setStatus('success');
-        setEmail('');
-    };
+    const { email, setEmail, status, errorMessage, handleSubmit } = useWaitlist();
 
     return (
         <section className="py-32 px-4 relative overflow-hidden">
@@ -48,12 +37,13 @@ const WaitlistCTA = ({ title, description }) => {
                     transition={{ delay: 0.2 }}
                     className="max-w-md mx-auto"
                 >
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence mode="wait" initial={false}>
                         {status === 'success' ? (
                             <motion.div
                                 key="success"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.3 }}
                                 className="bg-green-50 border border-green-200 rounded-2xl p-6 text-center"
                             >
                                 <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-200">
@@ -63,11 +53,8 @@ const WaitlistCTA = ({ title, description }) => {
                                 <p className="text-ink/60 text-sm">We'll notify you when access opens.</p>
                             </motion.div>
                         ) : (
-                            <motion.form
+                            <form
                                 key="form"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0, y: -20 }}
                                 onSubmit={handleSubmit}
                                 className="relative flex flex-col items-center"
                             >
@@ -107,7 +94,12 @@ const WaitlistCTA = ({ title, description }) => {
                                         <a href="/privacy" className="underline hover:text-ink/50">Privacy Policy</a>
                                     </p>
                                 </div>
-                            </motion.form>
+                                {status === 'error' && (
+                                    <p className="mt-3 text-red-600 text-sm text-center">
+                                        {errorMessage}
+                                    </p>
+                                )}
+                            </form>
                         )}
                     </AnimatePresence>
                 </motion.div>
