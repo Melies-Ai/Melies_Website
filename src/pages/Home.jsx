@@ -322,7 +322,7 @@ const Home = () => {
                                         </Button>
                                     </div>
                                     <p className="text-secondary/60 text-[10px] leading-relaxed md:text-right md:max-w-xs">
-                                        By joining, you agree to receive updates from Fantazia.{' '}
+                                        By joining, you agree to receive updates from Lumon Industries.{' '}
                                         <Link to="/privacy" className="underline hover:text-primary">Privacy</Link>.
                                     </p>
                                     {homeWaitlist.status === 'error' && (
