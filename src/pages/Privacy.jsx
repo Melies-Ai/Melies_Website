@@ -39,10 +39,7 @@ const Privacy = () => {
                         <p className="font-medium mb-2">Data Controller Information</p>
                         <ul className="space-y-1 text-ink/70">
                             <li>Company Name: FANTAZIA TECHNOLOGIES</li>
-                            <li>Legal Form: Société par actions simplifiée (SAS)</li>
-                            <li>Registration Number: 94113277100010</li>
-                            <li>Registered Office: QUAI DE RIVE NEUVE, 13007 MARSEILLE</li>
-                            <li>Contact Email: contact@fantazia.ai</li>
+                            <li>Contact Email: hello@fantazia.ai</li>
                         </ul>
                     </div>
                 </Section>
@@ -150,7 +147,7 @@ const Privacy = () => {
                             </tbody>
                         </table>
                     </div>
-                    <p className="mt-4 text-sm text-ink/60">For details on safeguards or to request copies of applicable Standard Contractual Clauses, contact contact@fantazia.ai.</p>
+                    <p className="mt-4 text-sm text-ink/60">For details on safeguards or to request copies of applicable Standard Contractual Clauses, contact hello@fantazia.ai.</p>
                 </Section>
 
                 <Section title="7. Data Retention">
@@ -168,7 +165,7 @@ const Privacy = () => {
 
                     <div className="mt-6 bg-black/5 p-6 rounded-lg">
                         <p className="mb-2">To exercise any of these rights, please contact us at:</p>
-                        <p className="font-mono text-sm font-medium">contact@fantazia.ai</p>
+                        <p className="font-mono text-sm font-medium">hello@fantazia.ai</p>
                         <p className="mt-4 text-sm text-ink/60">We aim to respond within 30 days. You also have the right to lodge a complaint with the CNIL (Commission Nationale de l'Informatique et des Libertés).</p>
                     </div>
                 </Section>
@@ -217,7 +214,7 @@ const Privacy = () => {
                 <Section title="12. Use of Your Data for Service Improvement">
                     <p><span className="font-medium">What we use:</span> We may use the text prompts you submit to improve our AI systems and service quality.</p>
                     <p className="mt-2"><span className="font-medium">What we do NOT use:</span> We do not use your uploaded images or generated videos for AI training purposes.</p>
-                    <p className="mt-2"><span className="font-medium">How we protect you:</span> Prompts used for improvement are stripped of any personal identifiers. This processing is based on our legitimate interest in improving the Service. You may opt out at any time by contacting contact@fantazia.ai.</p>
+                    <p className="mt-2"><span className="font-medium">How we protect you:</span> Prompts used for improvement are stripped of any personal identifiers. This processing is based on our legitimate interest in improving the Service. You may opt out at any time by contacting hello@fantazia.ai.</p>
                     <p className="mt-2 text-sm text-ink/60">Note: Opting out will not affect prompts already processed but will apply to future submissions.</p>
                 </Section>
 
@@ -232,8 +229,7 @@ const Privacy = () => {
                 <Section title="15. Contact Us">
                     <p>For questions about this Privacy Policy, please contact us at:</p>
                     <div className="mt-4 bg-black/5 p-4 rounded text-sm font-mono text-ink/80">
-                        <p>Email: contact@fantazia.ai</p>
-                        <p>Postal Address: QUAI DE RIVE NEUVE, 13007 MARSEILLE</p>
+                        <p>Email: hello@fantazia.ai</p>
                     </div>
                 </Section>
 

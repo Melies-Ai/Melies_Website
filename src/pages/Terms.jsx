@@ -34,7 +34,7 @@ const Terms = () => {
 
                 <Section title="1. Introduction and Acceptance">
                     <h3 className="font-medium text-ink mt-4 mb-2">1.1 Agreement</h3>
-                    <p>These Terms and Conditions ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and FANTAZIA TECHNOLOGIES, a French simplified joint-stock company (société par actions simplifiée), registered under number 94113277100010, with its registered office at QUAI DE RIVE NEUVE, 13007 MARSEILLE ("Fantazia," "we," "us," or "our").</p>
+                    <p>These Terms and Conditions ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and FANTAZIA TECHNOLOGIES, the entity operating the Fantazia.ai platform ("Fantazia," "we," "us," or "our").</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">1.2 Acceptance</h3>
                     <p>By accessing or using the Fantazia.ai platform (the "Service"), you agree to be bound by these Terms, our Privacy Policy, and any additional terms that may apply. If you do not agree to these Terms, you must not use the Service.</p>
@@ -170,7 +170,7 @@ const Terms = () => {
                     <p>These Terms are governed by and construed in accordance with the laws of France, without regard to its conflict of law provisions.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">12.2 Jurisdiction</h3>
-                    <p>Subject to the mediation provisions below, any disputes arising from these Terms shall be submitted to the exclusive jurisdiction of the courts of Marseille, France.</p>
+                    <p>Subject to the mediation provisions below, any disputes arising from these Terms shall be submitted to the exclusive jurisdiction of the competent French courts.</p>
 
                     <h3 className="font-medium text-ink mt-6 mb-2">12.3 Consumer Mediation</h3>
                     <p>In accordance with Article L.612-1 of the French Consumer Code, if you are a consumer, you may submit any dispute to a consumer mediator. Information about consumer mediation is available at: <a href="https://www.economie.gouv.fr/mediation-conso" className="underline hover:text-ink">https://www.economie.gouv.fr/mediation-conso</a></p>
@@ -202,9 +202,7 @@ const Terms = () => {
                 <Section title="14. Contact Information">
                     <p>For any questions about these Terms, please contact us at:</p>
                     <div className="mt-4 bg-black/5 p-4 rounded text-sm font-mono text-ink/80">
-                        <p>Email: contact@fantazia.ai</p>
-                        <p>Address: QUAI DE RIVE NEUVE, 13007 MARSEILLE, France</p>
-                        <p>SIRET: 94113277100010</p>
+                        <p>Email: hello@fantazia.ai</p>
                     </div>
                 </Section>
 
