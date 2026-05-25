@@ -33,12 +33,12 @@ const Privacy = () => {
                 <p className="text-ink/60 mb-16">Last Updated: December 2025</p>
 
                 <Section title="1. Introduction">
-                    <p>LUMON INDUSTRIES ("we," "us," or "our"), operating the Fantazia.ai platform, is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered video creation service.</p>
+                    <p>FANTAZIA TECHNOLOGIES ("we," "us," or "our"), operating Fantazia.ai, is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered video creation service.</p>
                     <p>This Privacy Policy complies with the General Data Protection Regulation (GDPR) (EU Regulation 2016/679) and the French Data Protection Act (Loi Informatique et Libertés).</p>
                     <div className="bg-black/5 p-6 rounded-lg mt-4 text-sm">
                         <p className="font-medium mb-2">Data Controller Information</p>
                         <ul className="space-y-1 text-ink/70">
-                            <li>Company Name: LUMON INDUSTRIES</li>
+                            <li>Company Name: FANTAZIA TECHNOLOGIES</li>
                             <li>Legal Form: Société par actions simplifiée (SAS)</li>
                             <li>Registration Number: 94113277100010</li>
                             <li>Registered Office: QUAI DE RIVE NEUVE, 13007 MARSEILLE</li>
