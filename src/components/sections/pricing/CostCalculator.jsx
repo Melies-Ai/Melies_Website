@@ -142,11 +142,15 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
         // Scene card pattern — image backdrop + frost content panel.
         // See DESIGN_SYSTEM.md §06 for the recipe.
         <div className="scene-card" aria-live="polite">
-            {/* Image backdrop. Fades cross-plan when the slider changes
-                the recommendation. Falls back to a soft paper color
-                when no media is mapped (Production / Atelier). */}
+            {/* Image backdrop. Cross-fades cross-plan when the slider
+                changes the recommendation. NO `mode="wait"` so the
+                outgoing image and incoming image coexist (both absolute
+                inset-0) for the duration — they blend directly into each
+                other instead of going through the white frost panel
+                background. Falls back to a soft paper color when no
+                media is mapped (Production / Atelier). */}
             {media ? (
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                     <motion.img
                         key={`media-${plan.id}`}
                         src={media.src}
@@ -158,7 +162,7 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: 0.4, ease: 'easeInOut' }}
                         className="absolute inset-0 w-full h-full object-cover"
                     />
                 </AnimatePresence>
@@ -268,9 +272,23 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                     }}
                     className="block w-full py-3 px-4 bg-ink text-white text-center rounded-full text-base font-medium hover:bg-ink/90 hover:-translate-y-0.5 transition-all duration-300 shadow-card hover:shadow-lifted"
                 >
-                    <AnimatedSwap swapKey={`${plan.id}-cta`}>
-                        {isFree ? 'Start for free' : `Get ${plan.tier}`}
-                    </AnimatedSwap>
+                    {/* Opacity-only cross-fade on the CTA text (no slide).
+                        The shared AnimatedSwap pattern uses translateY which
+                        would compete with the button's hover lift transform
+                        and add motion in a zone the user wants to stay calm.
+                        Short 150ms each direction keeps the swap snappy. */}
+                    <AnimatePresence mode="wait">
+                        <motion.span
+                            key={`cta-${plan.id}`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.15, ease: 'easeInOut' }}
+                            className="inline-block"
+                        >
+                            {isFree ? 'Start for free' : `Get ${plan.tier}`}
+                        </motion.span>
+                    </AnimatePresence>
                 </a>
 
                 {/* Tagline parked below the CTA as soft footnote, not a competing headline */}
