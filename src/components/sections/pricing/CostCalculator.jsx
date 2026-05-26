@@ -112,6 +112,33 @@ const BreakdownRow = ({ label, value, swapKey, muted }) => (
     </div>
 );
 
+/**
+ * CollapsibleRow — wraps a conditional BreakdownRow so it stays in the DOM
+ * but collapses to max-h-0 (with overflow hidden) when not applicable.
+ * The CSS max-height transition interpolates the parent's height smoothly,
+ * so the rows below (and the CTA further down) glide into position instead
+ * of teleporting when the row appears/disappears.
+ *
+ * Carries its own border-top so the divider only shows when the row is
+ * visible — otherwise we'd get stacked dividers underneath the rows above.
+ *
+ * max-h-16 (64px) is a safe upper bound for a single ~44px row including
+ * its py-2.5 padding; only the first ~70% of the transition has visible
+ * movement, the rest is no-op padding, but the 300ms total still reads
+ * as a smooth glide.
+ */
+const CollapsibleRow = ({ visible, children }) => (
+    <div
+        className={cn(
+            'overflow-hidden transition-[max-height,opacity] duration-300 ease-out',
+            visible ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0',
+        )}
+        aria-hidden={!visible}
+    >
+        <div className="border-t border-ink/10">{children}</div>
+    </div>
+);
+
 const BreakdownPanel = ({ plan, period, breakdown }) => {
     const href = getCheckoutUrl(plan.id, period);
     const isFree = plan.free;
@@ -181,14 +208,13 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                     </h3>
                 </div>
 
-                {/* Line items — invoice-style, all rows share the same alignment.
-                    Dividers use ink/10 instead of border-subtle so they read
-                    well against the frost panel background.
-
-                    The two conditional rows (buffer, top-up) are wrapped in
-                    AnimatePresence + motion.div with height animation so they
-                    slide in/out smoothly when the slider crosses thresholds —
-                    no more brutal layout jump as rows pop in/out of the DOM. */}
+                {/* Line items — invoice-style. The 3 always-present rows share
+                    dividers via divide-y. The 2 conditional rows (buffer,
+                    top-up) are always rendered in the DOM but collapse to
+                    max-h-0 via a CSS transition when not applicable — the
+                    parent's height (and therefore the CTA position below)
+                    interpolates smoothly instead of jumping when rows
+                    appear/disappear. */}
                 <div className="divide-y divide-ink/10">
                     <BreakdownRow
                         label="Your estimated volume"
@@ -205,43 +231,25 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                         value={`${formatInt(breakdown.planCredits)} credits`}
                         swapKey={`included-${plan.id}`}
                     />
-                    <AnimatePresence initial={false}>
-                        {!breakdown.overflows && breakdown.buffer > 0 && (
-                            <motion.div
-                                key="buffer"
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                                style={{ overflow: 'hidden' }}
-                            >
-                                <BreakdownRow
-                                    label="Buffer for experimentation"
-                                    value={`${formatInt(breakdown.buffer)} credits`}
-                                    swapKey={`buffer-${breakdown.buffer}`}
-                                    muted
-                                />
-                            </motion.div>
-                        )}
-                        {breakdown.showTopUpHint && (
-                            <motion.div
-                                key="topup"
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                                style={{ overflow: 'hidden' }}
-                            >
-                                <BreakdownRow
-                                    label="Top-up packs available"
-                                    value="from $9"
-                                    swapKey="topup"
-                                    muted
-                                />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </div>
+
+                <CollapsibleRow visible={!breakdown.overflows && breakdown.buffer > 0}>
+                    <BreakdownRow
+                        label="Buffer for experimentation"
+                        value={`${formatInt(breakdown.buffer)} credits`}
+                        swapKey={`buffer-${breakdown.buffer}`}
+                        muted
+                    />
+                </CollapsibleRow>
+
+                <CollapsibleRow visible={breakdown.showTopUpHint}>
+                    <BreakdownRow
+                        label="Top-up packs available"
+                        value="from $9"
+                        swapKey="topup"
+                        muted
+                    />
+                </CollapsibleRow>
 
                 {/* Total + CTA */}
                 <div className="border-t-2 border-ink/15 mt-4 pt-5">
