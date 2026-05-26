@@ -183,7 +183,12 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
 
                 {/* Line items — invoice-style, all rows share the same alignment.
                     Dividers use ink/10 instead of border-subtle so they read
-                    well against the frost panel background. */}
+                    well against the frost panel background.
+
+                    The two conditional rows (buffer, top-up) are wrapped in
+                    AnimatePresence + motion.div with height animation so they
+                    slide in/out smoothly when the slider crosses thresholds —
+                    no more brutal layout jump as rows pop in/out of the DOM. */}
                 <div className="divide-y divide-ink/10">
                     <BreakdownRow
                         label="Your estimated volume"
@@ -200,22 +205,42 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                         value={`${formatInt(breakdown.planCredits)} credits`}
                         swapKey={`included-${plan.id}`}
                     />
-                    {!breakdown.overflows && breakdown.buffer > 0 && (
-                        <BreakdownRow
-                            label="Buffer for experimentation"
-                            value={`${formatInt(breakdown.buffer)} credits`}
-                            swapKey={`buffer-${breakdown.buffer}`}
-                            muted
-                        />
-                    )}
-                    {breakdown.showTopUpHint && (
-                        <BreakdownRow
-                            label="Top-up packs available"
-                            value="from $9"
-                            swapKey="topup"
-                            muted
-                        />
-                    )}
+                    <AnimatePresence initial={false}>
+                        {!breakdown.overflows && breakdown.buffer > 0 && (
+                            <motion.div
+                                key="buffer"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                                style={{ overflow: 'hidden' }}
+                            >
+                                <BreakdownRow
+                                    label="Buffer for experimentation"
+                                    value={`${formatInt(breakdown.buffer)} credits`}
+                                    swapKey={`buffer-${breakdown.buffer}`}
+                                    muted
+                                />
+                            </motion.div>
+                        )}
+                        {breakdown.showTopUpHint && (
+                            <motion.div
+                                key="topup"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                                style={{ overflow: 'hidden' }}
+                            >
+                                <BreakdownRow
+                                    label="Top-up packs available"
+                                    value="from $9"
+                                    swapKey="topup"
+                                    muted
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {/* Total + CTA */}
