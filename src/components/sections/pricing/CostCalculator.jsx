@@ -114,28 +114,28 @@ const BreakdownRow = ({ label, value, swapKey, muted }) => (
 
 /**
  * CollapsibleRow — wraps a conditional BreakdownRow so it stays in the DOM
- * but collapses to max-h-0 (with overflow hidden) when not applicable.
- * The CSS max-height transition interpolates the parent's height smoothly,
- * so the rows below (and the CTA further down) glide into position instead
- * of teleporting when the row appears/disappears.
+ * but collapses to 0 height when not applicable. Uses the modern
+ * `grid-template-rows: 0fr ↔ 1fr` trick which animates smoothly all the
+ * way to the content's natural height (no need to guess a max-height
+ * value that caps the visible animation early like max-h-* would).
  *
  * Carries its own border-top so the divider only shows when the row is
- * visible — otherwise we'd get stacked dividers underneath the rows above.
- *
- * max-h-16 (64px) is a safe upper bound for a single ~44px row including
- * its py-2.5 padding; only the first ~70% of the transition has visible
- * movement, the rest is no-op padding, but the 300ms total still reads
- * as a smooth glide.
+ * expanded — otherwise we'd get stacked dividers underneath the rows above.
  */
 const CollapsibleRow = ({ visible, children }) => (
     <div
         className={cn(
-            'overflow-hidden transition-[max-height,opacity] duration-300 ease-out',
-            visible ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0',
+            'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
+            visible ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
         )}
         aria-hidden={!visible}
     >
-        <div className="border-t border-ink/10">{children}</div>
+        {/* min-h-0 is required for the grid row to actually collapse to 0;
+            without it the inner content's intrinsic min-height (= its
+            content height) prevents the row from shrinking. */}
+        <div className="min-h-0 overflow-hidden">
+            <div className="border-t border-ink/10">{children}</div>
+        </div>
     </div>
 );
 
