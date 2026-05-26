@@ -165,8 +165,12 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                 <div className="absolute inset-0 bg-paper" />
             )}
 
-            {/* Frost content panel — holds the breakdown rows + total + CTA. */}
-            <div className="scene-frost">
+            {/* Frost content panel — holds the breakdown rows + total + CTA.
+                min-h-[525px] absorbs the row-count variation across plans
+                (3 rows for Director-exact-fit, up to 5 rows for Atelier with
+                buffer + top-up) so the card height stays stable as the user
+                drags the slider across tier boundaries — no more visual jump. */}
+            <div className="scene-frost min-h-[525px]">
                 {/* Plan name header */}
                 <div className="mb-5">
                     <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">
