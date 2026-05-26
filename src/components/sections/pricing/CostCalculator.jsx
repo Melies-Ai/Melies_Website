@@ -112,32 +112,6 @@ const BreakdownRow = ({ label, value, swapKey, muted }) => (
     </div>
 );
 
-/**
- * CollapsibleRow — wraps a conditional BreakdownRow so it stays in the DOM
- * but collapses to 0 height when not applicable. Uses the modern
- * `grid-template-rows: 0fr ↔ 1fr` trick which animates smoothly all the
- * way to the content's natural height (no need to guess a max-height
- * value that caps the visible animation early like max-h-* would).
- *
- * Carries its own border-top so the divider only shows when the row is
- * expanded — otherwise we'd get stacked dividers underneath the rows above.
- */
-const CollapsibleRow = ({ visible, children }) => (
-    <div
-        className={cn(
-            'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out',
-            visible ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
-        )}
-        aria-hidden={!visible}
-    >
-        {/* min-h-0 is required for the grid row to actually collapse to 0;
-            without it the inner content's intrinsic min-height (= its
-            content height) prevents the row from shrinking. */}
-        <div className="min-h-0 overflow-hidden">
-            <div className="border-t border-ink/10">{children}</div>
-        </div>
-    </div>
-);
 
 const BreakdownPanel = ({ plan, period, breakdown }) => {
     const href = getCheckoutUrl(plan.id, period);
@@ -193,11 +167,10 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
             )}
 
             {/* Frost content panel — holds the breakdown rows + total + CTA.
-                min-h-[525px] absorbs the row-count variation across plans
-                (3 rows for Director-exact-fit, up to 5 rows for Atelier with
-                buffer + top-up) so the card height stays stable as the user
-                drags the slider across tier boundaries — no more visual jump. */}
-            <div className="scene-frost min-h-[525px]">
+                All breakdown rows are always rendered (with "—" placeholders
+                when not applicable), so the layout is structurally stable
+                without needing an artificial min-height. */}
+            <div className="scene-frost">
                 {/* Plan name header */}
                 <div className="mb-5">
                     <div className="text-[10px] font-mono uppercase tracking-widest text-faint mb-1">
@@ -208,13 +181,13 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                     </h3>
                 </div>
 
-                {/* Line items — invoice-style. The 3 always-present rows share
-                    dividers via divide-y. The 2 conditional rows (buffer,
-                    top-up) are always rendered in the DOM but collapse to
-                    max-h-0 via a CSS transition when not applicable — the
-                    parent's height (and therefore the CTA position below)
-                    interpolates smoothly instead of jumping when rows
-                    appear/disappear. */}
+                {/* Line items — invoice-style. ALL 5 rows are always rendered
+                    in the DOM so the layout is structurally stable — the CTA
+                    never moves. The two conditional rows (buffer, top-up)
+                    show a "—" placeholder when not applicable, and the
+                    AnimatedSwap inside each row fades smoothly between the
+                    real value and the placeholder. The rows themselves
+                    don't appear/disappear, so there's no layout shift. */}
                 <div className="divide-y divide-ink/10">
                     <BreakdownRow
                         label="Your estimated volume"
@@ -231,25 +204,33 @@ const BreakdownPanel = ({ plan, period, breakdown }) => {
                         value={`${formatInt(breakdown.planCredits)} credits`}
                         swapKey={`included-${plan.id}`}
                     />
+                    {(() => {
+                        const showBuffer = !breakdown.overflows && breakdown.buffer > 0;
+                        const bufferValue = showBuffer
+                            ? `${formatInt(breakdown.buffer)} credits`
+                            : '—';
+                        return (
+                            <BreakdownRow
+                                label="Buffer for experimentation"
+                                value={bufferValue}
+                                swapKey={`buffer-${bufferValue}`}
+                                muted
+                            />
+                        );
+                    })()}
+                    {(() => {
+                        const showTopUp = breakdown.showTopUpHint;
+                        const topUpValue = showTopUp ? 'from $9' : '—';
+                        return (
+                            <BreakdownRow
+                                label="Top-up packs available"
+                                value={topUpValue}
+                                swapKey={`topup-${topUpValue}`}
+                                muted
+                            />
+                        );
+                    })()}
                 </div>
-
-                <CollapsibleRow visible={!breakdown.overflows && breakdown.buffer > 0}>
-                    <BreakdownRow
-                        label="Buffer for experimentation"
-                        value={`${formatInt(breakdown.buffer)} credits`}
-                        swapKey={`buffer-${breakdown.buffer}`}
-                        muted
-                    />
-                </CollapsibleRow>
-
-                <CollapsibleRow visible={breakdown.showTopUpHint}>
-                    <BreakdownRow
-                        label="Top-up packs available"
-                        value="from $9"
-                        swapKey="topup"
-                        muted
-                    />
-                </CollapsibleRow>
 
                 {/* Total + CTA */}
                 <div className="border-t-2 border-ink/15 mt-4 pt-5">
