@@ -17,7 +17,13 @@ import {
     Loader2
 } from 'lucide-react';
 import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
-import commercialDesk from '../assets/images/home/home-hero-workspace.webp';
+// Home hero — LCP element. The source is 1456×816 but the displayed
+// size is at most ~1028×576 on desktop. Serve responsive variants so
+// mobile gets a small one, desktop a medium one — no 2x oversize.
+// 1024w covers 2x retina at the display size (1024 ≈ 2 × 512 ≈ what's
+// shown on a 1080p desktop).
+import commercialDesk from '../assets/images/home/home-hero-workspace.webp?w=1024&format=webp';
+import commercialDeskSrcSet from '../assets/images/home/home-hero-workspace.webp?w=480;800;1024;1280&format=webp&as=srcset';
 import { upcomingProducts } from '../config/products';
 import { getProductIcons } from '../config/products-icons';
 import { getProductMedia } from '../config/products-media';
@@ -65,6 +71,8 @@ const Home = () => {
                 description="Orchestrate multi-agent AI systems to generate films from script to screen, in real-time. The future of filmmaking starts with Fantazia."
                 canonical="/"
                 preloadImage={commercialDesk}
+                preloadImageSrcSet={commercialDeskSrcSet}
+                preloadImageSizes="(min-width: 1024px) 1024px, 100vw"
             />
 
             {/* HERO SECTION */}
@@ -120,6 +128,8 @@ const Home = () => {
                 >
                     <img
                         src={commercialDesk}
+                        srcSet={commercialDeskSrcSet}
+                        sizes="(min-width: 1024px) 1024px, 100vw"
                         alt="Fantazia Workspace"
                         fetchPriority="high"
                         decoding="async"

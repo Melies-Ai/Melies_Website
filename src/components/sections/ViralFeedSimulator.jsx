@@ -3,10 +3,13 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../lib/cn';
 import { useInView } from '../../lib/useInView';
 
-import consistency1 from '../../assets/images/products/spark/spark-consistency-scene-01.webp';
-import consistency2 from '../../assets/images/products/spark/spark-consistency-scene-02.webp';
-import consistency3 from '../../assets/images/products/spark/spark-consistency-scene-03.webp';
-import character2 from '../../assets/images/products/spark/spark-feed-character.webp';
+// Feed thumbnails — displayed at ~288-320px wide max (phone simulator).
+// 480w covers 1.5x retina at the largest variant; serving the 608-source
+// 1:1 wasted ~22kB per image. vite-imagetools resizes on import.
+import consistency1 from '../../assets/images/products/spark/spark-consistency-scene-01.webp?w=480&format=webp';
+import consistency2 from '../../assets/images/products/spark/spark-consistency-scene-02.webp?w=480&format=webp';
+import consistency3 from '../../assets/images/products/spark/spark-consistency-scene-03.webp?w=480&format=webp';
+import character2 from '../../assets/images/products/spark/spark-feed-character.webp?w=480&format=webp';
 
 // Phone simulator that loops a vertical TikTok-like feed of Spark images.
 // Shared between Home (compact, tilted) and Spark hero (responsive, upright).

@@ -31,7 +31,9 @@ const ORG_JSON_LD = {
  * @param {string} [props.canonical]        // pathname or full URL
  * @param {'website'|'article'|'product'} [props.type]
  * @param {string} [props.image]            // og:image (path or full URL)
- * @param {string} [props.preloadImage]     // <link rel="preload"> for the LCP image of the page
+ * @param {string} [props.preloadImage]        // <link rel="preload"> for the LCP image of the page
+ * @param {string} [props.preloadImageSrcSet]  // optional `imagesrcset` for responsive preload (paired with sizes)
+ * @param {string} [props.preloadImageSizes]   // optional `imagesizes` matching the <img sizes>
  * @param {Object|Array} [props.structuredData]  // additional JSON-LD; merged with Organization
  */
 const SEO = ({
@@ -41,6 +43,8 @@ const SEO = ({
     type = 'website',
     image,
     preloadImage,
+    preloadImageSrcSet,
+    preloadImageSizes,
     structuredData,
 }) => {
     const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | The Infinite Cinema Engine`;
@@ -70,12 +74,18 @@ const SEO = ({
             <meta name="description" content={finalDescription} />
             <link rel="canonical" href={finalCanonical} />
 
-            {/* Hint the LCP image so the browser kicks off the fetch in parallel. */}
+            {/* Hint the LCP image so the browser kicks off the fetch in
+                parallel. When preloadImageSrcSet is provided, the browser
+                picks the right responsive variant (matching what the <img>
+                ends up rendering) — no wasted bytes on a single oversized
+                preload. */}
             {preloadImage && (
                 <link
                     rel="preload"
                     as="image"
                     href={preloadImage}
+                    imageSrcSet={preloadImageSrcSet}
+                    imageSizes={preloadImageSizes}
                     fetchPriority="high"
                 />
             )}

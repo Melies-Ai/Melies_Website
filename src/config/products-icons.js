@@ -1,16 +1,18 @@
 // Product icons — small, navbar-friendly assets.
 //
-// These are imported by always-mounted UI (Navbar) and consumed by Home
-// product cards. Total weight ~50 KB across all four products, so they
-// are safe to ship in the main JS chunk. Heavier media (banners, lockups)
-// lives in `./products-media.js` which is page-only.
+// `?w=96` asks vite-imagetools to emit a 96px-wide variant (instead of
+// the 200-275px sources), which is plenty for the 24-32px display sizes
+// (2x retina headroom). Cuts each mark from ~8-11kB down to ~2-3kB.
+// Heavier media (banners, lockups) lives in `./products-media.js`.
 
-import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
-import iconFable from '../assets/icons/products/fable/fable-mark.webp';
-import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp';
-import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp';
+import iconSpark from '../assets/icons/products/spark/spark-mark.webp?w=96&format=webp';
+import iconFable from '../assets/icons/products/fable/fable-mark.webp?w=96&format=webp';
+import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp?w=96&format=webp';
+import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp?w=96&format=webp';
 
-import sparkSpotlight from '../assets/images/products/spark/spark-consistency-scene-01.webp';
+// Spotlight: navbar dropdown thumbnail (~48x64 display). 256w covers
+// 2x retina with much less weight than the 608x1298 source.
+import sparkSpotlight from '../assets/images/products/spark/spark-consistency-scene-01.webp?w=256&format=webp';
 
 /**
  * @typedef {Object} ProductIcons

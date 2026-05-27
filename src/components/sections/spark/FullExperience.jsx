@@ -91,13 +91,25 @@ const FullExperience = () => {
                     {/* Playhead — confined to the bars region (after the icons +
                         track-name columns), so the line really starts at the
                         first bar and stops at the last. Top handle is a soft
-                        accent disc with a white ring and a chromatic glow. */}
+                        accent disc with a white ring and a chromatic glow.
+
+                        IMPORTANT: animating `left` (a layout property) on a
+                        8s-infinite loop was causing ~1.2s of forced reflow
+                        per Lighthouse audit — every frame recomputed layout.
+                        Now wrapped in an `inset-0` div whose `x` transform
+                        animates instead. translateX(%) is relative to the
+                        wrapper's own width, which equals the parent's width,
+                        so 42% → 95% of the wrapper = 42% → 95% of the
+                        parent (same visual result, zero layout cost). */}
                     <motion.div
-                        className="absolute top-0 bottom-0 w-[2px] -translate-x-1/2 bg-accent/70 z-20 shadow-[0_0_8px_rgba(157,148,128,0.4)]"
-                        animate={animate ? { left: ['42%', '95%'] } : { left: '42%' }}
+                        className="absolute inset-0 pointer-events-none z-20"
+                        animate={animate ? { x: ['42%', '95%'] } : { x: '42%' }}
                         transition={{ duration: 8, ease: 'linear', repeat: Infinity }}
+                        style={{ willChange: 'transform' }}
                     >
-                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-accent ring-[3px] ring-white shadow-[0_3px_10px_rgba(0,0,0,0.18),0_0_16px_rgba(157,148,128,0.55)] pointer-events-none" />
+                        <div className="absolute top-0 bottom-0 left-0 w-[2px] -translate-x-1/2 bg-accent/70 shadow-[0_0_8px_rgba(157,148,128,0.4)]">
+                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-accent ring-[3px] ring-white shadow-[0_3px_10px_rgba(0,0,0,0.18),0_0_16px_rgba(157,148,128,0.55)] pointer-events-none" />
+                        </div>
                     </motion.div>
 
                     {TIMELINE_LAYERS.map((layer, i) => (
