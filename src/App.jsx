@@ -1,29 +1,31 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-// Lazy loading pages for better initial performance.
-// On the client, these are split into per-route chunks. On the server
-// (entry-server.jsx) we import them statically to avoid Suspense fallbacks
-// in the prerendered HTML — bundle weight there doesn't matter, the SSR
-// bundle is only used at build time.
-const Home = lazy(() => import('./pages/Home'));
-const Fable = lazy(() => import('./pages/Fable'));
-const Citizen = lazy(() => import('./pages/Citizen'));
-const Oasis = lazy(() => import('./pages/Oasis'));
-const Spark = lazy(() => import('./pages/Spark'));
-const Pricing = lazy(() => import('./pages/Pricing'));
-const PricingLab = lazy(() => import('./pages/PricingLab'));
-const Terms = lazy(() => import('./pages/Terms'));
-const Privacy = lazy(() => import('./pages/Privacy'));
-
-const LoadingFallback = () => (
-  <div className="fixed inset-0 flex items-center justify-center bg-paper z-[100]">
-    <div className="w-8 h-8 border-2 border-accent/20 border-t-accent rounded-full animate-spin" />
-  </div>
-);
+// Eager route imports. We used to lazy-load these via React.lazy() for
+// smaller initial JS, but that broke hydration on the prerendered HTML:
+// while a route's chunk was in-flight, React.Suspense replaced the
+// prerendered route content with a fixed-positioned fallback (out of flow)
+// — the Footer suddenly had nothing above it and jumped to the top of the
+// viewport, then jumped back down when the chunk arrived. Net result:
+// CLS ≈ 0.95 on the Footer at every first-paint, confirmed via a
+// PerformanceObserver capture.
+//
+// The SSR entry already imports these synchronously (entry-server.jsx),
+// so going eager on the client unifies the two render paths and eliminates
+// the hydration mismatch. The ~150kB of extra JS in the initial bundle is
+// well worth the Core Web Vitals win + instant route-to-route navigation.
+import Home from './pages/Home';
+import Fable from './pages/Fable';
+import Citizen from './pages/Citizen';
+import Oasis from './pages/Oasis';
+import Spark from './pages/Spark';
+import Pricing from './pages/Pricing';
+import PricingLab from './pages/PricingLab';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 
 // AnimatedRoutes — relies on a Router context being mounted upstream (either
 // BrowserRouter for client, StaticRouter for SSR). Touches `window` only via
@@ -36,25 +38,23 @@ const AnimatedRoutes = () => {
     : undefined;
 
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <AnimatePresence mode="wait" onExitComplete={onExitComplete}>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
-          <Route path="/fable" element={<Fable />} />
-          <Route path="/citizen" element={<Citizen />} />
-          <Route path="/oasis" element={<Oasis />} />
-          <Route path="/spark" element={<Spark />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/pricing/lab" element={<PricingLab />} />
-          <Route path="/button-lab" element={<Navigate to="/" replace />} />
-          <Route path="/archives" element={<Navigate to="/" replace />} />
+    <AnimatePresence mode="wait" onExitComplete={onExitComplete}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+        <Route path="/fable" element={<Fable />} />
+        <Route path="/citizen" element={<Citizen />} />
+        <Route path="/oasis" element={<Oasis />} />
+        <Route path="/spark" element={<Spark />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/pricing/lab" element={<PricingLab />} />
+        <Route path="/button-lab" element={<Navigate to="/" replace />} />
+        <Route path="/archives" element={<Navigate to="/" replace />} />
 
-          {/* LEGAL */}
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-        </Routes>
-      </AnimatePresence>
-    </Suspense>
+        {/* LEGAL */}
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+      </Routes>
+    </AnimatePresence>
   );
 };
 
