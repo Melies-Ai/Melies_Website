@@ -58,7 +58,7 @@ export const PRODUCTS = [
         releaseLabel: 'Coming 2026',
         tagline: 'AI Director',
         description: 'Weave stories with infinite narrative arcs.',
-        heroTitle: 'Weave Stories.',
+        heroTitle: 'Tell Stories.',
         heroSubtitle: 'The studio for infinite narrative arcs.',
         accent: { tint: 'blue-900' },
         seo: {
@@ -110,7 +110,7 @@ export const PRODUCTS = [
         releaseLabel: 'Coming 2026',
         tagline: 'Living Worlds',
         description: 'Infinite landscapes, physics, and lighting generated instantly.',
-        heroTitle: 'Infinite Worlds.',
+        heroTitle: 'Visit Worlds.',
         heroSubtitle: 'Instant Reality. Infinite landscapes, physics, and lighting generated instantly.',
         accent: { tint: 'teal-900' },
         seo: {
