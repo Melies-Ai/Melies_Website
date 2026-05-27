@@ -123,7 +123,12 @@ const FullExperience = () => {
                                                 className={`h-full aspect-video rounded-md ${layer.barColor} opacity-40`}
                                                 animate={animate ? { opacity: [0.4, 0.7, 0.4] } : { opacity: 0.4 }}
                                                 transition={{
-                                                    duration: 2 + Math.random(),
+                                                    // Deterministic per-index variation (was Math.random()
+                                                    // which differs between SSR and client render → triggered
+                                                    // React hydration error #418). Same organic-feel, no
+                                                    // mismatch: ((j * 0.37) % 1) cycles through 0..1 values
+                                                    // pseudo-randomly across the 8 bars.
+                                                    duration: 2 + ((j * 0.37) % 1),
                                                     repeat: Infinity,
                                                     repeatType: 'reverse',
                                                     delay: j * 0.2,

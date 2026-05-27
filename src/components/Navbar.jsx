@@ -146,7 +146,14 @@ const Navbar = () => {
                     </div>
 
                     {/* Mobile Menu Toggle */}
-                    <button className="md:hidden p-2 text-ink" onClick={toggleMenu}>
+                    <button
+                        type="button"
+                        className="md:hidden p-2 text-ink"
+                        onClick={toggleMenu}
+                        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                        aria-expanded={isMenuOpen}
+                        aria-controls="mobile-menu"
+                    >
                         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </motion.nav>
@@ -156,6 +163,7 @@ const Navbar = () => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
+                        id="mobile-menu"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}

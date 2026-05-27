@@ -6,6 +6,13 @@ import { imagetools } from 'vite-imagetools'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
+  build: {
+    // Emit .map files alongside bundles. Lighthouse uses these to flag
+    // unused code accurately, Sentry/error trackers to symbolicate stack
+    // traces, and devs to debug minified prod code. Adds ~1MB to dist/
+    // but maps are loaded only on demand (devtools opens them).
+    sourcemap: true,
+  },
   plugins: [
     react(),
     // Generate responsive variants on demand. Use via query string:

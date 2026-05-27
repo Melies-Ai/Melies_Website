@@ -64,7 +64,12 @@ const AnimatedRoutes = () => {
 export const AppShell = () => (
   <div className="min-h-screen bg-paper text-ink font-sans selection:bg-accent/30 relative">
     <Navbar />
-    <AnimatedRoutes />
+    {/* <main> landmark — required for a11y. Screen readers use it as
+        the 'jump to main content' anchor. Pages don't render their own
+        <main> elements so we wrap routes here once. */}
+    <main>
+      <AnimatedRoutes />
+    </main>
     <Footer />
   </div>
 );

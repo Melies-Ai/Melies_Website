@@ -172,8 +172,13 @@ const Home = () => {
                                 </p>
 
                                 <div className="flex flex-wrap gap-4 mb-12">
+                                    {/* Text says 'Try Spark' (not 'Start Creating') so it doesn't
+                                        clash semantically with the navbar / Spark page CTAs that
+                                        say 'Start Creating' but go to /login. Different
+                                        destination → different label, per a11y best practice on
+                                        'identical links should have identical purpose'. */}
                                     <Button to="/spark" variant="dark" className="px-8 py-3 text-sm">
-                                        Start Creating
+                                        Try Spark
                                     </Button>
                                     <Button to="/spark" variant="outlineDark" className="px-8 py-3 text-sm">
                                         More Details <ArrowRight size={14} />
