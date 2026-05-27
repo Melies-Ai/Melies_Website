@@ -69,9 +69,14 @@ const Home = () => {
 
             {/* HERO SECTION */}
             <section className="flex flex-col items-center justify-center text-center px-4 mb-20 md:mb-32 relative z-20">
+                {/* Hero text — entrance animations use translateY only
+                    (no opacity 0 → 1) so Lighthouse counts the text as
+                    'painted' from the prerendered HTML's first frame
+                    instead of waiting for the JS animation to complete.
+                    Saves ~600-800ms on FCP/LCP. */}
                 <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ y: 20 }}
+                    animate={{ y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="text-6xl md:text-8xl tracking-tighter text-primary mb-6 max-w-5xl font-normal"
                 >
@@ -80,8 +85,8 @@ const Home = () => {
                 </motion.h1>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ y: 20 }}
+                    animate={{ y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                     className="text-xl md:text-2xl text-secondary max-w-2xl mb-12"
                 >
@@ -90,8 +95,8 @@ const Home = () => {
                 </motion.p>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ y: 20 }}
+                    animate={{ y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                 >
                     <Button shimmer={false} className="bg-btn-bg text-btn-text rounded-full px-8 py-4 text-lg font-medium">
@@ -99,10 +104,15 @@ const Home = () => {
                     </Button>
                 </motion.div>
 
-                {/* Central Visual */}
+                {/* Central Visual — LCP element.
+                    NOTE: starts at opacity:1 (not 0) so Lighthouse counts
+                    the image as "painted" the moment it loads — animating
+                    opacity from 0 would push the LCP back by the whole
+                    delay + duration (~1.6s). Only the scale subtly animates;
+                    transforms don't affect LCP measurement. */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ scale: 0.95 }}
+                    animate={{ scale: 1 }}
                     transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
                     className="mt-24 w-full max-w-5xl aspect-video bg-stroke rounded-[40px] shadow-2xl flex items-center justify-center relative overflow-hidden"
                 >
@@ -111,6 +121,8 @@ const Home = () => {
                         alt="Fantazia Workspace"
                         fetchPriority="high"
                         decoding="async"
+                        width="1456"
+                        height="816"
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent" />
