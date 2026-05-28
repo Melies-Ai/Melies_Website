@@ -66,7 +66,12 @@ const UseCases = () => (
                     transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     className="group relative isolate shrink-0 w-[78%] sm:w-[58%] md:w-auto snap-center overflow-hidden rounded-card-lg border border-subtle shadow-card bg-paper aspect-[9/16] transition-shadow duration-500 hover:shadow-lifted"
                 >
-                    {/* Output image — fills the 9:16 frame, gentle zoom on hover */}
+                    {/* Output image — fills the 9:16 frame, gentle zoom on hover.
+                        width/height are a loose aspect HINT only (reserve space /
+                        signal intent). The aspect-[9/16] frame + object-cover below
+                        govern actual rendered geometry, so swapped-in finals of any
+                        near-vertical size render identically — don't "fix" these to
+                        match a final's intrinsic pixels; it changes nothing visible. */}
                     <img
                         src={image}
                         alt={alt}
