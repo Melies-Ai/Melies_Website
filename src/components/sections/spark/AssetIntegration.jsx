@@ -1,11 +1,16 @@
 import React, { useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, MotionConfig } from 'framer-motion';
 import { Image as ImageIcon, X, Palmtree, User, Box } from 'lucide-react';
 
-import sparkLocation from '../../../assets/images/products/spark/spark-location-apartment.webp';
-import sparkCharacter from '../../../assets/images/products/spark/spark-character-isabelle.webp';
-import sparkProduct from '../../../assets/images/products/spark/spark-product-perfume.webp';
-import consistency1 from '../../../assets/images/products/spark/spark-consistency-scene-01.webp';
+// Resized on import (vite-imagetools), mirroring the repo convention
+// (ViralFeedSimulator ?w=480, UseCases ?w=720). The three asset thumbs render
+// at 160px (asset card) / 128px (drop preview) → w=400 covers 2x retina. The
+// final reveal renders at 280px wide → w=640. The originals are 768–1024px
+// wide (perfume/isabelle ~120KB & 71KB each), wasted on these small tiles.
+import sparkLocation from '../../../assets/images/products/spark/spark-location-apartment.webp?w=400&format=webp';
+import sparkCharacter from '../../../assets/images/products/spark/spark-character-isabelle.webp?w=400&format=webp';
+import sparkProduct from '../../../assets/images/products/spark/spark-product-perfume.webp?w=400&format=webp';
+import consistency1 from '../../../assets/images/products/spark/spark-consistency-scene-01.webp?w=640&format=webp';
 
 import Button from '../../Button';
 import { useInView } from '../../../lib/useInView';
@@ -94,18 +99,28 @@ const AssetIntegration = () => {
     // user can't see. Reduced motion: respect the system preference.
     const phase = usePhaseSequence(inView && !reducedMotion);
 
-    const isLocVisible = ['SHOW_LOC', 'DROP_PROP', 'SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
-    const isPropVisible = ['SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
-    const isCharVisible = ['SHOW_ALL'].includes(phase);
+    // Reduced-motion users never see the loop run, so they'd be stuck on the
+    // empty "Drop Assets Here" box forever. Instead, freeze a representative
+    // composed end-state (all 3 assets in + the integrated scene revealed).
+    // Gate on `mounted` so SSR (which can't read the media query) renders the
+    // same idle box the client's first paint does — no hydration mismatch.
+    const [mounted, setMounted] = React.useState(false);
+    React.useEffect(() => setMounted(true), []);
+    const staticEnd = mounted && reducedMotion;
+
+    const isLocVisible = staticEnd || ['SHOW_LOC', 'DROP_PROP', 'SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
+    const isPropVisible = staticEnd || ['SHOW_PROP_AND_LOC', 'DROP_CHAR', 'SHOW_ALL'].includes(phase);
+    const isCharVisible = staticEnd || ['SHOW_ALL'].includes(phase);
 
     const droppingImage =
         phase === PHASES.DROP_LOC ? sparkLocation :
             phase === PHASES.DROP_PROP ? sparkProduct :
                 phase === PHASES.DROP_CHAR ? sparkCharacter : null;
 
-    const isReveal = phase === PHASES.REVEAL_SCENE;
+    const isReveal = staticEnd || phase === PHASES.REVEAL_SCENE;
 
     return (
+        <MotionConfig reducedMotion="user">
         <div ref={sectionRef} className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
             <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row-reverse items-center gap-16">
                 <div className="flex-1 text-left">
@@ -126,7 +141,7 @@ const AssetIntegration = () => {
                     <div className="relative w-full max-w-md h-full flex flex-col items-center justify-center">
                         {/* 1. EMPTY STATE */}
                         <AnimatePresence mode="wait">
-                            {phase === PHASES.IDLE && (
+                            {phase === PHASES.IDLE && !staticEnd && (
                                 <motion.div
                                     key="empty-state"
                                     initial={{ opacity: 0 }}
@@ -169,10 +184,14 @@ const AssetIntegration = () => {
                         <div
                             className="flex gap-4 z-10"
                             style={{
-                                transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
-                                opacity: isReveal ? 0.5 : 1,
-                                filter: isReveal ? 'blur(4px)' : 'blur(0px)',
-                                transform: isReveal ? 'scale(0.92)' : 'scale(1)',
+                                // Animate ONLY opacity + transform — both GPU-composited.
+                                // The previous `transition: all` swept `filter: blur()`,
+                                // which repaints the whole grid every frame (the mobile
+                                // jank). Receding + fading reads as the same depth cue
+                                // without the per-frame blur shader.
+                                transition: 'opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
+                                opacity: isReveal ? 0.35 : 1,
+                                transform: isReveal ? 'scale(0.9)' : 'scale(1)',
                             }}
                         >
                             <AnimatePresence>
@@ -210,6 +229,7 @@ const AssetIntegration = () => {
                 </div>
             </div>
         </div>
+        </MotionConfig>
     );
 };
 
