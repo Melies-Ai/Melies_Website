@@ -24,6 +24,8 @@ import Oasis from './pages/Oasis';
 import Spark from './pages/Spark';
 import Pricing from './pages/Pricing';
 import PricingLab from './pages/PricingLab';
+import HomeLab from './pages/HomeLab';
+import Login from './pages/Login';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 
@@ -47,6 +49,8 @@ const AnimatedRoutes = () => {
         <Route path="/spark" element={<Spark />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/pricing/lab" element={<PricingLab />} />
+        <Route path="/home/lab" element={<HomeLab />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/button-lab" element={<Navigate to="/" replace />} />
         <Route path="/archives" element={<Navigate to="/" replace />} />
 
@@ -58,21 +62,32 @@ const AnimatedRoutes = () => {
   );
 };
 
+// Chromeless routes — rendered as standalone full pages with no global
+// Navbar/Footer. /login is a dedicated, distraction-free auth screen (its own
+// split layout fills the viewport), so the site chrome would only get in the
+// way.
+const CHROMELESS_ROUTES = new Set(['/login']);
+
 // AppShell — Router-agnostic. Used by both client (wrapped in BrowserRouter)
 // and SSR (wrapped in StaticRouter). Doesn't touch window or any browser-only
 // API outside of components rendered into AnimatedRoutes.
-export const AppShell = () => (
-  <div className="min-h-screen bg-paper text-ink font-sans selection:bg-accent/30 relative">
-    <Navbar />
-    {/* <main> landmark — required for a11y. Screen readers use it as
-        the 'jump to main content' anchor. Pages don't render their own
-        <main> elements so we wrap routes here once. */}
-    <main>
-      <AnimatedRoutes />
-    </main>
-    <Footer />
-  </div>
-);
+export const AppShell = () => {
+  const { pathname } = useLocation();
+  const chromeless = CHROMELESS_ROUTES.has(pathname);
+
+  return (
+    <div className="min-h-screen bg-paper text-ink font-sans selection:bg-accent/30 relative">
+      {!chromeless && <Navbar />}
+      {/* <main> landmark — required for a11y. Screen readers use it as
+          the 'jump to main content' anchor. Pages don't render their own
+          <main> elements so we wrap routes here once. */}
+      <main>
+        <AnimatedRoutes />
+      </main>
+      {!chromeless && <Footer />}
+    </div>
+  );
+};
 
 // Default export — client SPA bootstrap, used by entry-client.jsx.
 function App() {

@@ -17,13 +17,12 @@ import {
     Loader2
 } from 'lucide-react';
 import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
-// Home hero — LCP element. The source is 1456×816 but the displayed
-// size is at most ~1028×576 on desktop. Serve responsive variants so
-// mobile gets a small one, desktop a medium one — no 2x oversize.
-// 1024w covers 2x retina at the display size (1024 ≈ 2 × 512 ≈ what's
-// shown on a 1080p desktop).
-import commercialDesk from '../assets/images/home/home-hero-workspace.webp?w=1024&format=webp';
-import commercialDeskSrcSet from '../assets/images/home/home-hero-workspace.webp?w=480;800;1024;1280&format=webp&as=srcset';
+import PromptComposer from '../components/sections/home-lab/PromptComposer';
+// Home hero backdrop — the LCP element. Full-bleed cinematic image (same asset
+// as the Footer) served large since it fills the whole viewport. Eager + high
+// priority + preloaded (see <SEO> below) so the largest paint lands fast.
+import heroBg from '../assets/images/home/footer-desk.webp?w=1800&format=webp';
+import heroBgSrcSet from '../assets/images/home/footer-desk.webp?w=800;1200;1800&format=webp&as=srcset';
 import { upcomingProducts } from '../config/products';
 import { getProductIcons } from '../config/products-icons';
 import { getProductMedia } from '../config/products-media';
@@ -65,80 +64,79 @@ const HOME_CARD_COPY = {
 const Home = () => {
     const homeWaitlist = useWaitlist();
     return (
-        <div className="bg-background min-h-screen pt-40">
+        <div className="bg-background min-h-screen">
             <SEO
                 title="The Infinite Cinema Engine"
                 description="Orchestrate multi-agent AI systems to generate films from script to screen, in real-time. The future of filmmaking starts with Fantazia."
                 canonical="/"
-                preloadImage={commercialDesk}
-                preloadImageSrcSet={commercialDeskSrcSet}
-                preloadImageSizes="(min-width: 1024px) 1024px, 100vw"
+                preloadImage={heroBg}
+                preloadImageSrcSet={heroBgSrcSet}
+                preloadImageSizes="100vw"
             />
 
-            {/* HERO SECTION */}
-            <section className="flex flex-col items-center justify-center text-center px-4 mb-20 md:mb-32 relative z-20">
-                {/* Hero text — opacity fade-in preserved (the page's visual
-                    signature) but with tight timing: 400ms duration, very
-                    short stagger (0/100/200ms). The original 800ms+ with
-                    delays up to 400ms pushed the LCP from ~2s to 4.4s
-                    because Lighthouse doesn't count an element as painted
-                    until opacity crosses a visibility threshold. 400ms
-                    keeps the cinematic 'appear' feel without sacrificing
-                    Core Web Vitals. */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="text-6xl md:text-8xl tracking-tighter text-primary mb-6 max-w-5xl font-normal"
-                >
-                    The Infinite <br />
-                    <span className="chroma-text">Cinema</span> Engine.
-                </motion.h1>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
-                    className="text-xl md:text-2xl text-secondary max-w-2xl mb-12"
-                >
-                    Orchestrate multi-agent systems to generate films. <br className="hidden md:block" />
-                    From script to screen, in real-time.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
-                >
-                    <Button shimmer={false} className="bg-btn-bg text-btn-text rounded-full px-8 py-4 text-lg font-medium">
-                        Start Creating
-                    </Button>
-                </motion.div>
-
-                {/* Central Visual — LCP element.
-                    Keeps the opacity fade-in (page signature) but with
-                    tight timing: 400ms duration, 300ms stagger after the
-                    button. Image loads at ~500ms via preload+fetchpriority;
-                    fade completes by ~1.2s post-hydration → LCP target ~1.5s. */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-                    className="mt-24 w-full max-w-5xl aspect-video bg-stroke rounded-[40px] shadow-2xl flex items-center justify-center relative overflow-hidden"
-                >
+            {/* HERO SECTION — full-bleed cinematic backdrop with the hero copy
+                and a film-concept composer centred on top (promoted from the
+                hero lab's "Variant C"). The composer replaces the old "Start
+                Creating" button, stepping the user straight into the create
+                flow. Sits flush under the floating navbar (page wrapper drops
+                its top padding for this). */}
+            <section className="relative isolate min-h-screen flex items-center justify-center overflow-hidden">
+                {/* Full-bleed cinematic backdrop — the LCP element. Eager +
+                    high priority + preloaded so the largest paint lands fast. */}
+                <div className="absolute inset-0 -z-10">
                     <img
-                        src={commercialDesk}
-                        srcSet={commercialDeskSrcSet}
-                        sizes="(min-width: 1024px) 1024px, 100vw"
-                        alt="Fantazia Workspace"
+                        src={heroBg}
+                        srcSet={heroBgSrcSet}
+                        sizes="100vw"
+                        alt=""
+                        aria-hidden="true"
                         fetchPriority="high"
                         decoding="async"
-                        width="1456"
-                        height="816"
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent" />
-                </motion.div>
+                    {/* Legibility overlays — flat tint + a top-and-bottom
+                        darkening so white copy and the bright composer panel
+                        both hold contrast. */}
+                    <div className="absolute inset-0 bg-ink/55" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink/60" />
+                </div>
+
+                {/* Copy + composer sit a little high in the viewport (pt-12 /
+                    pb-40), positioned with padding only — never a transform —
+                    so the composer's frosted backdrop-blur stays live. */}
+                <div className="w-full max-w-3xl mx-auto px-6 pt-12 pb-40 flex flex-col items-center text-center">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                        className="text-5xl md:text-7xl tracking-tighter text-white font-normal mb-6 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]"
+                    >
+                        The Infinite <br />
+                        Cinema Engine.
+                    </motion.h1>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
+                        className="text-lg md:text-xl text-white/85 max-w-xl mb-10 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]"
+                    >
+                        Orchestrate multi-agent systems to generate films. <br className="hidden md:block" />
+                        From script to screen, in real-time.
+                    </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+                        className="w-full max-w-xl"
+                    >
+                        <PromptComposer
+                            arrow="right"
+                            surfaceClassName="border border-white/50 bg-white/85 backdrop-blur-2xl shadow-heavy"
+                        />
+                    </motion.div>
+                </div>
             </section>
 
             {/* SECTION 2 — SPARK SPOTLIGHT (Restored) */}
