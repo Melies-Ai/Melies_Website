@@ -16,7 +16,7 @@ import {
     Check,
     Loader2
 } from 'lucide-react';
-import iconSpark from '../assets/icons/products/spark/spark-mark.webp';
+import iconSpark from '../assets/icons/products/spark/spark-mark.svg';
 import PromptComposer from '../components/sections/home-lab/PromptComposer';
 // Home hero backdrop — the LCP element. Full-bleed cinematic image (same asset
 // as the Footer) served large since it fills the whole viewport. Eager + high

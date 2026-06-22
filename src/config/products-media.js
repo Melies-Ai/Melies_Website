@@ -14,9 +14,9 @@
 // Smaller nav-friendly assets (marks, Spark spotlight) live in
 // `./products-icons.js` instead.
 
-import lockupFable from '../assets/icons/products/fable/fable-lockup-vertical-white.webp';
-import lockupCitizen from '../assets/icons/products/citizen/citizen-lockup-vertical-white.webp';
-import lockupOasis from '../assets/icons/products/oasis/oasis-lockup-vertical-white.webp';
+import lockupFable from '../assets/icons/products/fable/fable-lockup-white.svg';
+import lockupCitizen from '../assets/icons/products/citizen/citizen-lockup-white.svg';
+import lockupOasis from '../assets/icons/products/oasis/oasis-lockup-white.svg';
 
 import bannerFableSrc from '../assets/images/products/fable/fable-hero-banner.webp?w=800&format=webp';
 import bannerFableSrcSet from '../assets/images/products/fable/fable-hero-banner.webp?w=480;800;1200;1600&format=webp&as=srcset';
@@ -31,7 +31,7 @@ import bannerOasisSrcSet from '../assets/images/products/oasis/oasis-hero-banner
  * @property {string} srcSet        // 480w/800w/1200w/1600w variants
  *
  * @typedef {Object} ProductMedia
- * @property {string|null} lockup           // tall white lockup used in coming-soon page heroes
+ * @property {string|null} lockup           // white lockup (symbol + text) used in coming-soon page heroes
  * @property {ResponsiveImage|null} banner  // wide hero banner with responsive variants
  */
 

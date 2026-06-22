@@ -1,14 +1,13 @@
 // Product icons — small, navbar-friendly assets.
 //
-// `?w=96` asks vite-imagetools to emit a 96px-wide variant (instead of
-// the 200-275px sources), which is plenty for the 24-32px display sizes
-// (2x retina headroom). Cuts each mark from ~8-11kB down to ~2-3kB.
+// All marks are vector (SVG) — crisp at any display size, no retina
+// variants needed.
 // Heavier media (banners, lockups) lives in `./products-media.js`.
 
-import iconSpark from '../assets/icons/products/spark/spark-mark.webp?w=96&format=webp';
-import iconFable from '../assets/icons/products/fable/fable-mark.webp?w=96&format=webp';
-import iconCitizen from '../assets/icons/products/citizen/citizen-mark.webp?w=96&format=webp';
-import iconOasis from '../assets/icons/products/oasis/oasis-mark.webp?w=96&format=webp';
+import iconSpark from '../assets/icons/products/spark/spark-mark.svg';
+import iconFable from '../assets/icons/products/fable/fable-mark.svg';
+import iconCitizen from '../assets/icons/products/citizen/citizen-mark.svg';
+import iconOasis from '../assets/icons/products/oasis/oasis-mark.svg';
 
 // Spotlight: navbar dropdown thumbnail (~48x64 display). 256w covers
 // 2x retina with much less weight than the 608x1298 source.
