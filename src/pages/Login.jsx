@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Sparkles, Film, Lightbulb, Check, Loader2 } from 'lucide-react';
+import { Sparkles, Film, Lightbulb, Check, Loader2, Users, MapPin, BookOpen } from 'lucide-react';
 import { readPendingConcept } from '../lib/pendingConcept';
 import SEO from '../components/SEO';
 
@@ -47,20 +47,29 @@ const SAMPLE_PROMPT = 'A lighthouse keeper who discovers the sea is alive.';
 //
 // The SECOND assistant turn is an `activity` block instead of a plain line: it
 // stages the agent "working" — running tools (a step with a spinner that
-// resolves to a check, an insight it derives) and then materialising an
-// artifact card. Purely choreographed; it shows the product's working surface,
-// not a real run.
+// resolves to a check, an insight it derives) and then materialising a grid of
+// artifact cards (characters, locations, story, the opening scene) so the demo
+// reads as "we build a whole world", not just one shot. Purely choreographed;
+// it shows the product's working surface, not a real run.
 const FOLLOW_UPS = [
-    { from: 'assistant', text: 'Love it. I can already picture the opening shot.' },
-    { from: 'user', text: 'Make it feel more cinematic.' },
+    { from: 'assistant', text: 'Love it. Let me build the whole world around it.' },
+    { from: 'user', text: 'Make it feel cinematic.' },
     {
         from: 'assistant',
         kind: 'activity',
         steps: [
-            { type: 'tool', label: 'Framing the opening shot' },
-            { type: 'insight', label: 'Golden hour, a slow push, a score that swells.' },
+            { type: 'tool', label: 'Casting characters, designing locations' },
+            { type: 'tool', label: 'Outlining the story, scene by scene' },
+            { type: 'insight', label: 'One consistent world — every face, place, and beat.' },
         ],
-        artifact: { title: 'Opening Scene' },
+        // Each card maps to an ARTIFACT_ICONS kind; rendered as a 2×2 grid that
+        // cascades in once the working steps land.
+        artifacts: [
+            { kind: 'characters', title: 'Characters' },
+            { kind: 'location', title: 'Locations' },
+            { kind: 'story', title: 'Story' },
+            { kind: 'scene', title: 'Opening Scene' },
+        ],
     },
 ];
 
@@ -137,10 +146,22 @@ const StreamingLine = ({ text, prefersReduced }) => {
  * artifact card is solid (no backdrop-filter of its own), so its transform is
  * free too.
  */
-const ACTIVITY_STEP_MS = 1050;
+const ACTIVITY_STEP_MS = 900;
 
-const AgentActivity = ({ steps, artifact, prefersReduced }) => {
-    const total = steps.length + (artifact ? 1 : 0);
+// Maps an artifact card's `kind` to its glyph, so the grid reads at a glance as
+// distinct deliverables (a cast, places, a script, a shot) rather than four
+// identical cards.
+const ARTIFACT_ICONS = {
+    characters: Users,
+    location: MapPin,
+    story: BookOpen,
+    scene: Film,
+};
+
+const AgentActivity = ({ steps, artifacts = [], prefersReduced }) => {
+    // The artifact grid counts as a single phase (it cascades internally), so
+    // total = working steps + 1 if there are any cards.
+    const total = steps.length + (artifacts.length ? 1 : 0);
     // phase = how many items have been revealed. Start at 1 so the first step
     // is present the instant the block mounts — that keeps the bubble the same
     // height as the "thinking" dots it replaces (no empty frosted frame in
@@ -185,15 +206,40 @@ const AgentActivity = ({ steps, artifact, prefersReduced }) => {
                 );
             })}
 
-            {artifact && phase > steps.length && (
+            {/* Deliverables — the world the agent just built. A 2×2 grid of
+                solid cards that cascades in (staggerChildren) once the working
+                steps have landed, so it reads as "characters + locations + story
+                + scene", a whole kit rather than a single output. Transforms on
+                these children of the frosted bubble are frost-safe; the cards are
+                solid (no backdrop-filter of their own). */}
+            {artifacts.length > 0 && phase > steps.length && (
                 <motion.div
-                    initial={prefersReduced ? false : { opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: CHAT_EASE }}
-                    className="mt-0.5 flex items-center gap-2.5 rounded-xl bg-white/95 px-3 py-2.5 shadow-lifted"
+                    className="mt-0.5 grid grid-cols-2 gap-2"
+                    initial={prefersReduced ? false : 'hidden'}
+                    animate={prefersReduced ? false : 'show'}
+                    variants={{ show: { transition: { staggerChildren: 0.1 } } }}
                 >
-                    <Film className="size-4 shrink-0 text-[#262220]" />
-                    <span className="text-sm font-medium text-[#262220]">{artifact.title}</span>
+                    {artifacts.map((a) => {
+                        const Icon = ARTIFACT_ICONS[a.kind] || Film;
+                        return (
+                            <motion.div
+                                key={a.kind}
+                                variants={{
+                                    hidden: { opacity: 0, y: 6 },
+                                    show: { opacity: 1, y: 0 },
+                                }}
+                                transition={{ duration: 0.35, ease: CHAT_EASE }}
+                                className="flex items-center gap-2 rounded-xl bg-white/95 px-2.5 py-2 shadow-lifted"
+                            >
+                                <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#F0ECE2]">
+                                    <Icon className="size-4 text-[#262220]" />
+                                </span>
+                                <span className="text-xs font-medium leading-tight text-[#262220]">
+                                    {a.title}
+                                </span>
+                            </motion.div>
+                        );
+                    })}
                 </motion.div>
             )}
         </div>
@@ -253,13 +299,14 @@ const ConceptConversation = ({ concept }) => {
             }, streamMs + beat);
         } else {
             // Whole exchange shown — hold, then loop back to the first line.
-            // Longer than the plain-text loop used to be: the final turn is the
-            // activity block, which needs ~2.4s to stage its steps + artifact,
-            // so we wait that out and then let it linger before resetting.
+            // The final turn is the activity block, which now needs ~3.6s to
+            // stage three working steps plus the cascading 2×2 artifact grid, so
+            // we wait that out and then let the finished world-kit linger before
+            // resetting.
             timer = setTimeout(() => {
                 setVisible(1);
                 setSpoken(1);
-            }, 6000);
+            }, 7500);
         }
         return () => clearTimeout(timer);
     }, [visible, spoken, prefersReduced, script]);
@@ -347,7 +394,7 @@ const ConceptConversation = ({ concept }) => {
                                                 >
                                                     <AgentActivity
                                                         steps={msg.steps}
-                                                        artifact={msg.artifact}
+                                                        artifacts={msg.artifacts}
                                                         prefersReduced={prefersReduced}
                                                     />
                                                 </motion.div>
@@ -426,10 +473,20 @@ const ConceptConversation = ({ concept }) => {
  */
 const Login = () => {
     const location = useLocation();
+    const prefersReduced = useReducedMotion();
     // Prefer fresh router state; fall back to the durable sessionStorage copy
     // (which survives a refresh — that's how we prove the concept was kept).
     const [concept] = useState(() => location.state?.concept || readPendingConcept());
     const [mode, setMode] = useState('signin'); // 'signin' | 'signup'
+
+    // Soften the left portal's arrival. /login is an instant route swap, so the
+    // image used to pop in ~0.2s late over a white panel. We hold a dark panel
+    // underneath and fade the image in once it has decoded. The ref callback
+    // covers the cached case, where onLoad doesn't refire after mount.
+    const [bgLoaded, setBgLoaded] = useState(false);
+    const handlePanelImg = useCallback((node) => {
+        if (node && node.complete && node.naturalWidth > 0) setBgLoaded(true);
+    }, []);
 
     const isSignup = mode === 'signup';
 
@@ -445,17 +502,27 @@ const Login = () => {
                 Hidden on mobile (hidden lg:block): on small screens we drop the
                 image so the login form is the priority — see the compact concept
                 reminder in the right panel that keeps the handoff alive. */}
-            <div className="relative isolate hidden lg:block lg:min-h-screen overflow-hidden">
+            <div className="relative isolate hidden lg:block lg:min-h-screen overflow-hidden bg-ink">
+                {/* bg-ink on the panel is the placeholder: while the portal
+                    decodes after the route swap, the half reads as a calm dark
+                    panel instead of flashing white. */}
                 <img
+                    ref={handlePanelImg}
+                    onLoad={() => setBgLoaded(true)}
                     src={panelBg}
                     srcSet={panelBgSrcSet}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     alt=""
                     aria-hidden="true"
                     decoding="async"
+                    fetchPriority="high"
                     // Mirrored (scale-x-[-1]): brings the darker foliage to the
                     // top-left so the white wordmark sitting there stays legible.
-                    className="absolute inset-0 -z-10 w-full h-full object-cover scale-x-[-1]"
+                    // Fades in over the dark panel once decoded so it eases in
+                    // instead of popping — instant for reduced-motion.
+                    className={`absolute inset-0 -z-10 w-full h-full object-cover scale-x-[-1] transition-opacity duration-700 ease-out ${
+                        bgLoaded || prefersReduced ? 'opacity-100' : 'opacity-0'
+                    }`}
                 />
                 {/* Overlays — the portal is the hero of this panel, so we keep
                     the centre almost clear and only darken top & bottom enough
