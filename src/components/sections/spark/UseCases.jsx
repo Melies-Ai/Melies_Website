@@ -38,7 +38,7 @@ const CASES = [
 ];
 
 const UseCases = () => (
-    <div className="max-w-7xl mx-auto px-6 py-32">
+    <div className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         {/* Heading block */}
         <div className="text-center mb-16 md:mb-20">
             <p className="text-label font-mono uppercase tracking-[0.25em] text-muted mb-4">

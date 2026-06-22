@@ -72,18 +72,18 @@ const FullExperience = () => {
     const animate = inView && !reducedMotion;
 
     return (
-    <div ref={sectionRef} className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
-        <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row items-center gap-16">
+    <div ref={sectionRef} className="w-full py-16 md:py-24 relative overflow-hidden flex flex-col items-center justify-center">
+        <div className="max-w-7xl w-full px-6 md:px-8 flex flex-col md:flex-row items-center gap-10 md:gap-16">
             <div className="flex-1 text-left">
                 <h2 className="text-4xl md:text-5xl font-medium text-strong mb-6">The Full Experience</h2>
-                <p className="text-xl text-muted leading-relaxed mb-8">
+                <p className="text-lg md:text-xl text-muted leading-relaxed mb-8">
                     Video is just the beginning. Our best model generates the entire sensory package.
                     <br /><br />
                     Video, Music, Voice, and Sound FX—all generated together in perfect sync.
                 </p>
             </div>
 
-            <div className="w-full md:flex-1 sunken-canvas bg-paper/50 shadow-inset-canvas rounded-canvas p-4 md:p-12 relative overflow-hidden flex items-center justify-center min-h-[500px]">
+            <div className="w-full md:flex-1 sunken-canvas bg-paper/50 shadow-inset-canvas rounded-canvas p-4 md:p-12 relative overflow-hidden flex items-center justify-center min-h-[420px] md:min-h-[500px]">
                 <div className="absolute inset-0 grid-texture-subtle opacity-10 pointer-events-none" />
 
                 {/* Timeline Editor */}

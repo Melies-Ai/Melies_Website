@@ -21,7 +21,7 @@ const SocialLink = ({ href, icon: Icon, label }) => (
 );
 
 const SOCIAL_LINKS = [
-    { href: 'https://discord.gg/g9b4z5G9DR', icon: DiscordIcon, label: 'Discord' },
+    { href: 'https://discord.gg/kB3BVAJuK', icon: DiscordIcon, label: 'Discord' },
     { href: 'https://x.com/FantaziaAI', icon: XIcon, label: 'Twitter (X)' },
     { href: 'https://t.me/fantazia_ai', icon: TelegramIcon, label: 'Telegram' },
     { href: 'https://tiktok.com/@fantazia_ai', icon: TikTokIcon, label: 'TikTok' },

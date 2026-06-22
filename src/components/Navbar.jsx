@@ -6,6 +6,11 @@ import { liveProducts, upcomingProducts } from '../config/products';
 import { getProductIcons } from '../config/products-icons';
 import Button from './Button';
 
+// Horizontal Fantazia logo. Served from /public (not imported from src/)
+// because the same file doubles as the SEO og:image / JSON-LD logo, so it
+// must keep a stable un-hashed URL anyway — no point shipping it twice.
+const fantaziaLogo = '/fantazia-wordmark.svg';
+
 import { Menu, X, ChevronDown, ArrowUpRight, ArrowRight } from 'lucide-react';
 
 const NavLink = ({ to, label, isActive, onClick }) => (
@@ -45,16 +50,20 @@ const Navbar = () => {
                 <motion.nav
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="w-full max-w-5xl bg-white/40 backdrop-blur-xl border border-white/20 rounded-full px-6 py-3 flex items-center justify-between shadow-sm relative"
+                    className="w-full max-w-5xl bg-white/40 backdrop-blur-xl border border-white/20 rounded-full px-3 py-2 flex items-center justify-between shadow-sm relative"
                 >
                     {/* Brand */}
+                    {/* px-3 on the pill is tight against the rounded edge, so the
+                        brand gets its own ml-3 to keep the logo visually inset. */}
                     <Link
                         to="/"
-                        className="flex items-center gap-3 shrink-0 mr-8"
+                        className="flex items-center gap-3 shrink-0 ml-3 mr-8"
                     >
-                        <span className="font-display text-[1.45rem] lowercase text-ink leading-none">
-                            fantazia.ai
-                        </span>
+                        <img
+                            src={fantaziaLogo}
+                            alt="fantazia.ai"
+                            className="h-7 w-auto"
+                        />
                     </Link>
 
                     {/* Center Group: Navigation */}
@@ -92,7 +101,7 @@ const Navbar = () => {
                                                     </div>
                                                     <div className="flex-1 pr-6">
                                                         <div className="flex items-center gap-2 mb-1">
-                                                            <span className="font-medium text-primary text-lg">{product.name}</span>
+                                                            <span className="font-display lowercase text-primary text-2xl leading-none">{product.name}</span>
                                                             <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
                                                         </div>
                                                         <p className="text-sm text-secondary leading-snug">
@@ -115,7 +124,7 @@ const Navbar = () => {
                                                             <img src={getProductIcons(product.id)?.mark} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                                                         </div>
                                                         <div>
-                                                            <div className="font-medium text-primary text-sm mb-0.5">{product.name}</div>
+                                                            <div className="font-display lowercase text-primary text-lg mb-0.5">{product.name}</div>
                                                             <div className="text-[9px] text-secondary uppercase tracking-widest mb-2">{product.tagline}</div>
                                                             <div className="text-[9px] font-medium text-black/40 border border-black/10 rounded-full px-2 py-0.5 inline-block group-hover:bg-black group-hover:text-white group-hover:border-black transition-colors duration-300">
                                                                 Waitlist
@@ -181,7 +190,7 @@ const Navbar = () => {
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 mb-1">
-                                                    <span className="font-medium text-primary text-lg transition-colors">{product.name}</span>
+                                                    <span className="font-display lowercase text-primary text-2xl leading-none transition-colors">{product.name}</span>
                                                     <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">Live</span>
                                                 </div>
                                                 <p className="text-sm text-secondary leading-snug transition-colors">
@@ -201,7 +210,7 @@ const Navbar = () => {
                                                 <div className="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity">
                                                     <img src={getProductIcons(product.id)?.mark} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-contain transition-all" />
                                                 </div>
-                                                <span className="text-xs font-medium text-primary transition-colors">{product.name}</span>
+                                                <span className="font-display lowercase text-base text-primary transition-colors">{product.name}</span>
                                             </Link>
                                         ))}
                                     </div>

@@ -22,16 +22,18 @@ const AssetCard = ({ image, type, icon: Icon, delay }) => (
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
         transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-        className="relative w-40 h-40 rounded-card overflow-hidden shadow-lifted group"
+        className="relative w-24 h-24 md:w-40 md:h-40 rounded-card overflow-hidden shadow-lifted group"
     >
         <img src={image} alt={type} loading="lazy" decoding="async" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
 
-        <div className="absolute top-2 right-2 w-8 h-8 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/50 transition-colors cursor-pointer">
+        {/* Fake-UI chrome (close button + label pill) only fits the desktop
+            card size; on mobile the three small thumbs read better bare. */}
+        <div className="hidden md:flex absolute top-2 right-2 w-8 h-8 bg-white/30 backdrop-blur-md rounded-full items-center justify-center text-white hover:bg-white/50 transition-colors cursor-pointer">
             <X size={16} />
         </div>
 
-        <div className="absolute bottom-2 left-2 right-2">
+        <div className="hidden md:block absolute bottom-2 left-2 right-2">
             <div className="bg-white/90 backdrop-blur-md rounded-full py-1.5 px-3 flex items-center gap-2 shadow-card">
                 <Icon size={14} className="text-strong" />
                 <span className="text-xs font-medium text-strong">{type}</span>
@@ -121,11 +123,11 @@ const AssetIntegration = () => {
 
     return (
         <MotionConfig reducedMotion="user">
-        <div ref={sectionRef} className="w-full py-24 relative overflow-hidden flex flex-col items-center justify-center">
-            <div className="max-w-7xl w-full px-8 flex flex-col md:flex-row-reverse items-center gap-16">
+        <div ref={sectionRef} className="w-full py-16 md:py-24 relative overflow-hidden flex flex-col items-center justify-center">
+            <div className="max-w-7xl w-full px-6 md:px-8 flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
                 <div className="flex-1 text-left">
                     <h2 className="text-4xl md:text-5xl font-medium text-strong mb-6">Bring Your Own Assets</h2>
-                    <p className="text-xl text-muted leading-relaxed mb-8">
+                    <p className="text-lg md:text-xl text-muted leading-relaxed mb-8">
                         Integrate up to three of your own elements. Logos, products, or specific props.
                         <br /><br />
                         Spark seamlessly blends them into the generated video, respecting lighting and physics.
@@ -135,7 +137,7 @@ const AssetIntegration = () => {
                     </Button>
                 </div>
 
-                <div className="w-full md:flex-1 sunken-canvas surface-page shadow-inset-canvas rounded-canvas p-6 md:p-12 relative overflow-hidden flex items-center justify-center min-h-[600px]">
+                <div className="w-full md:flex-1 sunken-canvas surface-page shadow-inset-canvas rounded-canvas p-6 md:p-12 relative overflow-hidden flex items-center justify-center min-h-[460px] md:min-h-[600px]">
                     <div className="absolute inset-0 grid-texture-subtle opacity-20 pointer-events-none" />
 
                     <div className="relative w-full max-w-md h-full flex flex-col items-center justify-center">
@@ -173,7 +175,7 @@ const AssetIntegration = () => {
                                     transition={{ type: 'spring', stiffness: 100, damping: 15, mass: 0.8 }}
                                     className="absolute z-20"
                                 >
-                                    <div className="w-32 h-32 surface-card rounded-card shadow-heavy border-glass-default overflow-hidden p-1">
+                                    <div className="w-24 h-24 md:w-32 md:h-32 surface-card rounded-card shadow-heavy border-glass-default overflow-hidden p-1">
                                         <img src={droppingImage} alt="Dropping Asset" loading="lazy" decoding="async" className="w-full h-full object-cover rounded-xl" />
                                     </div>
                                 </motion.div>
@@ -212,7 +214,7 @@ const AssetIntegration = () => {
                                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                                     className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none"
                                 >
-                                    <div className="relative w-[280px] aspect-[9/16] bg-black rounded-[32px] shadow-heavy overflow-hidden border-4 border-white ring-1 ring-black/10 group rotate-[-2deg]">
+                                    <div className="relative w-[230px] md:w-[280px] aspect-[9/16] bg-black rounded-[32px] shadow-heavy overflow-hidden border-4 border-white ring-1 ring-black/10 group rotate-[-2deg]">
                                         <div className="absolute top-4 left-4 z-20 flex gap-2">
                                             <div className="bg-black/40 backdrop-blur-md text-white text-badge font-mono uppercase tracking-widest px-3 py-1 rounded-full border-glass-subtle flex items-center gap-2">
                                                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />

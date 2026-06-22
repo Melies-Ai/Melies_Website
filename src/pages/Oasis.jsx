@@ -30,7 +30,7 @@ const Oasis = () => {
             />
 
             {/* HERO SECTION */}
-            <div className="max-w-[1400px] mx-auto mb-32 relative h-[85vh] rounded-[32px] overflow-hidden shadow-2xl">
+            <div className="max-w-[1400px] mx-auto mb-16 md:mb-32 relative h-[70vh] md:h-[85vh] rounded-[32px] overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-black/20 z-10" />
                 <img
                     src={media.banner.src}
@@ -43,7 +43,7 @@ const Oasis = () => {
                 />
 
                 {/* Availability Tag */}
-                <div className="absolute top-8 right-8 bg-white/10 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-lg font-mono text-white/60 tracking-widest uppercase z-30">
+                <div className="absolute top-4 right-4 md:top-8 md:right-8 bg-white/10 backdrop-blur-md border border-white/10 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-lg font-mono text-white/60 tracking-widest uppercase z-30">
                     {product.releaseLabel}
                 </div>
 
@@ -53,10 +53,12 @@ const Oasis = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         className="mb-8"
                     >
-                        <img src={media.lockup} alt={product.name} className="h-32 w-auto drop-shadow-lg" />
+                        <img src={media.lockup} alt={product.name} className="h-24 md:h-32 w-auto drop-shadow-lg" />
                     </motion.div>
 
-                    <div className="absolute bottom-8 left-8">
+                    {/* Terminal boot-sequence flavour, pinned bottom-left at every
+                        size (tighter inset on mobile). */}
+                    <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8">
                         <SystemText lines={product.terminal} delay={0.5} />
                     </div>
 
@@ -64,7 +66,7 @@ const Oasis = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-7xl md:text-9xl font-medium text-white mb-6 tracking-tighter"
+                        className="text-5xl sm:text-6xl md:text-9xl font-medium text-white mb-6 tracking-tighter"
                     >
                         {product.heroTitle}
                     </motion.h1>
@@ -72,7 +74,7 @@ const Oasis = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="text-xl text-white/90 max-w-xl font-light leading-relaxed"
+                        className="text-lg md:text-xl text-white/90 max-w-xl font-light leading-relaxed"
                     >
                         {product.heroSubtitle}
                     </motion.p>

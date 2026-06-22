@@ -67,7 +67,7 @@ const Home = () => {
         <div className="bg-background min-h-screen">
             <SEO
                 title="The Infinite Cinema Engine"
-                description="Orchestrate multi-agent AI systems to generate films from script to screen, in real-time. The future of filmmaking starts with Fantazia."
+                description="Type an idea and watch it come to life. Fantazia writes, directs and renders films from script to screen, in real-time. The future of filmmaking."
                 canonical="/"
                 preloadImage={heroBg}
                 preloadImageSrcSet={heroBgSrcSet}
@@ -104,7 +104,7 @@ const Home = () => {
                 {/* Copy + composer sit a little high in the viewport (pt-12 /
                     pb-40), positioned with padding only — never a transform —
                     so the composer's frosted backdrop-blur stays live. */}
-                <div className="w-full max-w-3xl mx-auto px-6 pt-12 pb-40 flex flex-col items-center text-center">
+                <div className="w-full max-w-3xl mx-auto px-6 pt-12 pb-28 md:pb-40 flex flex-col items-center text-center">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -121,8 +121,7 @@ const Home = () => {
                         transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
                         className="text-lg md:text-xl text-white/85 max-w-xl mb-10 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]"
                     >
-                        Orchestrate multi-agent systems to generate films. <br className="hidden md:block" />
-                        From script to screen, in real-time.
+                        Type an idea. Watch it come to life.
                     </motion.p>
 
                     <motion.div
@@ -140,9 +139,9 @@ const Home = () => {
             </section>
 
             {/* SECTION 2 — SPARK SPOTLIGHT (Restored) */}
-            <section className="w-full py-32 bg-[#FAF9F6]">
+            <section className="w-full py-20 md:py-32 bg-[#FAF9F6]">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex flex-col md:flex-row items-center gap-20">
+                    <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
                         {/* LEFT: Visuals (ViralFeedSimulator) */}
                         <div className="flex-1 w-full flex justify-center relative">
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-gradient-to-tr from-orange-200/20 to-purple-200/20 rounded-full blur-3xl mix-blend-multiply pointer-events-none" />
@@ -170,7 +169,7 @@ const Home = () => {
                                     <span className="text-lg font-medium tracking-tight text-primary">Spark Engine</span>
                                 </div>
 
-                                <h2 className="text-5xl md:text-6xl font-medium text-primary mb-6 leading-[1.1] tracking-tight">
+                                <h2 className="text-4xl md:text-6xl font-medium text-primary mb-6 leading-[1.1] tracking-tight">
                                     Vertical Stories.<br />
                                     <span className="text-primary">Perfect Consistency.</span>
                                 </h2>
@@ -215,13 +214,13 @@ const Home = () => {
             </section>
 
             {/* SECTION 3 — CORE ECOSYSTEM (One Story. Three Ways In.) */}
-            <section className="w-full py-32 bg-[#FAF9F6] text-primary relative overflow-hidden">
+            <section className="w-full py-20 md:py-32 bg-[#FAF9F6] text-primary relative overflow-hidden">
                 {/* Background Ambience */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,0,0,0.02),transparent_70%)]" />
 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     {/* Header */}
-                    <div className="text-center mb-20">
+                    <div className="text-center mb-10 md:mb-20">
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -242,8 +241,12 @@ const Home = () => {
 
                     </div>
 
-                    {/* Core Grid (Flex Layout for "Bento" expansion) */}
-                    <div className="flex flex-col md:flex-row gap-4 h-[1200px] md:h-[600px] mb-12 group/grid">
+                    {/* Core Grid (Flex Layout for "Bento" expansion).
+                        Mobile: no hover-expansion, so no fixed total height —
+                        each card gets its own h-[340px] and the column grows
+                        naturally. Desktop: fixed 600px row enables the
+                        flex-grow hover dance. */}
+                    <div className="flex flex-col md:flex-row gap-4 md:h-[600px] mb-12 group/grid">
 
                         {upcomingProducts.map((product) => {
                             const copy = HOME_CARD_COPY[product.id];
@@ -262,7 +265,7 @@ const Home = () => {
                                 <Link
                                     key={product.id}
                                     to={product.route}
-                                    className="relative flex-1 group/card overflow-hidden rounded-[32px] bg-black border border-black/5 transition-[flex] duration-500 ease-out hover:flex-[1.5]"
+                                    className="relative h-[340px] md:h-auto md:flex-1 group/card overflow-hidden rounded-[32px] bg-black border border-black/5 transition-[flex] duration-500 ease-out md:hover:flex-[1.5]"
                                 >
                                     {/* Background & Overlay */}
                                     <div className="absolute inset-0 z-0">
@@ -293,7 +296,10 @@ const Home = () => {
                                             <span className="text-xs font-mono text-white/40 border border-white/10 px-2 py-1 rounded-full uppercase tracking-widest bg-black/20 backdrop-blur-sm">{product.releaseLabel}</span>
                                         </div>
 
-                                        <div className="min-w-max group-hover/card:opacity-0 transition-opacity duration-500">
+                                        {/* min-w-max only on desktop: it pins the text block's
+                                            width during the flex hover-expansion so copy doesn't
+                                            reflow. On mobile it would force overflow — let it wrap. */}
+                                        <div className="md:min-w-max group-hover/card:opacity-0 transition-opacity duration-500">
                                             <h4 className="text-3xl font-bold mb-2 tracking-tight text-white">{product.name.toUpperCase()}</h4>
                                             <div className="flex items-center gap-3 mb-4">
                                                 <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm border border-white/5 text-white">{copy.verbBadge}</span>
@@ -308,7 +314,7 @@ const Home = () => {
                         })}
                     </div>
 
-                    <div className="flex flex-col md:flex-row justify-between items-start mt-20 gap-6 text-left">
+                    <div className="flex flex-col md:flex-row justify-between items-start mt-10 md:mt-20 gap-6 text-left">
                         <div>
                             <h2 className="text-3xl font-medium text-primary mb-2">Coming 2026</h2>
                             <p className="text-secondary">The future of cinema is being built. Join the waitlist.</p>
@@ -365,9 +371,9 @@ const Home = () => {
             </section>
 
             {/* SECTION 5 (Renumbered) — SOCIAL PROOF (Beige 2) */}
-            <section className="w-full py-32 bg-[#F0ECE2] text-primary relative overflow-hidden">
+            <section className="w-full py-20 md:py-32 bg-[#F0ECE2] text-primary relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
-                    <div className="text-center mb-24">
+                    <div className="text-center mb-12 md:mb-24">
                         <h2 className="text-sm font-mono text-secondary/60 uppercase tracking-[0.2em] mb-4">Empowering Visionaries</h2>
                         <h3 className="text-3xl md:text-5xl font-medium text-primary leading-tight tracking-tight">Built by creators, for creators.</h3>
                     </div>
@@ -376,10 +382,10 @@ const Home = () => {
 
                     <div className="text-center">
                         <p className="text-xl text-secondary mb-8 max-w-2xl mx-auto leading-relaxed">
-                            Join the filmmakers defining the next era of cinema. <br />
+                            Join the filmmakers defining the next era of cinema. <br className="hidden md:block" />
                             Be first in line when the full ecosystem launches.
                         </p>
-                        <Button href="https://discord.gg/g9b4z5G9DR" target="_blank" rel="noopener noreferrer" variant="outlineDark" className="px-8 py-3 text-sm">
+                        <Button href="https://discord.gg/kB3BVAJuK" target="_blank" rel="noopener noreferrer" variant="outlineDark" className="px-8 py-3 text-sm">
                             Join the Discord <ArrowRight size={14} />
                         </Button>
                     </div>
