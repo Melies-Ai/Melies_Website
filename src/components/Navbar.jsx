@@ -140,7 +140,6 @@ const Navbar = () => {
                         </div>
 
                         <NavLink to="/pricing" label="Pricing" isActive={location.pathname === '/pricing'} />
-                        <NavLink to="/about" label="About" isActive={location.pathname === '/about'} />
                     </div>
 
                     {/* Right Group: Actions */}
@@ -220,7 +219,6 @@ const Navbar = () => {
                             <div className="h-px bg-ink/10" />
 
                             <NavLink to="/pricing" label="Pricing" isActive={location.pathname === '/pricing'} onClick={toggleMenu} />
-                            <NavLink to="/about" label="About" isActive={location.pathname === '/about'} onClick={toggleMenu} />
 
                             <div className="h-px bg-ink/10" />
 
