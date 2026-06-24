@@ -14,10 +14,9 @@
     <meta property="og:url" content="https://fantazia.ai/" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Umami — privacy-friendly, cookieless analytics. `defer` so it never
-         blocks first paint. Loads on every route (this shell wraps all
-         prerendered pages). -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="da656510-e5d0-48a7-99ad-7cf0d6b8e592"></script>
+    <!-- Analytics (Umami) is loaded via Cloudflare Zaraz, not inline, so it's
+         gated by Zaraz's consent manager and managed without a redeploy. Keep
+         it out of here to avoid double-counting pageviews. -->
   </head>
   <body>
     <div id="root"></div>
