@@ -53,7 +53,10 @@ const Citizen = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         className="mb-8"
                     >
-                        <img src={media.lockup} alt={product.name} className="h-24 md:h-32 w-auto drop-shadow-lg" />
+                        {/* brightness-0 invert forces the lockup pure white: the
+                            build's SVGO step strips fill attributes, so the SVG
+                            would otherwise fall back to black in production. */}
+                        <img src={media.lockup} alt={product.name} className="h-24 md:h-32 w-auto brightness-0 invert drop-shadow-lg" />
                     </motion.div>
 
                     {/* Terminal boot-sequence flavour, pinned bottom-left at every
