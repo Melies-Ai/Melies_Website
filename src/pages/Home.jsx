@@ -132,7 +132,7 @@ const Home = () => {
                     >
                         <PromptComposer
                             arrow="right"
-                            surfaceClassName="border border-white/50 bg-white/85 backdrop-blur-2xl shadow-heavy"
+                            surfaceClassName="outline outline-[5px] outline-white/50 bg-white/85 backdrop-blur-2xl shadow-heavy"
                         />
                     </motion.div>
                 </div>
